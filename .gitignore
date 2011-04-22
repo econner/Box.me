@@ -1,4 +1,3 @@
 # Ignore the local sqlite3 db.
-box
 *.pyc
 *DS_Store
