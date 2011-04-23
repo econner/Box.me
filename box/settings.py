@@ -94,5 +94,12 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     'auth',
-    'suggengine'
+    'suggestion_engine',
+    'celery',
 )
+
+AMQP_SERVER = "192.168.1.2"
+AMQP_PORT = 5672
+AMQP_USER = "myuser"
+AMQP_PASSWORD = "mypassword"
+AMQP_VHOST = "myvhost"
