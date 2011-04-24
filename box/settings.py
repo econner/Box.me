@@ -1,4 +1,10 @@
 # Django settings for box project.
+import sys
+import os
+
+# Setup the python path
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
+sys.path.insert(0, PROJECT_ROOT)
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
