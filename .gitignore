@@ -1,3 +1,4 @@
 # Ignore the local sqlite3 db.
 *.pyc
 *DS_Store
+boxdb
