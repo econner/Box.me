@@ -15,4 +15,6 @@ urlpatterns = patterns('',
     (r'^admin/', include(admin.site.urls)),
     (r'^login/?$', 'box.users.views.box_login'),
     (r'^nlp/?$', 'box.suggestion_engine.views.do_analysis'),
+    (r'^search/', include('haystack.urls')),
+    (r'^sugg/', 'box.suggestion_engine.views.get_similar_docs'),
 )

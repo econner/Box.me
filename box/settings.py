@@ -92,6 +92,7 @@ TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
+    PROJECT_ROOT + '/box/templates'
 )
 
 INSTALLED_APPS = (
@@ -107,7 +108,12 @@ INSTALLED_APPS = (
     'users',
     'suggestion_engine',
     'celery',
+    'haystack',
 )
+
+HAYSTACK_SITECONF = 'box.search_sites'
+HAYSTACK_SEARCH_ENGINE= 'solr'
+HAYSTACK_SOLR_URL = 'http://127.0.0.1:8983/solr'
 
 AMQP_SERVER = "192.168.1.2"
 AMQP_PORT = 5672
