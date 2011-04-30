@@ -1,0 +1,111 @@
+<html>
+    <head>
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+        <title>Django, Orbited, Stomp and Co.</title>
+        
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js" type="text/javascript"></script>
+        <script src="/static/js/jquery-json.js"></script>
+        <script src="/static/js/diff_match_patch.js"></script>
+        <script src="/static/js/orbited/Orbited.js"></script>
+        <script>
+        // set the orbited settings and port
+        Orbited.settings.port = 9000;
+        Orbited.settings.hostname = "localhost";
+        //Orbited.settings.streaming = false;
+        TCPSocket = Orbited.TCPSocket
+        </script>
+        <script> document.domain = document.domain; </script>
+        <script src="/static/js/stomp/stomp.js"></script>
+
+        <script type="text/javascript" charset="utf-8">
+            var dmp = new diff_match_patch();
+            var clientShadow = "{{ message.msg }}";
+            
+            function performDiff(text1, text2) {
+                var diff = dmp.diff_main(text1, text2, true);
+                
+                // not sure what this does yet TODO
+                if (diff.length > 2) {
+                  dmp.diff_cleanupSemantic(diff);
+                }
+                
+                var patch_list = dmp.patch_make(text1, text2, diff);
+                return patch_list;
+            }
+            
+            function performPatch(text, patches) {
+                var results = dmp.patch_apply(patches, text);
+                console.log(results);
+                var result_text = results[0];
+                return result_text;
+            }
+            
+            function add_message(msg) {
+                var serverEdits = dmp.patch_fromText(msg['patches']);
+                var serverText = msg['serverText'];
+                console.log("SERVER TEXT: " + serverText);
+                console.log("COMMON SHADOW: " + clientShadow);
+                clientShadow = serverText;
+                
+                var clientText = $("#editor").val();
+                var patchedText = performPatch(clientText, serverEdits);
+                console.log("SERVER PATCHED TEXT: " + patchedText);
+                $("#editor").val(patchedText);
+            }
+            
+            $(document).ready(function() {
+                stomp = new STOMPClient();
+                stomp.onopen = function(){
+                    //console.log("opening stomp client");
+                };
+                stomp.onclose = function(c){
+                    alert('Lost Connection, Code: ' + c);
+                };
+                stomp.onerror = function(error){
+                    alert("Error: " + error);
+                };
+                stomp.onerrorframe = function(frame){
+                    alert("Error: " + frame.body);
+                };
+                stomp.onconnectedframe = function(){
+                    console.log("Connected. Subscribing");
+                    //alert("subscribing");
+                    stomp.subscribe("/messages");
+                };
+                stomp.onmessageframe = function(frame){
+                    // Presumably we should only receive message frames with the
+                    // destination "/topic/message" because that's the only destination
+                    // to which we've subscribed. To handle multiple destinations we
+                    // would have to check frame.headers.destination.
+                    add_message($.parseJSON(frame.body));
+                };
+                stomp.connect('localhost', 61613);
+                
+                setInterval(function(data) {
+                    var clientText = $("#editor").val();
+
+                    // diff client text against client shadow
+                    var patches = performDiff(clientText, clientShadow);
+                    patch_text = dmp.patch_toText(patches);
+                    
+                    // copy client text over to shadow
+                    clientShadow = clientText;
+                    console.log("PATCH TEXT: " + patch_text);
+                    // apply edits to server text
+                    $.post("/addMessage/", 
+                                "patches=" + encodeURIComponent(patch_text)
+                                + "&text=" + encodeURIComponent(clientText)
+                    );
+                }, 2000);
+            });
+
+        </script>
+    </head>
+    <body id="index">
+        <div id="new_message">
+            <textarea id="editor">{{ message.msg }}</textarea>
+        </div>
+        
+
+    </body>
+</html>
