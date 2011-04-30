@@ -20,6 +20,8 @@ urlpatterns = patterns('',
     (r'^nlp/?$', 'box.suggestion_engine.views.do_analysis'),
     (r'^/?$', 'box.users.views.index'),
     (r'^addMessage/', 'box.users.views.addMessage'),
+    (r'^search/', include('haystack.urls')),
+    (r'^sugg/', 'box.suggestion_engine.views.get_similar_docs'),
 )
 
 # static content served only in debug
