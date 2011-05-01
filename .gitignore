@@ -2,3 +2,7 @@
 *.pyc
 *DS_Store
 boxdb
+box/example
+box/haystack
+box/boxdb
+box/celerybeat-schedule

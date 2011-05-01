@@ -1,7 +1,7 @@
 import os
 from box import constants
 from gensim import corpora, models, similarities
-from celery.task import task
+from celery.decorators import task
 
 class IceCorpus(object):
     def __init__(self, dictionary, filenames):
@@ -27,7 +27,7 @@ def get_file_info():
 
 # Currently prints out all document pairs that have similarity above
 # some threshold value
-@task
+@task()
 def generate_doc_sims():
     (filenames, file_ids) = get_file_info()
 

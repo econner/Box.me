@@ -1,6 +1,10 @@
 # Django settings for box project.
 import sys
 import os
+import djcelery
+from datetime import timedelta
+
+djcelery.setup_loader()
 
 # Setup the python path
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
@@ -107,13 +111,30 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
     'users',
     'suggestion_engine',
-    'celery',
+    'djcelery',
     'haystack',
 )
 
 HAYSTACK_SITECONF = 'box.search_sites'
 HAYSTACK_SEARCH_ENGINE= 'solr'
 HAYSTACK_SOLR_URL = 'http://127.0.0.1:8983/solr'
+
+CELERY_RESULT_BACKEND = "amqp"
+CELERY_IMPORTS = ("box.suggestion_engine.docsims", "box.suggestion_engine.docsearch")
+
+CELERYBEAT_SCHEDULE = {
+    "runs-every-30-seconds": {
+        "task": "box.suggestion_engine.docsearch.update_suggestion_engine",
+        "schedule": timedelta(seconds=30),
+        "args": ()
+    },
+}
+
+BROKER_HOST = "localhost"
+BROKER_PORT = 5672
+BROKER_USER = "myuser"
+BROKER_PASSWORD = "mypassword"
+BROKER_VHOST = "myvhost"
 
 AMQP_SERVER = "192.168.1.2"
 AMQP_PORT = 5672

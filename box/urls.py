@@ -19,9 +19,11 @@ urlpatterns = patterns('',
     (r'^login/?$', 'box.users.views.box_login'),
     (r'^nlp/?$', 'box.suggestion_engine.views.do_analysis'),
     (r'^/?$', 'box.users.views.index'),
-    (r'^addMessage/', 'box.users.views.addMessage'),
-    (r'^search/', include('haystack.urls')),
+    (r'^addMessage/', 'box.users.views.addMessage'), 
     (r'^sugg/', 'box.suggestion_engine.views.get_similar_docs'),
+    
+    # this is used for the search box interface provided by haystack
+#    (r'^search/', include('haystack.urls')),
 )
 
 # static content served only in debug
