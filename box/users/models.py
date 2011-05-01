@@ -24,3 +24,10 @@ class Message(models.Model):
     msg = models.TextField('Message')
     timestamp = models.DateTimeField('Timestamp', auto_now_add=True)
     posted_by = models.CharField(max_length=50)
+    
+class Revision(models.Model):
+    user = models.ForeignKey(User)
+    # every message should have multiple revisions per client
+    message = models.ForeignKey(Message) 
+    revisionText = models.TextField("Revision")
+    

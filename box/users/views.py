@@ -7,7 +7,7 @@ from django.conf import settings
 
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate, logout as auth_logout
-from models import UserProfile
+from models import UserProfile, Revision, Message
 
 from boxdotnet import BoxDotNet
 import diff_match_patch as dmp_module
@@ -15,7 +15,6 @@ import urllib
 
 from datetime import datetime
 import json
-from models import Message
 
 import stomp
 
@@ -30,43 +29,39 @@ dmp = dmp_module.diff_match_patch()
 
 def _perform_diff(text1, text2):
     diff = dmp.diff_main(text1, text2, True)
-    print diff
     if (len(diff) > 2):
-      dmp.diff_cleanupSemantic(diff)
+     dmp.diff_cleanupSemantic(diff)
     
     patch_list = dmp.patch_make(text1, text2, diff)
     return patch_list;
 
 def _perform_patch(patches, text):
     results = dmp.patch_apply(patches, text)
-    print results
     result_text = results[0]
     return result_text
-
+    
 def index(request):
     """
     handle the index request
     """
     message = Message.objects.get(pk=1)
-    message.msg = "Macs had the original point and click UI."
-    message.save()
-    
-    serverShadow = Message.objects.get(pk=2)
-    serverShadow.msg = "Macs had the original point and click UI."
-    serverShadow.save()
+    print "************ USER **************"
+    print request.user
+    print "********************************"
+    # message.msg = "Macs had the original point and click UI."
+    # message.save()
+    # 
+    # serverShadow = Message.objects.get(pk=2)
+    # serverShadow.msg = "Macs had the original point and click UI."
+    # serverShadow.save()
     
     return render_to_response("index.html", {"message":message})
 
 def addMessage(request):
     patchText = urllib.unquote(request.POST.get("patches", ""))
-    patches = dmp.patch_fromText(patchText)
-    
     clientText = urllib.unquote(request.POST.get("text", ""))
     
-    # server shadow must be the same as client text after every iteration
-    serverShadow = Message.objects.get(pk=2)
-    serverShadow.msg = clientText
-    serverShadow.save()
+    patches = dmp.patch_fromText(patchText)
     
     # patch the server text
     serverText = Message.objects.get(pk=1)
@@ -74,18 +69,35 @@ def addMessage(request):
     serverText.msg = patchedText
     serverText.save()
     
+    # get the server shadow for this client
+    try:
+        serverShadow = Revision.objects.get(message=serverText, user=request.user)
+    except Revision.DoesNotExist:
+        serverShadow = Revision(message=serverText, user=request.user)
+    
+    # server shadow must be the same as client text after every half of sync
+    #serverShadow.revisionText = clientText
+    serverShadow.revisionText = _perform_patch(patches, serverShadow.revisionText)
+    serverShadow.save()
+    
+    print "------------------------------------"
     print "SERVER TEXT: %s" % serverText.msg
-    print "SERVER SHADOW: %s" % serverShadow.msg
+    shadows = Revision.objects.all()
+    for s in shadows:
+        print "SERVER SHADOW for %s: %s" % (request.user.email, s.revisionText)
+    print "------------------------------------"
+    print ""
+    
+    
     
     # diff server text with server shadow
-    patches = _perform_diff(serverText.msg, serverShadow.msg)
+    patches = _perform_diff(serverShadow.revisionText, serverText.msg)
     
     # copy server text into server shadow
-    serverShadow.msg = serverText.msg
+    serverShadow.revisionText = serverText.msg
     serverShadow.save()
     
     msg_to_send = json.dumps({"patches": dmp.patch_toText(patches), "serverText": serverText.msg})
-    print msg_to_send
     conn.send(msg_to_send, destination='/messages') 
     return HttpResponse("ok")
 

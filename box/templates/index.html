@@ -20,6 +20,7 @@
         <script type="text/javascript" charset="utf-8">
             var dmp = new diff_match_patch();
             var clientShadow = "{{ message.msg }}";
+            var clientText = "{{ message.msg }}"
             
             function performDiff(text1, text2) {
                 var diff = dmp.diff_main(text1, text2, true);
@@ -35,7 +36,6 @@
             
             function performPatch(text, patches) {
                 var results = dmp.patch_apply(patches, text);
-                console.log(results);
                 var result_text = results[0];
                 return result_text;
             }
@@ -43,30 +43,27 @@
             function add_message(msg) {
                 var serverEdits = dmp.patch_fromText(msg['patches']);
                 var serverText = msg['serverText'];
-                console.log("SERVER TEXT: " + serverText);
-                console.log("COMMON SHADOW: " + clientShadow);
-                clientShadow = serverText;
                 
-                var clientText = $("#editor").val();
+                $("#new_message").append(serverText + "<br/>");
+                
+                clientText = $("#editor").val();
+                
+                clientShadow = performPatch(clientShadow, serverEdits);
                 var patchedText = performPatch(clientText, serverEdits);
+                
+                console.log("-----------------------------------------");
+                console.log("SERVER TEXT: " + serverText);
+                console.log("CLIENT SHADOW: " + clientShadow);
+                console.log("PATCHES TO MAKE: " + msg['patches']);
                 console.log("SERVER PATCHED TEXT: " + patchedText);
+                console.log("-----------------------------------------");
+                console.log("   ");
+                
                 $("#editor").val(patchedText);
             }
             
             $(document).ready(function() {
                 stomp = new STOMPClient();
-                stomp.onopen = function(){
-                    //console.log("opening stomp client");
-                };
-                stomp.onclose = function(c){
-                    alert('Lost Connection, Code: ' + c);
-                };
-                stomp.onerror = function(error){
-                    alert("Error: " + error);
-                };
-                stomp.onerrorframe = function(frame){
-                    alert("Error: " + frame.body);
-                };
                 stomp.onconnectedframe = function(){
                     console.log("Connected. Subscribing");
                     //alert("subscribing");
@@ -82,10 +79,10 @@
                 stomp.connect('localhost', 61613);
                 
                 setInterval(function(data) {
-                    var clientText = $("#editor").val();
+                    clientText = $("#editor").val();
 
                     // diff client text against client shadow
-                    var patches = performDiff(clientText, clientShadow);
+                    var patches = performDiff(clientShadow, clientText);
                     patch_text = dmp.patch_toText(patches);
                     
                     // copy client text over to shadow
