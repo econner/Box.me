@@ -125,7 +125,7 @@ CELERY_IMPORTS = ("box.suggestion_engine.docsims", "box.suggestion_engine.docsea
 CELERYBEAT_SCHEDULE = {
     "runs-every-30-seconds": {
         "task": "box.suggestion_engine.docsearch.update_suggestion_engine",
-        "schedule": timedelta(seconds=30),
+        "schedule": timedelta(seconds=7),
         "args": ()
     },
 }

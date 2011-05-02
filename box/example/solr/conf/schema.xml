@@ -1,5 +1,5 @@
 <?xml version="1.0" ?>
-<!--
+<!-- asdf
  Licensed to the Apache Software Foundation (ASF) under one or more
  contributor license agreements.  See the NOTICE file distributed with
  this work for additional information regarding copyright ownership.
@@ -106,11 +106,7 @@
 
     <field name="text" type="text" indexed="true" stored="true" multiValued="false" />
 
-    <field name="pub_date" type="date" indexed="true" stored="true" multiValued="false" />
-
     <field name="last_changed" type="date" indexed="true" stored="true" multiValued="false" />
-
-    <field name="author" type="text" indexed="true" stored="true" multiValued="false" />
 
   </fields>
 
