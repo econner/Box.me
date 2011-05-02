@@ -1,15 +1,10 @@
 import os
 import jpype
 from box import constants
+import subprocess
 
-def extract_text():
-    '''
-    jpype.startJVM(constants.JVM_PATH, "-ea", constants.JPYPE_CLASSPATH)
-    TextExtract = jpype.JClass("TextExtract")
-    text = TextExtract.extractTextFromFile('box/suggestion_engine/test_files/wordfile.doc')
-    jpype.shutdownJVM()
-    '''
-    
-    os.system('java -classpath ' + constants.JAVA_CLASSPATH + ' TextExtract suggestion_engine/test_files/wordfile.doc')
-    
-    return os.getcwd()
+def extract_text(filename):
+    args = constants.POI_SUBPROCESS_ARGS
+    args.append(filename)
+    pipe = subprocess.Popen(args, stdout=subprocess.PIPE)
+    return pipe.stdout.read().decode('utf-8', 'ignore')

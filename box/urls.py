@@ -20,7 +20,7 @@ urlpatterns = patterns('',
     (r'^nlp/?$', 'box.suggestion_engine.views.do_analysis'),
     (r'^/?$', 'box.users.views.index'),
     (r'^addMessage/', 'box.users.views.addMessage'), 
-    (r'^sugg/', 'box.suggestion_engine.views.get_similar_docs'),
+    (r'^search/', 'box.suggestion_engine.views.get_similar_docs'),
     
     # this is used for the search box interface provided by haystack
 #    (r'^search/', include('haystack.urls')),

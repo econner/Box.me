@@ -5,10 +5,10 @@ import models
 import docsearch
 
 def do_analysis(request):
-#    text = textextract.extract_text()
-#    return HttpResponse(text)
-    sim_pairs = docsims.generate_doc_sims.delay()
-    return HttpResponse(str(sim_pairs.get()))
+    text = textextract.extract_text()
+    return HttpResponse(text)
+#    sim_pairs = docsims.generate_doc_sims.delay()
+#    return HttpResponse(str(sim_pairs.get()))
 
 def get_similar_docs(request):
     path_info = request.META['PATH_INFO']

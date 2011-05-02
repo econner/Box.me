@@ -1,5 +1,5 @@
 TEMP_PT_FILES_DIR = 'suggestion_engine/temp_pt_files/'
-TEMP_PT_FILES_INFO_FILE = 'suggestion_engine/temp_pt_files/_file_info.txt'
+TEMP_FILES_DIR = 'suggestion_engine/temp_files/'
 SIM_INDEX_THRESHOLD = 0.8
 
 # Poi Integration
@@ -16,3 +16,4 @@ JAVA_CLASSPATH = JPYPE_CLASSPATH_DELIMITER.join([  \
                     POI_JARS_DIR + 'ooxml-lib/geronimo-stax-api_1.0_spec-1.0.jar', \
                     POI_JARS_DIR + 'ooxml-lib/xmlbeans-2.3.0.jar', \
                     JAVA_DEPENDENCIES_DIR])
+POI_SUBPROCESS_ARGS = ('java -classpath ' + JAVA_CLASSPATH + ' TextExtract').split()

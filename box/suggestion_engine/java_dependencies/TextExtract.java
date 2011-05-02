@@ -19,14 +19,10 @@ public class TextExtract {
 	public void run(String filename) throws XmlException, 
 										OpenXML4JException, IOException {
 		POITextExtractor textExtractor = 
-			ExtractorFactory.createExtractor(new File(filename));
+			ExtractorFactory.createExtractor(new File("suggestion_engine/temp_files/" + filename));
 			
 		try {	
-		    // TODO fix filename
-		    FileWriter fstream = new FileWriter(new File("suggestion_engine/temp_pt_files/" + filename));
-		    BufferedWriter out = new BufferedWriter(fstream);
-		    out.write(textExtractor.getText());
-		    out.close();
+		    System.out.println(textExtractor.getText());
 		} catch (Exception e) {
 		    e.printStackTrace();
 		}
