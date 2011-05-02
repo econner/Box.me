@@ -1,5 +1,4 @@
 import os
-import jpype
 from box import constants
 import subprocess
 
