@@ -106,11 +106,7 @@
 
     <field name="text" type="text" indexed="true" stored="true" multiValued="false" />
 
-    <field name="pub_date" type="date" indexed="true" stored="true" multiValued="false" />
-
     <field name="last_changed" type="date" indexed="true" stored="true" multiValued="false" />
-
-    <field name="author" type="text" indexed="true" stored="true" multiValued="false" />
 
   </fields>
 
