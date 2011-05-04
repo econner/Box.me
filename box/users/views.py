@@ -16,29 +16,11 @@ import urllib
 from datetime import datetime
 import json
 
-import stomp
+import socket
+import os
 
-conn = stomp.Connection()
-conn.start()
-conn.connect()
-conn.subscribe(destination='/messages', ack='auto')
-
-dmp = dmp_module.diff_match_patch()
-
-# Create your views here.
-
-def _perform_diff(text1, text2):
-    diff = dmp.diff_main(text1, text2, True)
-    if (len(diff) > 2):
-     dmp.diff_cleanupSemantic(diff)
-    
-    patch_list = dmp.patch_make(text1, text2, diff)
-    return patch_list;
-
-def _perform_patch(patches, text):
-    results = dmp.patch_apply(patches, text)
-    result_text = results[0]
-    return result_text
+# mobwrite port
+PORT = 3017
     
 def index(request):
     """
@@ -55,52 +37,50 @@ def index(request):
     # serverShadow.msg = "Macs had the original point and click UI."
     # serverShadow.save()
     
-    return render_to_response("index.html", {"message":message})
+    return render_to_response("index.html", {"message": message, "user": request.user})
+    
+def sync(request):
+    form = request.POST
+    if form.has_key("q"):
+        # Client sending a sync.  Requesting text return.
+        outStr = form["q"]
+    elif form.has_key("p"):
+        # Client sending a sync.  Requesting JS return.
+        outStr = form["p"]
+    print form["q"]
 
-def addMessage(request):
-    patchText = urllib.unquote(request.POST.get("patches", ""))
-    clientText = urllib.unquote(request.POST.get("text", ""))
-    
-    patches = dmp.patch_fromText(patchText)
-    
-    # patch the server text
-    serverText = Message.objects.get(pk=1)
-    patchedText = _perform_patch(patches, serverText.msg)
-    serverText.msg = patchedText
-    serverText.save()
-    
-    # get the server shadow for this client
+    inStr = ""
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     try:
-        serverShadow = Revision.objects.get(message=serverText, user=request.user)
-    except Revision.DoesNotExist:
-        serverShadow = Revision(message=serverText, user=request.user)
+        s.connect(("localhost", PORT))
+    except socket.error, msg:
+        s = None
     
-    # server shadow must be the same as client text after every half of sync
-    #serverShadow.revisionText = clientText
-    serverShadow.revisionText = _perform_patch(patches, serverShadow.revisionText)
-    serverShadow.save()
-    
-    print "------------------------------------"
-    print "SERVER TEXT: %s" % serverText.msg
-    shadows = Revision.objects.all()
-    for s in shadows:
-        print "SERVER SHADOW for %s: %s" % (request.user.email, s.revisionText)
-    print "------------------------------------"
-    print ""
-    
-    
-    
-    # diff server text with server shadow
-    patches = _perform_diff(serverShadow.revisionText, serverText.msg)
-    
-    # copy server text into server shadow
-    serverShadow.revisionText = serverText.msg
-    serverShadow.save()
-    
-    msg_to_send = json.dumps({"patches": dmp.patch_toText(patches), "serverText": serverText.msg})
-    conn.send(msg_to_send, destination='/messages') 
-    return HttpResponse("ok")
+    if not s:
+        # Python CGI can't connect to Python daemon.
+        inStr = "\n"
+    else:
+        # Timeout if MobWrite daemon dosen't respond in 10 seconds.
+        s.settimeout(10.0)
+        s.send(outStr)
+        while 1:
+            line = s.recv(1024)
+            if not line:
+                break
+            inStr += line
+        s.close()
 
+    if form.has_key("p"):
+        # Client sending a sync.  Requesting JS return.
+        inStr = inStr.replace("\\", "\\\\").replace("\"", "\\\"")
+        inStr = inStr.replace("\n", "\\n").replace("\r", "\\r")
+        inStr = "mobwrite.callback(\"%s\");" % inStr
+    print inStr
+    return HttpResponse(inStr + "\n")
+
+def editor(request):
+    print request
+    return render_to_response("editor.html")
 
 def _get_next(request):
     """

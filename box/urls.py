@@ -19,7 +19,11 @@ urlpatterns = patterns('',
     (r'^login/?$', 'box.users.views.box_login'),
     (r'^nlp/?$', 'box.suggestion_engine.views.do_analysis'),
     (r'^/?$', 'box.users.views.index'),
-    (r'^addMessage/', 'box.users.views.addMessage'), 
+    
+    # mobwrite views
+    (r'^sync/?$', 'box.users.views.sync'), 
+    (r'^editor/?$', 'box.users.views.editor'), 
+    
     (r'^search/', 'box.suggestion_engine.views.get_similar_docs'),
     
     # this is used for the search box interface provided by haystack

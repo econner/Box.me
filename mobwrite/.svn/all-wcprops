@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 29
+/svn/!svn/ver/93/trunk/daemon
+END
+README_daemon
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/!svn/ver/93/trunk/daemon/README_daemon
+END
+mobwrite_daemon.py
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/93/trunk/daemon/mobwrite_daemon.py
+END
+q.php
+K 25
+svn:wc:ra_dav:version-url
+V 35
+/svn/!svn/ver/93/trunk/daemon/q.php
+END
+lib
+K 25
+svn:wc:ra_dav:version-url
+V 33
+/svn/!svn/ver/47/trunk/daemon/lib
+END
+q.py
+K 25
+svn:wc:ra_dav:version-url
+V 34
+/svn/!svn/ver/93/trunk/daemon/q.py
+END
+q.jsp
+K 25
+svn:wc:ra_dav:version-url
+V 35
+/svn/!svn/ver/93/trunk/daemon/q.jsp
+END
+.htaccess
+K 25
+svn:wc:ra_dav:version-url
+V 39
+/svn/!svn/ver/37/trunk/daemon/.htaccess
+END

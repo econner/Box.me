@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 26
+/svn/!svn/ver/96/trunk/lib
+END
+json_validator_test.py
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/!svn/ver/96/trunk/lib/json_validator_test.py
+END
+json_validator.py
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/!svn/ver/96/trunk/lib/json_validator.py
+END
+mobwrite_core_test.py
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/93/trunk/lib/mobwrite_core_test.py
+END
+mobwrite_core.py
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/!svn/ver/95/trunk/lib/mobwrite_core.py
+END
+diff_match_patch.py
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/!svn/ver/93/trunk/lib/diff_match_patch.py
+END
+README.txt
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/svn/!svn/ver/93/trunk/lib/README.txt
+END
+mobwrite_config.txt
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/!svn/ver/93/trunk/lib/mobwrite_config.txt
+END
+default_editor.html
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/!svn/ver/93/trunk/lib/default_editor.html
+END

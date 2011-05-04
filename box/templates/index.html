@@ -41,15 +41,22 @@
             }
             
             function add_message(msg) {
+                // don't propagate changes to client that initiated them
+                //if(msg['client_id'] == {{ user.pk }}) return;
+                
                 var serverEdits = dmp.patch_fromText(msg['patches']);
                 var serverText = msg['serverText'];
-                
-                $("#new_message").append(serverText + "<br/>");
+                var serverShadow = msg['serverShadow'];
                 
                 clientText = $("#editor").val();
-                
+                console.log(serverEdits)
+                patchResults = dmp.patch_apply(serverEdits, clientShadow);
+                console.log(patchResults);
                 clientShadow = performPatch(clientShadow, serverEdits);
                 var patchedText = performPatch(clientText, serverEdits);
+                
+                if(patchedText != serverShadow)
+                    patchedText = serverShadow;
                 
                 console.log("-----------------------------------------");
                 console.log("SERVER TEXT: " + serverText);
@@ -58,6 +65,10 @@
                 console.log("SERVER PATCHED TEXT: " + patchedText);
                 console.log("-----------------------------------------");
                 console.log("   ");
+                
+                $("#new_message").append(serverText + "<br/>");
+                $("#new_message").append(serverShadow + "<br/>");
+                $("#new_message").append("<br/>");
                 
                 $("#editor").val(patchedText);
             }
@@ -93,7 +104,7 @@
                                 "patches=" + encodeURIComponent(patch_text)
                                 + "&text=" + encodeURIComponent(clientText)
                     );
-                }, 2000);
+                }, 5000);
             });
 
         </script>
