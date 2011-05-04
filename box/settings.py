@@ -81,6 +81,7 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
     'users.auth.BoxAuth'
 )
+AUTH_PROFILE_MODULE = 'users.userprofile'
 
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
