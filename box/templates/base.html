@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <title>Raunk</title>
+        <!-- Jquery -->
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script> 
+    	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/jquery-ui.min.js"></script>
+    	
+    	<!-- WMD WYSIWG Editor -->
+    	<script type="text/javascript" src="/static/js/wmd.js"></script>
+    	<script type="text/javascript" src="/static/js/showdown.js"></script>
+    	
+    	<!-- Mobwrite Sync -->
+    	<SCRIPT SRC="/static/js/diff_match_patch.js"></SCRIPT>
+        <SCRIPT SRC="/static/js/mobwrite/mobwrite_core.js"></SCRIPT>
+        <SCRIPT SRC="/static/js/mobwrite/mobwrite_form.js"></SCRIPT>
+    	
+    	<link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/base/jquery-ui.css" rel="stylesheet" />
+    	<link type="text/css" href="/static/css/wmd.css" rel="stylesheet"/>
+        <link type="text/css" href="/static/css/icebox_all.css" rel="stylesheet"/>
+		<link type="text/css" href="/static/css/icebox_header.css" rel="stylesheet"/>
+    </head>
+    <body>
+        <div id="wrapper">
+            <div id="header">
+                <div id="wrap">
+                    <div id="logo">
+                        <h1><span class="nav-link"><a href="/" class="logo-link">Icebox</a></span></h1>
+                    </div>
+                    <div class="clearfloat"></div>
+                </div>
+            </div>
+
+            <div id="content">
+	
+                
+                {# these two should be used for two column displays #}
+                {% block content %}
+                {% endblock %}
+                {% block right-column %}
+                {% endblock %}
+
+            </div>
+
+
+            <div class="push"></div>
+        </div> 
+		
+		<div id="footer">
+            <div class="widget">
+				<div>
+					Raunk&nbsp;&copy;&nbsp;2011
+				</div>
+                <div>
+                    <a href="#">About</a>
+                </div>
+                <div>
+                    <a href="#">Legal</a>
+                </div>
+                <div>
+                    <a href="#">Help</a>
+                </div>
+                <div>
+                    <a href="#">Jobs</a>
+                </div>
+				
+            </div>
+        </div>
+		
+
+    </body>
+</html>
