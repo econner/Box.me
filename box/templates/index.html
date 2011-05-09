@@ -1,15 +1,29 @@
-<html>
-    <head>
-        <meta http-equiv="Content-type" content="text/html; charset=utf-8">
-        <title>Icebox</title>
-        
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js" type="text/javascript"></script>
-    </head>
-    <body id="index">
-        <div id="new_message">
-            <textarea id="editor">{{ message }}</textarea>
-        </div>
-        
+{% extends "base.html" %}
 
-    </body>
-</html>
+{% block content %}
+      <div>
+      <div id="notes-button-bar"></div>
+      <textarea id="notes" style="width:500px; height: 500px"></textarea>
+      <br />
+      Preview:
+      <div id="notes-preview"></div>
+      <br />
+      Output:
+      <textarea type="text" name="copy_html" value="" id="copy_html" style="width:500px; height: 500px"></textarea>
+      </div>
+
+      <script type="text/javascript">
+          new WMDEditor({
+              input: "notes",
+              button_bar: "notes-button-bar",
+              preview: "notes-preview",
+              output: "copy_html",
+              buttons: "bold italic link ol ul heading code quote image",
+              modifierKeys: false,
+              autoFormatting: false
+          });
+          $(function() {
+              mobwrite.share('notes');
+          });
+      </script>
+{% endblock %}
