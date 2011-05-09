@@ -17,14 +17,15 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
     (r'^admin/', include(admin.site.urls)),
     (r'^login/?$', 'box.users.views.box_login'),
-    (r'^nlp/?$', 'box.suggestion_engine.views.do_analysis'),
-    (r'^/?$', 'box.users.views.index'),
     
+    
+    (r'^/?$', 'box.icebox.views.index'),
     # mobwrite views
-    (r'^sync/?$', 'box.users.views.sync'), 
-    (r'^editor/?$', 'box.users.views.editor'), 
+    (r'^sync/?$', 'box.icebox.views.sync'), 
+    (r'^editor/?$', 'box.icebox.views.editor'), 
     
     (r'^search/', 'box.suggestion_engine.views.get_similar_docs'),
+    (r'^nlp/?$', 'box.suggestion_engine.views.do_analysis'),
     
     # this is used for the search box interface provided by haystack
 #    (r'^search/', include('haystack.urls')),
