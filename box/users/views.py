@@ -41,6 +41,7 @@ def box_login(request, extra_context=dict(), account_inactive_template='TODO'):
     
     # if we have a ticket, then get the auth token
     tokenNode = box.login(settings.BOX_API_KEY, request.GET['ticket'])
+	
     print tokenNode.xml
     token = tokenNode.auth_token[0].elementText
     
@@ -67,9 +68,33 @@ def box_login(request, extra_context=dict(), account_inactive_template='TODO'):
     login(request, user)
     
     print request.user.is_authenticated()
+    
 
     if not user.is_active:
         return render_to_response(account_inactive_template, extra_context,
              context_instance=RequestContext(request))
 
     return HttpResponseRedirect(_get_next(request))
+
+# take a user, and search his files for a given query - HA
+def box_search_file(request):
+	box = BoxDotNet()
+	profile = request.user.get_profile()
+	query = "blah" # change, need query to be part of request
+	searchFiles = box.get_search(settings.BOX_API_KEY, profile.token, query)
+	return HttpResponseRedirect("http://www.google.com") # change
+	
+def box_download_file(request):
+    boxsearch = BoxDotNet()
+    query = "blah" # obviously, not going to be used here, fileid should be param?
+    auth_token = request.user.get_profile().token
+    fileid = boxsearch.get_search(settings.BOX_API_KEY, auth_token, query) # change eventually
+    downloadurl = 'https://www.box.net/api/1.0/download/%s/%s' % (auth_token, fileid)
+    return HttpResponseRedirect(downloadurl) # change
+    
+def box_versions(request):
+    box = BoxDotNet()
+    auth_token = request.user.get_profile().token
+    fileid = box.get_search(settings.BOX_API_KEY, auth_token, 'blah') # change eventually
+    versions = box.get_version_history(settings.BOX_API_KEY, auth_token, fileid)
+    print versions.version[0].author[0].elementText
