@@ -64,7 +64,7 @@
 		
 		
 		tagFilter: {
-			enabled: false,
+			enabled: true,
 			allowedTags: /^(<\/?(b|blockquote|code|del|dd|dl|dt|em|h1|h2|h3|i|kbd|li|ol|p|pre|s|sup|sub|strong|strike|ul)>|<(br|hr)\s?\/?>)$/i,
 			patternLink: /^(<a\shref=("|')(\#\d+|(https?:\/\/|ftp:\/\/|mailto:)[-A-Za-z0-9+&@#\/%?=~_|!:,.;\(\)]+)\2(\stitle="[^"<>]+")?\s?>|<\/a>)$/i,
 			patternImage: /^(<img\ssrc="https?:(\/\/[-A-Za-z0-9+&@#\/%?=~_|!:,.;\(\)]+)"(\swidth="\d{1,3}")?(\sheight="\d{1,3}")?(\salt="[^"<>]*")?(\stitle="[^"<>]*")?\s?\/?>)$/i

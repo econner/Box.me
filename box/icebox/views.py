@@ -108,7 +108,8 @@ def save_note(request):
     """
     try:
         note = Note.objects.get(pk = request.POST['note_id'])
-        note.text = request.POST['text']
+        note.text = sanitizeHtml(request.POST['text'])
+        print note.text
         note.save()
     except Note.DoesNotExist:
         pass
@@ -128,6 +129,9 @@ def editor(request):
         note.creator = request.user
         note.save()
         note_id = note.pk
+        # ok, now we've created a new note, redirect them back to the editor w/ this pk
+        # perhaps this should be its own view?
+        return HttpResponseRedirect("/editor?note_id=%d" % note.pk) 
     else:
         # user wants to retrieve existing note
         note_id = request.GET['note_id']
