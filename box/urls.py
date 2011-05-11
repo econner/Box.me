@@ -28,6 +28,11 @@ urlpatterns = patterns('',
     
     # this is used for the search box interface provided by haystack
 #    (r'^search/', include('haystack.urls')),
+
+	# search/download/version history stuff
+	(r'^profile/?$', 'box.users.views.box_search_file'),
+	(r'^download/?$', 'box.users.views.box_download_file'),
+	(r'^versions/?$', 'box.users.views.box_versions')	
 )
 
 # static content served only in debug

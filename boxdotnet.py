@@ -37,7 +37,7 @@ import mimetypes
 import os
 import sys
 
-from xml.dom.minidom import parseString
+from xml.dom.minidom import parse, parseString
 import xml.dom
 
 def get_content_type(filename):
@@ -150,7 +150,10 @@ class BoxDotNet(object):
         'logout'            :   'logout_ok',
         'create_folder'     :   'create_ok',
         'upload'            :   'upload_ok',
-        'delete'            :   's_delete_node'
+        'delete'            :   's_delete_node',
+        'search'            :   's_search',
+        'get_account_info'  :   'get_account_info_ok',
+        'get_versions'      :   's_get_versions'
     }
 
     def __init__(self, browser="firefox"):
@@ -178,22 +181,43 @@ class BoxDotNet(object):
             return
 
         raise BoxDotNetError ("Box.net returned [%s] for action [%s]" % (status, method))
-    
+
+
     # added by Eric Conner
     def get_login_url(self, api_key):
         # get ticket
         rsp = self.get_ticket (api_key=api_key)
         ticket = rsp.ticket[0].elementText
+
         # open url
         url = "http://www.box.net/api/1.0/auth/%s" % ticket
         return url
-        
+
+    # added by HA
+    def get_search(self, api_key, auth_token, query):
+
+        results = self.search (api_key=api_key, auth_token=auth_token, query=query, page=1, per_page=25, sort='relevance', direction='asc')
+        print "status: %s" % results.status[0].elementText # working
+        fileList= results.files[0] # has status / folders / files, but nothing else... SEE WHERE AT
+        print "file id (first): %s" % fileList.file[0].id[0].elementText # eventually get an array of file idss
+
+        return fileList.file[0].id[0].elementText
+
+    # added by HA
+    def get_version_history(self, api_key, auth_token, file_id):
+        filetype = "file"
+        results = self.get_versions (api_key=api_key, auth_token=auth_token, target=filetype, target_id=file_id)
+        print "status: %s" % results.status[0].elementText
+            
+                            
     def login(self, api_key, ticket):
         # get token
         rsp = self.get_auth_token(api_key=api_key, ticket=ticket)
         return rsp
 
     def __getattr__(self, method, **arg):
+        print "CALLING METHOD %s" % method
+
         """
         Handle all box.net calls
         """
@@ -204,23 +228,23 @@ class BoxDotNet(object):
                 url = _self.END_POINT
                 arg["action"] = _method
                 postData = urllib.urlencode(arg)
-                # print "--url---------------------------------------------"
-                # print url
-                # print "--postData----------------------------------------"
-                # print postData
+                print "--url---------------------------------------------"
+                print url
+                print "--postData----------------------------------------"
+                print postData
                 f = urllib.urlopen(url + postData)
                 data = f.read()
-                # print "--response----------------------------------------"
-                # print data
+                print "--response----------------------------------------"
+                print data
                 f.close()
 
                 xml = XMLNode.parseXML(data, True)
                 _self.check_errors(_method, xml)
                 return xml
-
-            self.__handlerCache[method] = handler;
-
+    
+            self.__handlerCache[method] = handler
         return self.__handlerCache[method]
+
 
     #-------------------------------------------------------------------
     #-------------------------------------------------------------------
