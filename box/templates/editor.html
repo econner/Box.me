@@ -21,6 +21,9 @@ $("#save").bind("click", function() {
     var note_id = $(this).attr("attr-note_id");
     var text = encodeURIComponent($("#notes-" + note_id).val());
     
+    // unshare while we save
+    mobwrite.unshare('notes-{{ note.pk }}');
+    
     $.ajax({
         type: "POST",
         url: "/save_note",
@@ -45,7 +48,7 @@ $("#save").bind("click", function() {
       autoFormatting: false,
   });
   $(function() {
-      mobwrite.share('notes-{{ note.pk }}');
+     // mobwrite.share('notes-{{ note.pk }}');
   });
 </script>
 
