@@ -1,9 +1,13 @@
 {% extends "base.html" %}
 
 {% block content %}
+{% if not note %}
+NOTE NOT FOUND
+{% else %}
 <div>
+<a href="#saving" id="save" attr-note_id="{{ note.pk }}">Save</a>
 <div id="notes-button-bar"></div>
-<textarea id="notes" attr-doc_id="{{ doc_id }}" style="width:500px; height: 500px"></textarea>
+<textarea class="note-editor" id="notes-{{ note.pk }}" style="width:500px; height: 500px">{{ note.text }}</textarea>
 <br />
 Preview:
 <div id="notes-preview"></div>
@@ -13,8 +17,26 @@ Output:
 </div>
 
 <script type="text/javascript">
+$("#save").bind("click", function() {
+    var note_id = $(this).attr("attr-note_id");
+    var text = encodeURIComponent($("#notes-" + note_id).val());
+    
+    $.ajax({
+        type: "POST",
+        url: "/save_note",
+        data: "note_id=" + note_id + "&text=" + text,
+        success: function(result){
+             //var json = $.parseJSON(result);
+             //response(json);
+             console.log(result);
+        },
+         error: function(jqXHR, textStatus, error){
+             //console.log(jqXHR);
+        }
+    });
+});
   new WMDEditor({
-      input: "notes",
+      input: "notes-{{ note.pk }}",
       button_bar: "notes-button-bar",
       preview: "notes-preview",
       output: "copy_html",
@@ -23,7 +45,9 @@ Output:
       autoFormatting: false
   });
   $(function() {
-      mobwrite.share('notes');
+      mobwrite.share('notes-{{ note.pk }}');
   });
 </script>
+
+{% endif %}
 {% endblock %}

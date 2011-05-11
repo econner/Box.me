@@ -11,6 +11,9 @@ class UserListField(models.CommaSeparatedIntegerField):
     description = "A list of User ids that can be stored and retrieved with a model"
 
     def to_python(self, value):
+        if not value:
+            return [ ]
+        
         if isinstance(value, list):
             return value
 
@@ -19,6 +22,9 @@ class UserListField(models.CommaSeparatedIntegerField):
         return users
 
     def get_prep_value(self, value):
+        if not value:
+            return ""
+            
         if not isinstance(value, list):
             # already a comma separated list
             return value 
@@ -35,7 +41,8 @@ class Note(models.Model):
     """
     creator = models.ForeignKey(User)
     collaborators = UserListField(max_length=500) # need a max length since we subclass CommaSeparatedIntegerField
-    pub_date = models.DateTimeField()
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
     title = models.CharField(max_length=200)
     text = models.TextField()
     revision = models.IntegerField(default=0)   # revision number of this note

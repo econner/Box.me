@@ -114,6 +114,7 @@ INSTALLED_APPS = (
     'suggestion_engine',
     'djcelery',
     'haystack',
+    'icebox',
 )
 
 HAYSTACK_SITECONF = 'box.search_sites'
@@ -145,3 +146,4 @@ AMQP_VHOST = "myvhost"
 
 BOX_API_KEY = "k6oor00o6680cll6q42x8b9hox6tvcbt"
 LOGIN_REDIRECT_URL = "/"
+LOGIN_URL = "/"
