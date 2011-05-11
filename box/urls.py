@@ -34,7 +34,7 @@ urlpatterns = patterns('',
 	# search/download/version history stuff
 	(r'^profile/?$', 'box.users.views.box_search_file'),
 	(r'^download/?$', 'box.users.views.box_download_file'),
-	(r'^versions/?$', 'box.users.views.box_versions')	
+	(r'^versions/?$', 'box.users.views.box_versions'),
 
     (r'^search/', include('haystack.urls')),
 
