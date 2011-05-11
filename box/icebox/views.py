@@ -70,8 +70,17 @@ def sync(request):
 
 def save_note(request):
     """
-    Save a specified note
+    Save the specified note.
+    Expects note to be passed as a post request with
+    text and id fields.
     """
+    try:
+        note = Note.objects.get(pk = request.POST['note_id'])
+        note.text = request.POST['text']
+        note.save()
+    except Note.DoesNotExist:
+        pass
+    
     return HttpResponse("blah")
 
 @login_required
