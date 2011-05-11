@@ -18,7 +18,6 @@ urlpatterns = patterns('',
     (r'^admin/', include(admin.site.urls)),
     (r'^login/?$', 'box.users.views.box_login'),
     
-    
     (r'^/?$', 'box.icebox.views.index'),
     # mobwrite views
     (r'^sync/?$', 'box.icebox.views.sync'), 
@@ -28,7 +27,7 @@ urlpatterns = patterns('',
     (r'^nlp/?$', 'box.suggestion_engine.views.do_analysis'),
     
     # this is used for the search box interface provided by haystack
-#    (r'^search/', include('haystack.urls')),
+    (r'^search/', include('haystack.urls')),
 )
 
 # static content served only in debug
