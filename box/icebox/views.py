@@ -18,14 +18,10 @@ import urllib
 import socket
 import os
 import json
-
 # Enable long polling using stomp, orbited, twister
 # See: http://mischneider.net/?p=125
 import stomp
-conn = stomp.Connection()
-conn.start()
-conn.connect()
-conn.subscribe(destination='/messages', ack='auto')
+
 
 # mobwrite port
 PORT = 3017
@@ -131,7 +127,9 @@ def editor(request):
     Display the editor view.  If no doc_id is found in
     the GET request, assume use wants to create a new note.
     """
+    
     note = None
+    note_id = ""
     if not 'note_id' in request.GET:
         # user wants a new note
         note = Note()
@@ -147,9 +145,15 @@ def editor(request):
         try:
             note = Note.objects.get(pk=note_id)
         except Note.DoesNotExist:
-            pass
+            return HttpResponse("Bad note id")
     
-    msg_to_send = json.dumps({"message": "New editor opened!"})
-    conn.send(msg_to_send, destination='/messages')
+    msg_to_send = json.dumps({"message": "%s is now editing this note." % request.user.username})
+    print note_id
+    # setup stomp so that we can push messages to the browser
+    conn = stomp.Connection()
+    conn.start()
+    conn.connect()
+    conn.subscribe(destination='/messages-%s' % note_id, ack='auto')
+    conn.send(msg_to_send, destination="/messages-%s" % note_id)
     
     return render_to_response("editor.html", {"note": note})

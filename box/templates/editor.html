@@ -29,7 +29,8 @@
         stomp.onconnectedframe = function(){
             console.log("Connected. Subscribing");
             //alert("subscribing");
-            stomp.subscribe("/messages");
+            var note_id = $("#save").attr("attr-note_id");
+            stomp.subscribe("/messages-" + note_id);
         };
         stomp.onmessageframe = function(frame){
             // Presumably we should only receive message frames with the
@@ -71,8 +72,8 @@ $("#save").bind("click", function() {
     var note_id = $(this).attr("attr-note_id");
     var text = encodeURIComponent($("#notes-" + note_id).val());
     var title = encodeURIComponent($("#title-" + note_id).val());
-    // unshare while we save
-    mobwrite.unshare('notes-{{ note.pk }}');
+
+    $("#save").html("Saving...");
     
     $.ajax({
         type: "POST",
@@ -81,6 +82,7 @@ $("#save").bind("click", function() {
         success: function(result){
              //var json = $.parseJSON(result);
              //response(json);
+             $("#save").html("Save");
              console.log(result);
         },
          error: function(jqXHR, textStatus, error){
@@ -98,7 +100,7 @@ $("#save").bind("click", function() {
       autoFormatting: false,
   });
   $(function() {
-     // mobwrite.share('notes-{{ note.pk }}');
+     mobwrite.share('notes-{{ note.pk }}');
   });
 </script>
 
