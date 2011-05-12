@@ -17,6 +17,15 @@ import urllib
 
 import socket
 import os
+import json
+
+# Enable long polling using stomp, orbited, twister
+# See: http://mischneider.net/?p=125
+import stomp
+conn = stomp.Connection()
+conn.start()
+conn.connect()
+conn.subscribe(destination='/messages', ack='auto')
 
 # mobwrite port
 PORT = 3017
@@ -25,7 +34,7 @@ def index(request):
     """
     handle the index request
     """
-    notes = Note.objects.filter(creator = request.user)
+    notes = Note.objects.all()
     return render_to_response("index.html", {"notes" : notes, "user": request.user})
     
 def sync(request):
@@ -139,5 +148,8 @@ def editor(request):
             note = Note.objects.get(pk=note_id)
         except Note.DoesNotExist:
             pass
+    
+    msg_to_send = json.dumps({"message": "New editor opened!"})
+    conn.send(msg_to_send, destination='/messages')
     
     return render_to_response("editor.html", {"note": note})
