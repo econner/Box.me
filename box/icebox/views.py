@@ -109,7 +109,7 @@ def save_note(request):
     try:
         note = Note.objects.get(pk = request.POST['note_id'])
         note.text = sanitizeHtml(request.POST['text'])
-        print note.text
+        note.title = request.POST['title']
         note.save()
     except Note.DoesNotExist:
         pass

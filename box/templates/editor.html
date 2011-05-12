@@ -6,6 +6,9 @@ NOTE NOT FOUND
 {% else %}
 <div>
 <a href="#saving" id="save" attr-note_id="{{ note.pk }}">Save</a>
+<br/>
+Title:<br>
+<input type="text" name="title" id="title-{{ note.pk }}" style="width:500px;" value="{{ note.title }}"/>
 <div id="notes-button-bar"></div>
 <textarea class="note-editor" id="notes-{{ note.pk }}" style="width:500px; height: 500px">{{ note.text }}</textarea>
 <br />
@@ -20,14 +23,14 @@ Output:
 $("#save").bind("click", function() {
     var note_id = $(this).attr("attr-note_id");
     var text = encodeURIComponent($("#notes-" + note_id).val());
-    
+    var title = encodeURIComponent($("#title-" + note_id).val());
     // unshare while we save
     mobwrite.unshare('notes-{{ note.pk }}');
     
     $.ajax({
         type: "POST",
         url: "/save_note",
-        data: "note_id=" + note_id + "&text=" + text,
+        data: "note_id=" + note_id + "&text=" + text + "&title=" + title,
         success: function(result){
              //var json = $.parseJSON(result);
              //response(json);
