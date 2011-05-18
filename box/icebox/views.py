@@ -18,7 +18,7 @@ import urllib
 import socket
 import os
 import json
-# Enable long polling using stomp, orbited, twister
+# Enable long polling using stomp, orbited, twisted
 # See: http://mischneider.net/?p=125
 import stomp
 
