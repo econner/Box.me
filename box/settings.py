@@ -9,9 +9,9 @@ djcelery.setup_loader()
 import platform
 
 if platform.node() != 'ip-10-117-38-244':
-    USE_MYSQL = False
+    LIVE = False
 else:
-    USE_MYSQL = True
+    LIVE = True
 
 
 # Setup the python path
@@ -26,7 +26,7 @@ ADMINS = (
 )
 
 MANAGERS = ADMINS
-if not USE_MYSQL:
+if not LIVE:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
@@ -163,6 +163,10 @@ AMQP_USER = "myuser"
 AMQP_PASSWORD = "mypassword"
 AMQP_VHOST = "myvhost"
 
-BOX_API_KEY = "k6oor00o6680cll6q42x8b9hox6tvcbt"
+if not LIVE:
+    BOX_API_KEY = "k6oor00o6680cll6q42x8b9hox6tvcbt"
+else:
+    BOX_API_KEY = "9lnj948i7xsyj7d0ldiiasdlgoq9seys"
+    
 LOGIN_REDIRECT_URL = "/"
 LOGIN_URL = "/"
