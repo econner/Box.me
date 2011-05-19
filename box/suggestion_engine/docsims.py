@@ -18,7 +18,7 @@ class IceCorpus(object):
 def get_file_info():
     filenames = list()
     file_ids = list()
-    fm = open(constants.TEMP_PT_FILES_INFO_FILE)
+    fm = open(constants.TEMP_PT_FILES_DIR + '_file_info.txt')
     for line in fm:
         s = line.split()
         filenames.append(s[0])
