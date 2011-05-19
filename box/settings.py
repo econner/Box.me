@@ -169,4 +169,4 @@ else:
     BOX_API_KEY = "9lnj948i7xsyj7d0ldiiasdlgoq9seys"
     
 LOGIN_REDIRECT_URL = "/"
-LOGIN_URL = "/"
+LOGIN_URL = "/login/"
