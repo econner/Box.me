@@ -22,17 +22,18 @@ import json
 # See: http://mischneider.net/?p=125
 import stomp
 
-
 # mobwrite port
 PORT = 3017
 
+@login_required
 def index(request):
     """
     handle the index request
     """
     notes = Note.objects.all()
     return render_to_response("index.html", {"notes" : notes, "user": request.user})
-    
+
+@login_required  
 def sync(request):
     form = request.POST
     if form.has_key("q"):
@@ -104,7 +105,7 @@ def sanitizeHtml(value, base_url=None):
 
     return soup.renderContents().decode('utf8')
 
-
+@login_required
 def save_note(request):
     """
     Save the specified note.
@@ -125,7 +126,7 @@ def save_note(request):
     
     return HttpResponse("blah")
     
-@login_required
+
 def note(request, id):
     print id
     # get the note

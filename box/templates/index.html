@@ -6,7 +6,7 @@
     {% if notes %}
     <p>Your notes:</a><br />
     {% for note in notes %}
-    <a id="editor" href="/editor?note_id={{ note.pk }}">
+    <a id="view" href="/note/{{ note.pk }}">
         {% if not note.title %}
         Note {{ note.pk }}
         {% else %}

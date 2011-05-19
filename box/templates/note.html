@@ -11,7 +11,9 @@ $(document).ready(function() {
 })
 
 </script>
+<h1>{{ revision.title }}</h2><br />
 <div id="text" style="display:none;">
     {{ revision.text }}
-</div>
+</div><br/>
+<a id="editor" href="/editor?note_id={{ revision.note.pk }}">Edit this note</a>
 {% endblock %}
