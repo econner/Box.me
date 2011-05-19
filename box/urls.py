@@ -27,6 +27,7 @@ urlpatterns = patterns('',
     
     (r'^search/', 'box.suggestion_engine.views.get_similar_docs'),
     (r'^nlp/?$', 'box.suggestion_engine.views.do_analysis'),
+    (r'^notesims/?$', 'box.suggestion_engine.views.get_similar_notes'),
     
     # this is used for the search box interface provided by haystack
 
