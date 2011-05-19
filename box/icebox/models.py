@@ -40,12 +40,17 @@ class Note(models.Model):
     first for intermediate caching.
     """
     creator = models.ForeignKey(User)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    def __unicode__(self):
+        return "note %d" % self.pk
+        
+class NoteRevision(models.Model):
     collaborators = UserListField(max_length=500) # need a max length since we subclass CommaSeparatedIntegerField
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     title = models.CharField(max_length=200)
     text = models.TextField()
     revision = models.IntegerField(default=0)   # revision number of this note
-
-    def __unicode__(self):
-        return self.title
+    note = models.ForeignKey(Note)

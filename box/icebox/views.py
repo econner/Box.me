@@ -9,7 +9,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate, logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from users.models import UserProfile
-from icebox.models import Note
+from icebox.models import Note, NoteRevision
 
 from boxdotnet import BoxDotNet
 import diff_match_patch as dmp_module
@@ -113,13 +113,34 @@ def save_note(request):
     """
     try:
         note = Note.objects.get(pk = request.POST['note_id'])
-        note.text = sanitizeHtml(request.POST['text'])
-        note.title = request.POST['title']
-        note.save()
+        
+        # create a new revision of this note
+        revision = NoteRevision(note = note)
+        
+        revision.text = sanitizeHtml(request.POST['text'])
+        revision.title = request.POST['title']
+        revision.save()
     except Note.DoesNotExist:
         pass
     
     return HttpResponse("blah")
+    
+@login_required
+def note(request, id):
+    print id
+    # get the note
+    try:
+        note = Note.objects.get(pk=id)
+    except Note.DoesNotExist:
+        return HttpResponse("Bad note id")
+        
+    # get note's latest revision
+    revisions = note.noterevision_set.all().order_by("-created")
+    revision = None
+    if revisions:
+        revision = revisions[0]
+    
+    return render_to_response("note.html", {"revision": revision})
 
 @login_required
 def editor(request):
@@ -146,7 +167,15 @@ def editor(request):
             note = Note.objects.get(pk=note_id)
         except Note.DoesNotExist:
             return HttpResponse("Bad note id")
-    
+            
+    # get the latest revision of the note
+    revisions = note.noterevision_set.all().order_by("-created")
+    revision = None
+    if revisions:
+        revision = revisions[0] 
+    else:
+        revision = NoteRevision(title = "", text = "")
+    print revision.title
     msg_to_send = json.dumps({"message": "%s is now editing this note." % request.user.username})
     print note_id
     # setup stomp so that we can push messages to the browser
@@ -156,4 +185,4 @@ def editor(request):
     conn.subscribe(destination='/messages-%s' % note_id, ack='auto')
     conn.send(msg_to_send, destination="/messages-%s" % note_id)
     
-    return render_to_response("editor.html", {"note": note})
+    return render_to_response("editor.html", {"note": note, "revision": revision})

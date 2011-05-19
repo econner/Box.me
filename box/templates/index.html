@@ -1,32 +1,6 @@
 {% extends "base.html" %}
 
 {% block content %}
-<script>
-// $(function() {
-//     $("#editor").bind("click", function() {
-        // $.ajax({
-        //     type: "GET",
-        //     url: "/editor",
-        //     data: "doc_id=1",
-        //     success: function(result){
-        //          //var json = $.parseJSON(result);
-        //          //response(json);
-        //          console.log(result);
-        //          //$("#content-load").show('blind', { direction: left }, 1000);
-        //          $("#content-load").hide("blind", { direction: "horizontal" }, 500, function() {
-        //              //$("#content-load").hide();
-        //              $("#content-load").html(result);
-        //              $("#content-load").show();
-        //          });
-        //     },
-        //      error: function(jqXHR, textStatus, error){
-        //          //console.log(jqXHR);
-        //     }
-        // });
-//     });
-// });
-
-</script>
 <div id="content-wrap">
     <a id="editor" href="/editor">+ Create New Note</a>
     {% if notes %}

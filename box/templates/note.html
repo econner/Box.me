@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+<script>
+$(document).ready(function() {
+    var text = $("#text").html();
+    var converter = new Showdown.converter();
+    var html = converter.makeHtml(text);
+    $("#text").html(html);
+    $("#text").show();
+})
+
+</script>
+<div id="text" style="display:none;">
+    {{ revision.text }}
+</div>
+{% endblock %}

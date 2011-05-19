@@ -55,18 +55,19 @@ NOTE NOT FOUND
 {% else %}
 <div id="messages"></div>
 <div>
-<a href="#saving" id="save" attr-note_id="{{ note.pk }}">Save</a>
-<br/>
+<b>Edit this board:</b>
+<br/><br/>
 Title:<br>
-<input type="text" name="title" id="title-{{ note.pk }}" style="width:500px;" value="{{ note.title }}"/>
+<input type="text" name="title" id="title-{{ note.pk }}" style="width:500px;" value="{{ revision.title }}"/>
 <div id="notes-button-bar"></div>
-<textarea class="note-editor" id="notes-{{ note.pk }}" style="width:500px; height: 500px">{{ note.text }}</textarea>
+<textarea class="note-editor" id="notes-{{ note.pk }}" style="width:500px; height: 500px">{{ revision.text }}</textarea>
 <br />
-Preview:
-<div id="notes-preview"></div>
+<!-- Preview:
+<div id="notes-preview"></div> -->
+<a href="#saving" id="save" attr-note_id="{{ note.pk }}">Save</a>
 <br />
-Output:
-<textarea type="text" name="copy_html" value="" id="copy_html" style="width:500px; height: 500px"></textarea>
+<!-- Output:
+<textarea type="text" name="copy_html" value="" id="copy_html" style="width:500px; height: 500px"></textarea> -->
 </div>
 
 <script type="text/javascript">
@@ -95,8 +96,8 @@ $("#save").bind("click", function() {
   new WMDEditor({
       input: "notes-{{ note.pk }}",
       button_bar: "notes-button-bar",
-      preview: "notes-preview",
-      output: "copy_html",
+      //preview: "notes-preview",
+      //output: "copy_html",
       buttons: "bold italic link ol ul heading code quote image",
       modifierKeys: false,
       autoFormatting: false,

@@ -163,7 +163,7 @@ AMQP_USER = "myuser"
 AMQP_PASSWORD = "mypassword"
 AMQP_VHOST = "myvhost"
 
-if not LIVE:
+if LIVE:
     BOX_API_KEY = "k6oor00o6680cll6q42x8b9hox6tvcbt"
 else:
     BOX_API_KEY = "9lnj948i7xsyj7d0ldiiasdlgoq9seys"

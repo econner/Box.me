@@ -23,6 +23,7 @@ urlpatterns = patterns('',
     (r'^sync/?$', 'box.icebox.views.sync'), 
     (r'^editor/?$', 'box.icebox.views.editor'), 
     (r'^save_note/?$', 'box.icebox.views.save_note'), 
+    (r'^note/(?P<id>\d+)/?$', 'box.icebox.views.note'),
     
     (r'^search/', 'box.suggestion_engine.views.get_similar_docs'),
     (r'^nlp/?$', 'box.suggestion_engine.views.do_analysis'),
@@ -37,6 +38,7 @@ urlpatterns = patterns('',
 	(r'^versions/?$', 'box.users.views.box_versions'),
 
     (r'^search/', include('haystack.urls')),
+    
 
 )
 
