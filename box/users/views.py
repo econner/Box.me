@@ -80,7 +80,7 @@ def box_login(request, extra_context=dict(), account_inactive_template='TODO'):
 def box_search_file(request):
 	box = BoxDotNet()
 	profile = request.user.get_profile()
-	query = "blah" # change, need query to be part of request
+	query = "word" # change, need query to be part of request
 	searchFiles = box.get_search(settings.BOX_API_KEY, profile.token, query)
 	return HttpResponseRedirect("http://www.google.com") # change
 	
@@ -98,3 +98,4 @@ def box_versions(request):
     fileid = box.get_search(settings.BOX_API_KEY, auth_token, 'blah') # change eventually
     versions = box.get_version_history(settings.BOX_API_KEY, auth_token, fileid)
     print versions.version[0].author[0].elementText
+
