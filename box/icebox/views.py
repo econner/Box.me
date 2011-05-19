@@ -31,15 +31,9 @@ def index(request):
     handle the index request
     """
     note_qset = Note.objects.all()
-    
-    # get note's latest revision
-    notes = [ ]
-    for idx,note in enumerate(note_qset):
-        revisions = note.noterevision_set.all().order_by("-created")
-        revision = None
-        if revisions:
-            revision = revisions[0]
-        note.latest_revision = revision
+    notes = []
+    for note in note_qset:
+        note.revisions = note.noterevision_set.all().order_by("-created")
         notes.append(note)
     
     print notes
@@ -96,7 +90,7 @@ def sanitizeHtml(value, base_url=None):
     rjs = r'[\s]*(&#x.{1,7})?'.join(list('javascript:'))
     rvb = r'[\s]*(&#x.{1,7})?'.join(list('vbscript:'))
     re_scripts = re.compile('(%s)|(%s)' % (rjs, rvb), re.IGNORECASE)
-    validTags = 'br b blockquote code del dd dl dt em h1 h2 h3 i kbd li ol p pre s sup sub strong strike ul'.split()
+    validTags = 'img br b blockquote code del dd dl dt em h1 h2 h3 i kbd li ol p pre s sup sub strong strike ul'.split()
     validAttrs = 'href src width height'.split()
     urlAttrs = 'href src'.split() # Attributes which should have a URL
     soup = BeautifulSoup(value)
@@ -124,6 +118,7 @@ def save_note(request):
     Expects note to be passed as a post request with
     text and id fields.
     """
+    print request.POST['text']
     try:
         note = Note.objects.get(pk = request.POST['note_id'])
         
@@ -147,12 +142,9 @@ def note(request, id):
         return HttpResponse("Bad note id")
         
     # get note's latest revision
-    revisions = note.noterevision_set.all().order_by("-created")
-    revision = None
-    if revisions:
-        revision = revisions[0]
+    note.revisions = note.noterevision_set.all().order_by("-created")
     
-    return render_to_response("note.html", {"revision": revision, "note": note})
+    return render_to_response("note.html", {"note": note})
 
 @login_required
 def editor(request):
@@ -188,8 +180,9 @@ def editor(request):
     else:
         revision = NoteRevision(title = "", text = "")
     print revision.title
-    msg_to_send = json.dumps({"message": "%s is now editing this note." % request.user.username})
+    msg_to_send = json.dumps({"message": "%s is now editing this note." % request.user.email})
     print note_id
+    
     # setup stomp so that we can push messages to the browser
     conn = stomp.Connection()
     conn.start()

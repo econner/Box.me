@@ -1,9 +1,32 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>{{ revision.title }}</h2><br />
-<div id="note">
-    {{ revision.text|safe }}
-</div><br/>
-<a id="editor" href="/editor?note_id={{ note.pk }}">Edit this note</a>
+<div id="left-column">
+    <h1>{{ note.revisions.0.title }}</h2><br />
+    <div id="note">
+        {{ note.revisions.0.text|safe }}
+    </div><br/>
+    <a id="editor" href="/editor?note_id={{ note.pk }}">Edit this note</a>
+</div>
+{% endblock %}
+
+{% block right-column %}
+<script>
+$(function() {
+    $(".switch-rev").bind("click", function() {
+       var html = $(this).next("div").html(); 
+       $("#note").html(html);
+    });
+});
+</script>
+<div id="right-column">
+    Versions<br />
+    {% for rev in note.revisions %}
+        <a class="switch-rev" href="#switch">{{ rev.created }}</a>
+        <div style="display:none;">
+            {{ rev.text }}
+        </div>
+        <br/>
+    {% endfor %}
+</div>
 {% endblock %}

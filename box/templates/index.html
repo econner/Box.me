@@ -1,20 +1,28 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div id="content-wrap">
-    <a id="editor" href="/editor">+ Create New Note</a>
-    {% if notes %}
-    <p>Your notes:</a><br />
-    {% for note in notes %}
-    <a id="view" href="/note/{{ note.pk }}">
-        {% if not note.latest_revision %}
-        Note {{ note.pk }}
-        {% else %}
-        {{ note.latest_revision.title }}
+<div id="left-column">
+    <div id="content-wrap">
+        <a id="editor" href="/editor">+ Create New Note</a>
+        {% if notes %}
+        <p>Your notes:</a><br />
+        {% for note in notes %}
+        <a id="view" href="/note/{{ note.pk }}">
+            {% if not note.revisions %}
+            Note {{ note.pk }}
+            {% else %}
+            {{ note.revisions.0.title }}
+            {% endif %}
+        </a>
+        <br />
+        {% endfor %}
         {% endif %}
-    </a>
-    <br />
-    {% endfor %}
-    {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block right-column %}
+<div id="right-column">
+    Sidebar
 </div>
 {% endblock %}
