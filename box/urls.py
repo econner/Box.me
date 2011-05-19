@@ -27,6 +27,7 @@ urlpatterns = patterns('',
     
     (r'^search/', 'box.suggestion_engine.views.get_similar_docs'),
     (r'^nlp/?$', 'box.suggestion_engine.views.do_analysis'),
+    (r'^notesims/?$', 'box.suggestion_engine.views.get_similar_notes'),
     
     # this is used for the search box interface provided by haystack
 
@@ -36,6 +37,7 @@ urlpatterns = patterns('',
 	(r'^profile/?$', 'box.users.views.box_search_file'),
 	(r'^download/?$', 'box.users.views.box_download_file'),
 	(r'^versions/?$', 'box.users.views.box_versions'),
+	(r'^keywords/?$', 'box.aprestatagger.views.keywords'),
 
     (r'^search/', include('haystack.urls')),
     

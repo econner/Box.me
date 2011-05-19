@@ -438,7 +438,7 @@ class Tagger:
         return tags[:tags_number]
 
 
-
+#ha modified
 if __name__ == '__main__':
 
     import glob
@@ -451,13 +451,12 @@ if __name__ == '__main__':
     else:
         documents = sys.argv[1:]
     
-    print 'Loading dictionary... '
     weights = pickle.load(open('data/dict.pkl', 'rb'))
 
     tagger = Tagger(Reader(), Stemmer(), Rater(weights))
 
     for doc in documents:
         with open(doc, 'r') as file:
-            print 'Tags for ', doc, ':'
-            print tagger(file.read())
+            keywords = tagger(file.read())
+            print keywords
           
