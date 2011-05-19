@@ -42,12 +42,6 @@
             add_message($.parseJSON(frame.body));
         };
         stomp.connect('localhost', 61613);
-
-        $("#send").click(function(data) {
-            var message = $("#message").val()
-            var user = $("#user").val()
-            $.post("/addMessage/", {"message":message, "user":user});
-        })
     });
 </script>
 {% if not note %}
@@ -88,7 +82,6 @@ $("#save").bind("click", function() {
              //var json = $.parseJSON(result);
              //response(json);
              $("#save").html("Save");
-             console.log(result);
         },
          error: function(jqXHR, textStatus, error){
              //console.log(jqXHR);
@@ -104,6 +97,7 @@ $("#save").bind("click", function() {
       modifierKeys: false,
       autoFormatting: false,
   });
+
   $(function() {
      mobwrite.share('notes-{{ note.pk }}');
   });

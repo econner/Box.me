@@ -7,10 +7,10 @@
     <p>Your notes:</a><br />
     {% for note in notes %}
     <a id="view" href="/note/{{ note.pk }}">
-        {% if not note.title %}
+        {% if not note.latest_revision %}
         Note {{ note.pk }}
         {% else %}
-        {{ note.title }}
+        {{ note.latest_revision.title }}
         {% endif %}
     </a>
     <br />

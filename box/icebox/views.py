@@ -30,7 +30,19 @@ def index(request):
     """
     handle the index request
     """
-    notes = Note.objects.all()
+    note_qset = Note.objects.all()
+    
+    # get note's latest revision
+    notes = [ ]
+    for idx,note in enumerate(note_qset):
+        revisions = note.noterevision_set.all().order_by("-created")
+        revision = None
+        if revisions:
+            revision = revisions[0]
+        note.latest_revision = revision
+        notes.append(note)
+    
+    print notes
     return render_to_response("index.html", {"notes" : notes, "user": request.user})
 
 @login_required  
