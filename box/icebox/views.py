@@ -140,7 +140,6 @@ def save_note(request):
     
 
 def note(request, id):
-    print id
     # get the note
     try:
         note = Note.objects.get(pk=id)

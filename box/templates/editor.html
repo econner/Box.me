@@ -62,7 +62,6 @@ Title:<br>
 <a id="view" href="/note/{{ note.pk }}">View</a>
 <br />
 <div id="note"></div>
-<div id="copy_html" style="display: none;"></div>
 </div>
 
 <script type="text/javascript">
@@ -70,14 +69,14 @@ $("#save").bind("click", function() {
     var note_id = $(this).attr("attr-note_id");
     var text = encodeURIComponent($("#notes-" + note_id).val());
     var title = encodeURIComponent($("#title-" + note_id).val());
-    var html = encodeURIComponent($("#copy_html").html());
+    var html = encodeURIComponent($("#note").html());
     
     $("#save").html("Saving...");
     
     $.ajax({
         type: "POST",
         url: "/save_note",
-        data: "note_id=" + note_id + "&text=" + text + "&title=" + title,
+        data: "note_id=" + note_id + "&text=" + html + "&title=" + title,
         success: function(result){
              //var json = $.parseJSON(result);
              //response(json);
@@ -92,7 +91,7 @@ $("#save").bind("click", function() {
       input: "notes-{{ note.pk }}",
       button_bar: "notes-button-bar",
       preview: "note",
-      output: "copy_html",
+      //output: "copy_html",
       buttons: "bold italic link ol ul heading code quote image",
       modifierKeys: false,
       autoFormatting: false,

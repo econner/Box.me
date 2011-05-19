@@ -1,19 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
-<script>
-$(document).ready(function() {
-    var text = $.trim($("#note").html());
-    var converter = new Showdown.converter();
-    var html = converter.makeHtml(text);
-    $("#note").html(html);
-    $("#note").show();
-})
-
-</script>
 <h1>{{ revision.title }}</h2><br />
-<div id="note" style="display:none;">
-    {{ revision.text }}
+<div id="note">
+    {{ revision.text|safe }}
 </div><br/>
 <a id="editor" href="/editor?note_id={{ note.pk }}">Edit this note</a>
 {% endblock %}
