@@ -3,17 +3,17 @@
 {% block content %}
 <script>
 $(document).ready(function() {
-    var text = $("#text").html();
+    var text = $.trim($("#note").html());
     var converter = new Showdown.converter();
     var html = converter.makeHtml(text);
-    $("#text").html(html);
-    $("#text").show();
+    $("#note").html(html);
+    $("#note").show();
 })
 
 </script>
 <h1>{{ revision.title }}</h2><br />
-<div id="text" style="display:none;">
+<div id="note" style="display:none;">
     {{ revision.text }}
 </div><br/>
-<a id="editor" href="/editor?note_id={{ revision.note.pk }}">Edit this note</a>
+<a id="editor" href="/editor?note_id={{ note.pk }}">Edit this note</a>
 {% endblock %}

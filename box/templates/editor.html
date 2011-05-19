@@ -58,17 +58,17 @@ NOTE NOT FOUND
 <b>Edit this board:</b>
 <br/><br/>
 Title:<br>
-<input type="text" name="title" id="title-{{ note.pk }}" style="width:500px;" value="{{ revision.title }}"/>
+<input type="text" name="title" id="title-{{ note.pk }}" style="width:660px;" value="{{ revision.title }}"/>
 <div id="notes-button-bar"></div>
-<textarea class="note-editor" id="notes-{{ note.pk }}" style="width:500px; height: 500px">{{ revision.text }}</textarea>
+<textarea class="note-editor" id="notes-{{ note.pk }}" style="width:660px; height: 200px">{{ revision.text }}</textarea>
 <br />
 <!-- Preview:
 <div id="notes-preview"></div> -->
 <a href="#saving" id="save" attr-note_id="{{ note.pk }}">Save</a>
 <a id="view" href="/note/{{ note.pk }}">View</a>
 <br />
-<!-- Output:
-<textarea type="text" name="copy_html" value="" id="copy_html" style="width:500px; height: 500px"></textarea> -->
+<div id="note"></div>
+<div id="copy_html" style="display: none;"></div>
 </div>
 
 <script type="text/javascript">
@@ -76,7 +76,8 @@ $("#save").bind("click", function() {
     var note_id = $(this).attr("attr-note_id");
     var text = encodeURIComponent($("#notes-" + note_id).val());
     var title = encodeURIComponent($("#title-" + note_id).val());
-
+    var html = encodeURIComponent($("#copy_html").html());
+    
     $("#save").html("Saving...");
     
     $.ajax({
@@ -97,8 +98,8 @@ $("#save").bind("click", function() {
   new WMDEditor({
       input: "notes-{{ note.pk }}",
       button_bar: "notes-button-bar",
-      //preview: "notes-preview",
-      //output: "copy_html",
+      preview: "note",
+      output: "copy_html",
       buttons: "bold italic link ol ul heading code quote image",
       modifierKeys: false,
       autoFormatting: false,

@@ -141,7 +141,7 @@ def note(request, id):
     if revisions:
         revision = revisions[0]
     
-    return render_to_response("note.html", {"revision": revision})
+    return render_to_response("note.html", {"revision": revision, "note": note})
 
 @login_required
 def editor(request):
