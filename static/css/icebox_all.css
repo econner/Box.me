@@ -35,6 +35,17 @@ ol,ul {
     width: 280px;
 }
 
+#switch-rev-meta {
+	margin-top: 3px;
+	overflow: hidden;
+}
+
+#rev-owner {
+	color: #888;
+	font-size: 11px;
+	float: left;
+	white-space: nowrap;
+}
 
 .content {
     overflow: auto;
