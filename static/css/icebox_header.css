@@ -25,10 +25,6 @@
     height: 50px;
     background: url("../images/icebox.png");
 }
-#logo a {
-    font: 28px 'Helvetica Neue';
-    font-weight: bold;   
-}
 #logo {
     float: left;
     width: 100%;

@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div id="left-column">
     <div id="content-wrap">
         <a id="editor" href="/editor">+ Create New Note</a>
         {% if notes %}
@@ -18,11 +17,4 @@
         {% endfor %}
         {% endif %}
     </div>
-</div>
-{% endblock %}
-
-{% block right-column %}
-<div id="right-column">
-    Sidebar
-</div>
 {% endblock %}
