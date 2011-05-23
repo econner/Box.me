@@ -2,19 +2,28 @@
 
 {% block content %}
     <div id="content-wrap">
-        <a id="editor" href="/editor">+ Create New Note</a>
-        {% if notes %}
-        <p>Your notes:</a><br />
-        {% for note in notes %}
-        <a id="view" href="/note/{{ note.pk }}">
-            {% if not note.revisions %}
-            Note {{ note.pk }}
-            {% else %}
-            {{ note.revisions.0.title }}
-            {% endif %}
-        </a>
-        <br />
+        <a id="create-note" href="/editor">+ Create New Note</a>
+		<br/>
+        {% if folders %}
+        {% for folder in folders %}
+        folder <b>{{ folder.name }}</b> owned by {% if user == folder.owner %}you{% else %}{{ folder.owner.email }}{% endif %}<br/>
+            {% for note in folder.notes %}
+            - <a id="view" href="/note/{{ note.pk }}">
+                {% if not note.revisions %}
+                Note {{ note.pk }}
+                {% else %}
+                {{ note.revisions.0.title }}
+                {% endif %}
+             </a>
+             <br />
+            {% endfor %}
         {% endfor %}
         {% endif %}
     </div>
+{% endblock %}
+
+{% block right-column %}
+<div id="right-column">
+<p>This is a test!</p>
+</div>
 {% endblock %}

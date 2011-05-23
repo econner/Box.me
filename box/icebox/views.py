@@ -9,7 +9,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate, logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from users.models import UserProfile
-from icebox.models import Note, NoteRevision
+from icebox.models import *
+from django.db.models import Q
 
 from boxdotnet import BoxDotNet
 import diff_match_patch as dmp_module
@@ -42,9 +43,18 @@ def _get_icebox_folder_id(user):
     
     # iterate through the folders by name
     folder_id = -1
-    for folder in rsp.tree[0].folder[0].folders[0].folder:
-        if folder['name'] == icebox_folder:
-            folder_id = folder['id']
+    if hasattr(rsp.tree[0].folder[0], "folders"):
+        for folder in rsp.tree[0].folder[0].folders[0].folder:
+            try:
+                my_folder = Folder.objects.get(folder_id=folder['id'])
+                folder_id = my_folder.folder_id
+                # add user as a collaborator if not owner and not one already
+                if my_folder.owner != user and not user in my_folder.collaborators:
+                    my_folder.collaborators.append(user)
+                    my_folder.save()
+                    
+            except Folder.DoesNotExist:
+                pass
     
     # create folder if not found
     if folder_id == -1:
@@ -53,6 +63,8 @@ def _get_icebox_folder_id(user):
             return -1
         
         folder_id = int(created_folder.folder[0].folder_id[0].elementText)
+        my_folder = Folder(folder_id=folder_id, name=icebox_folder, owner=user)
+        my_folder.save()
     
     return folder_id
 
@@ -61,17 +73,25 @@ def index(request):
     """
     handle the index request
     """
+    # make sure this user has an icebox folder of his own
     folder_id = _get_icebox_folder_id(request.user)
     if folder_id == -1:
         return HttpResponse("Failed to retrieve icebox note folder.")
+
+    folder_qset = Folder.objects.all()
+    folders = []
+    for folder in folder_qset:
+        if folder.owner == request.user or request.user in folder.collaborators:
+            notes = []
+            note_qset = folder.note_set.all()
+            for note in note_qset:
+                note.revisions = note.noterevision_set.all().order_by("-created")
+                notes.append(note)
+                
+            folder.notes = notes
+            folders.append(folder)
     
-    note_qset = Note.objects.filter(box_folder_id = folder_id)
-    notes = []
-    for note in note_qset:
-        note.revisions = note.noterevision_set.all().order_by("-created")
-        notes.append(note)
-    
-    return render_to_response("index.html", {"notes" : notes, "user": request.user})
+    return render_to_response("index.html", {"folders" : folders, "user": request.user})
 
 @login_required  
 def sync(request):
@@ -172,12 +192,14 @@ def save_note(request):
         box = BoxDotNet()
         action = ""
         entity_id = -1
-        # if we haven't already uploaded this file to box.net
+        # if we have a valid title, upload
         if revision.title != "":
             if note.box_file_id == -1:
+                # if not uploaded before, upload using whatever folder_id in db
                 action = "upload"
-                entity_id = folder_id
+                entity_id = note.box_folder.folder_id
             else:
+                # if this has already been saved, upload using saved file id
                 action = "overwrite"
                 entity_id = note.box_file_id
         
@@ -221,6 +243,11 @@ def editor(request):
     folder_id = _get_icebox_folder_id(request.user)
     if folder_id == -1:
         return HttpResponse("Failed to retrieve icebox note folder.")
+        
+    try:
+        folder = Folder.objects.get(folder_id=folder_id)
+    except Folder.DoesNotExist:
+        return HttpResponse("Bad icebox folder.")
     
     note = None
     note_id = ""
@@ -228,7 +255,7 @@ def editor(request):
         # user wants a new note
         note = Note()
         note.creator = request.user
-        note.box_folder_id = folder_id
+        note.box_folder = folder
         note.box_file_id = -1 # hasn't been saved yet
         note.save()
         note_id = note.pk
@@ -240,7 +267,7 @@ def editor(request):
         # user wants to retrieve existing note
         note_id = request.GET['note_id']
         try:
-            note = Note.objects.get(pk=note_id, box_folder_id=folder_id)
+            note = Note.objects.get(pk=note_id, box_folder=folder)
         except Note.DoesNotExist:
             return HttpResponse("Bad note id or folder id")
             
