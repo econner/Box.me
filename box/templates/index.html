@@ -6,7 +6,7 @@
 		<br/>
         {% if folders %}
         {% for folder in folders %}
-        <b>{{ folder.name }}</b><br/>
+        folder <b>{{ folder.name }}</b> owned by {% if user == folder.owner %}you{% else %}{{ folder.owner.email }}{% endif %}<br/>
             {% for note in folder.notes %}
             - <a id="view" href="/note/{{ note.pk }}">
                 {% if not note.revisions %}
