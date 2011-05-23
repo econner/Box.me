@@ -4,17 +4,19 @@
     <div id="content-wrap">
         <a id="create-note" href="/editor">+ Create New Note</a>
 		<br/>
-        {% if notes %}
-        <p>Your notes:</a><br />
-        {% for note in notes %}
-        <a id="view" href="/note/{{ note.pk }}">
-            {% if not note.revisions %}
-            Note {{ note.pk }}
-            {% else %}
-            {{ note.revisions.0.title }}
-            {% endif %}
-        </a>
-        <br />
+        {% if folders %}
+        {% for folder in folders %}
+        <b>{{ folder.name }}</b><br/>
+            {% for note in folder.notes %}
+            - <a id="view" href="/note/{{ note.pk }}">
+                {% if not note.revisions %}
+                Note {{ note.pk }}
+                {% else %}
+                {{ note.revisions.0.title }}
+                {% endif %}
+             </a>
+             <br />
+            {% endfor %}
         {% endfor %}
         {% endif %}
     </div>

@@ -10,6 +10,7 @@ from django.contrib.auth import login, authenticate, logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from users.models import UserProfile
 from icebox.models import *
+from django.db.models import Q
 
 from boxdotnet import BoxDotNet
 import diff_match_patch as dmp_module
@@ -72,21 +73,25 @@ def index(request):
     """
     handle the index request
     """
+    # make sure this user has an icebox folder of his own
     folder_id = _get_icebox_folder_id(request.user)
     if folder_id == -1:
         return HttpResponse("Failed to retrieve icebox note folder.")
-    try:
-        folder = Folder.objects.get(folder_id=folder_id)
-    except Folder.DoesNotExist:
-        return HttpResponse("Bad icebox folder.")
+
+    folder_qset = Folder.objects.all()
+    folders = []
+    for folder in folder_qset:
+        if folder.owner == request.user or request.user in folder.collaborators:
+            notes = []
+            note_qset = folder.note_set.all()
+            for note in note_qset:
+                note.revisions = note.noterevision_set.all().order_by("-created")
+                notes.append(note)
+                
+            folder.notes = notes
+            folders.append(folder)
     
-    note_qset = Note.objects.filter(box_folder=folder)
-    notes = []
-    for note in note_qset:
-        note.revisions = note.noterevision_set.all().order_by("-created")
-        notes.append(note)
-    
-    return render_to_response("index.html", {"notes" : notes, "user": request.user})
+    return render_to_response("index.html", {"folders" : folders, "user": request.user})
 
 @login_required  
 def sync(request):
@@ -187,12 +192,14 @@ def save_note(request):
         box = BoxDotNet()
         action = ""
         entity_id = -1
-        # if we haven't already uploaded this file to box.net
+        # if we have a valid title, upload
         if revision.title != "":
             if note.box_file_id == -1:
+                # if not uploaded before, upload using whatever folder_id in db
                 action = "upload"
-                entity_id = folder_id
+                entity_id = note.box_folder.folder_id
             else:
+                # if this has already been saved, upload using saved file id
                 action = "overwrite"
                 entity_id = note.box_file_id
         
