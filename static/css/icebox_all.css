@@ -26,6 +26,24 @@ ol,ul {
     margin: 0 auto;
     padding-top: 20px;
 }
+
+#create-note {
+	color: white;
+	background-color: #045A8B;
+	display: block;
+	font-weight: bold;
+	font-size: 18px;
+	font-weight: bold;
+	text-align: center;
+	padding-top: 3px;
+	padding-bottom: px;
+	border: 1px solid white;
+	outline: 1px solid #045A8B;
+	width: 200px;
+	margin-left: 1px;
+	text-decoration: none;
+}
+
 #left-column {
     float: left;
     width: 670px;
