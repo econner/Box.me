@@ -47,6 +47,11 @@ def _get_icebox_folder_id(user):
             try:
                 my_folder = Folder.objects.get(folder_id=folder['id'])
                 folder_id = my_folder.folder_id
+                # add user as a collaborator if not owner and not one already
+                if my_folder.owner != user and not user in my_folder.collaborators:
+                    my_folder.collaborators.append(user)
+                    my_folder.save()
+                    
             except Folder.DoesNotExist:
                 pass
     

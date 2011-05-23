@@ -37,7 +37,8 @@ class Folder(models.Model):
     folder_id = models.IntegerField()
     name = models.CharField(max_length=200)
     owner = models.ForeignKey(User)
-
+    collaborators = UserListField(max_length=500) # need a max length since we subclass CommaSeparatedIntegerField
+    
 class Note(models.Model):
     """
     Store every note created by a user in the database.
