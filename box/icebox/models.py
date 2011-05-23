@@ -32,6 +32,11 @@ class UserListField(models.CommaSeparatedIntegerField):
         ids = [str(user.id) for user in value]
         ids.sort()
         return ",".join(ids)
+        
+class Folder(models.Model):
+    folder_id = models.IntegerField()
+    name = models.CharField(max_length=200)
+    owner = models.ForeignKey(User)
 
 class Note(models.Model):
     """
@@ -39,7 +44,7 @@ class Note(models.Model):
     These will be mirrored on Box.net, but we hit our database
     first for intermediate caching.
     """
-    box_folder_id = models.IntegerField()    # folder in which this note lives on box.net
+    box_folder = models.ForeignKey(Folder)
     box_file_id = models.IntegerField()      # file id of this note on box.net so it can be overwritten
     creator = models.ForeignKey(User)
     created = models.DateTimeField(auto_now_add=True)
