@@ -2,7 +2,8 @@
 
 {% block content %}
     <div id="content-wrap">
-        <a id="editor" href="/editor">+ Create New Note</a>
+        <a id="create-note" href="/editor">+ Create New Note</a>
+		<br/>
         {% if notes %}
         <p>Your notes:</a><br />
         {% for note in notes %}
@@ -17,4 +18,10 @@
         {% endfor %}
         {% endif %}
     </div>
+{% endblock %}
+
+{% block right-column %}
+<div id="right-column">
+<p>This is a test!</p>
+</div>
 {% endblock %}
