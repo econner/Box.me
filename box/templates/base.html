@@ -41,13 +41,19 @@
             </div>
 
             <div id="content">
-                {# these two should be used for two column displays #}
-                {% block content %}
-                {% endblock %}
-                
-                {% block right-column %}
-                {% endblock %}
-
+              <table>
+                <tr>
+                  <td>
+                    {# these two should be used for two column displays #}
+                    {% block content %}
+                    {% endblock %}
+                  </td>
+                  <td>
+                    {% block right-column %}
+                    {% endblock %}
+                  </td>
+                </tr>
+              </table>
             </div>
 
 

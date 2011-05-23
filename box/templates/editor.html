@@ -104,3 +104,51 @@ $("#save").bind("click", function() {
 
 {% endif %}
 {% endblock %}
+
+{% block right-column %}
+<table>
+  <tr><td>Similar Notes:</td></tr>
+  <tr><td><ul id="sim_notes"></ul></td></tr>
+</table>
+
+<script type="text/javascript">
+  setInterval("refresh_suggestions()", 5000);
+  var note_id = document.getElementById("save").getAttribute("attr-note_id");
+  
+  var text_area = $("#notes-" + note_id);
+  var title_input = $("#title-" + note_id);
+  var last_text = "";
+  
+function refresh_suggestions() {
+    var cur_text = text_area.val()
+    if (last_text == cur_text) return;
+    
+    var text = encodeURIComponent(cur_text);
+    var title = encodeURIComponent(title_input.val());
+    
+    $.ajax({
+        type: "POST",
+        url: "/notesims",
+        data: "note_id=" + note_id + "&text=" + text,
+        success: function(result) {
+             sim_notes_list = document.getElementById("sim_notes");
+             sim_notes_list.innerHTML = "";
+           
+             var sim_notes = $.parseJSON(result);
+              num_notes = sim_notes.length;
+             for (var i = 0; i < num_notes; i++) {
+                note_rev = sim_notes[i].fields;
+                sugg = document.createElement('li');
+                sugg.innerHTML = "<a href=\"editor?note_id=" + note_rev.note + "\">" + note_rev.title + "</a";
+                sim_notes_list.appendChild(sugg)
+             }
+             
+             last_text = cur_text
+        },
+         error: function(jqXHR, textStatus, error){
+             //console.log(jqXHR);
+        }
+    });
+};
+</script>
+{% endblock %}

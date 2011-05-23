@@ -20,8 +20,9 @@ def create_dummy_noterevisions():
        revision.text = dummy_texts[i-1]
        revision.title = 'the note num ' + str(i)
        revision.save()
-           
-def get_note_revision(note):
+
+# TODO: sanatize html if necessary
+def get_latest_note_revision(note):
     revisions = note.noterevision_set.all().order_by("-created")
     revision = None
     if revisions:
@@ -31,15 +32,16 @@ def get_note_revision(note):
 
 # Given text, returns a list of the private keys of the Note model entries that are
 # deemed to be most similar.
-def generate_note_sims(note_text):
+def generate_note_sims(note_text, note_id):
     all_notes = Note.objects.all()
-    
     texts = []
-    text_ids = []
+    text_revisions = []
     for note in all_notes:
-        revision = get_note_revision(note)
+        revision = get_latest_note_revision(note)
+        if revision is None or str(revision.note.pk) == note_id:
+            continue
         texts.append(revision.text.lower().split())
-        text_ids.append(note.pk)
+        text_revisions.append(revision)
     dictionary = corpora.Dictionary(texts)
     corpus = [dictionary.doc2bow(text) for text in texts]
 
@@ -51,6 +53,6 @@ def generate_note_sims(note_text):
     best = [] 
     for sim in sims:
         if sim[1] < sim_threshold: break
-        best.append(text_ids[sim[0]])
+        best.append(text_revisions[sim[0]])
         
     return best
