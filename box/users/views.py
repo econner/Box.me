@@ -66,9 +66,6 @@ def box_login(request, extra_context=dict(), account_inactive_template='TODO'):
     
     # here we will have valid user so login
     login(request, user)
-    
-    print request.user.is_authenticated()
-    
 
     if not user.is_active:
         return render_to_response(account_inactive_template, extra_context,

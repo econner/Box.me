@@ -27,7 +27,7 @@ $(function() {
             {{ rev.text|safe }}
         </div>
 		<div id="switch-rev-meta">
-			<span id="rev-owner">Dummy data: Last edited by you!</span>
+			<span id="rev-owner">By {{ rev.collaborators.0.email }}</span>
 		</div>
         <br/>
     {% endfor %}

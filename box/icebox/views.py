@@ -26,6 +26,10 @@ import stomp
 PORT = 3017
 
 def _get_icebox_folder_id(user):
+    """
+    Gets the id of the icebox folder corresponding
+    to this user.
+    """
     icebox_folder = "icebox"
     
     # get the folder to store notes
@@ -61,7 +65,7 @@ def index(request):
     if folder_id == -1:
         return HttpResponse("Failed to retrieve icebox note folder.")
     
-    note_qset = Note.objects.all()
+    note_qset = Note.objects.filter(box_folder_id = folder_id)
     notes = []
     for note in note_qset:
         note.revisions = note.noterevision_set.all().order_by("-created")
@@ -155,6 +159,7 @@ def save_note(request):
         # create a new revision of this note
         revision = NoteRevision(note = note)
         
+        revision.collaborators = [request.user]
         revision.text = sanitizeHtml(request.POST['text'])
         revision.title = request.POST['title']
         revision.save()
@@ -176,8 +181,8 @@ def save_note(request):
                 action = "overwrite"
                 entity_id = note.box_file_id
         
+        # upload the file
         if action:
-            print "ACTION: %s" % action
             profile = request.user.get_profile()
             uploaded_file = box.upload(filename="%s.txt" % revision.title, data=revision.text, action=action, 
                                 api_key=settings.BOX_API_KEY, auth_token=profile.token, entity_id=entity_id, share=1)
