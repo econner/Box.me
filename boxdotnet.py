@@ -263,9 +263,8 @@ class BoxDotNet(object):
         url = 'http://upload.box.net/api/1.0/%s/%s/%s' % (action, arg['auth_token'], arg['entity_id'])
         
         if action == "overwrite":
-            extra_get = "?file_name=%s" % filename
+            extra_get = "?file_name=%s" % urllib.quote(filename)
             url = "%s%s" % (url, extra_get)
-            print url
             
         # construct POST data
         boundary = mimetools.choose_boundary()
