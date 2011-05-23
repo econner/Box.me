@@ -244,11 +244,10 @@ class BoxDotNet(object):
     
             self.__handlerCache[method] = handler
         return self.__handlerCache[method]
-
-
+        
+    
     #-------------------------------------------------------------------
-    #-------------------------------------------------------------------
-    def upload(self, filename, **arg):
+    def upload(self, filename, data, action, **arg):
         """
         Upload a file to box.net.
         """
@@ -258,11 +257,16 @@ class BoxDotNet(object):
 
         # verify key names
         for a in arg.keys():
-            if a != "api_key" and a != "auth_token" and a != "folder_id" and a != 'share':
+            if a != "api_key" and a != "auth_token" and a != "entity_id" and a != 'share':
                 sys.stderr.write("Box.net api: warning: unknown parameter \"%s\" sent to Box.net.upload\n" % (a))
 
-        url = 'http://upload.box.net/api/1.0/upload/%s/%s' % (arg['auth_token'], arg['folder_id'])
-
+        url = 'http://upload.box.net/api/1.0/%s/%s/%s' % (action, arg['auth_token'], arg['entity_id'])
+        
+        if action == "overwrite":
+            extra_get = "?file_name=%s" % filename
+            url = "%s%s" % (url, extra_get)
+            print url
+            
         # construct POST data
         boundary = mimetools.choose_boundary()
         body = ""
@@ -279,9 +283,9 @@ class BoxDotNet(object):
 
         #print body
 
-        fp = file(filename, "rb")
-        data = fp.read()
-        fp.close()
+        # fp = file(filename, "rb")
+        # data = fp.read()
+        # fp.close()
 
         postData = body.encode("utf_8") + data + \
             ("\r\n--%s--" % (boundary)).encode("utf_8")

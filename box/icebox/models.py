@@ -39,6 +39,8 @@ class Note(models.Model):
     These will be mirrored on Box.net, but we hit our database
     first for intermediate caching.
     """
+    box_folder_id = models.IntegerField()    # folder in which this note lives on box.net
+    box_file_id = models.IntegerField()      # file id of this note on box.net so it can be overwritten
     creator = models.ForeignKey(User)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
