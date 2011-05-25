@@ -25,46 +25,72 @@ import stomp
 # mobwrite port
 PORT = 3017
 
+class CollaboratorState:
+    note = None
+    collaborator = None
+    user = None
+    status = "ok"
+    output = ""
+    
+    def __init__(self, request):
+        try:
+            self.note = Note.objects.get(pk=request.POST['note_id'])
+        except Note.DoesNotExist:
+            self.status = "fail"
+            self.output = "Bad note id."
+            return
+        
+        if(request.user != self.note.creator and not request.user in self.note.access_list):
+            self.status = "fail"
+            self.output = "You don't have permission to modify the collaborators on this note."
+            return
+        
+        try:
+            self.collaborator = User.objects.get(email=request.POST['email'])
+        except User.DoesNotExist:
+            self.status = "fail"
+            self.output = "No user with that email."
+            return
+        
+
 def json_response(obj):
     """
     Helper method to turn a python object into json format and return an HttpResponse object.
     """
-    return HttpResponse(simplejson.dumps(obj), mimetype="application/x-javascript")
+    return HttpResponse(simplejson.dumps(obj), mimetype="application/x-javascript")    
+    
+    
+@login_required
+def del_collab(request):
+    """
+    Delete collaborator from specified note
+    """
+    c_state = CollaboratorState(request)
+    rsp = {"status": c_state.status, "output": c_state.output}
+    if c_state.status == "fail":
+        return json_response(rsp)
+    
+    if c_state.collaborator in c_state.note.access_list:
+        c_state.note.access_list.remove(c_state.collaborator)
+        c_state.note.save()
+        
+    return json_response(rsp)
+    
+
 
 @login_required
 def add_collab(request):
     """
     Add a collaborator to a specified note.
     """
-    note = None
-    
-    # assume a fail code to begin with
-    rsp = {}
-    rsp['status'] = 'fail'
-    rsp['output'] = ''
-    
-    try:
-        note = Note.objects.get(pk=request.POST['note_id'])
-    except Note.DoesNotExist:
-        rsp['output'] = "Bad note id."
+    c_state = CollaboratorState(request)
+    rsp = {"status": c_state.status, "output": c_state.output}
+    if c_state.status == "fail":
         return json_response(rsp)
     
-    if(request.user != note.creator and not request.user in note.access_list):
-        rsp['output'] = "You don't have permission to modify the collaborators on this note."
-        return json_response(rsp)
-        
-    try:
-        collab = User.objects.get(email=request.POST['email'])
-    except User.DoesNotExist:
-        rsp['output'] = "No user with that email."
-        return json_response(rsp)
-    
-    if not collab in note.access_list:
-        note.access_list.append(collab)
-        note.save()
-        
-        rsp['status'] = 'ok'
-        rsp['output'] = 'Successfully added collaborator.' 
+    if not c_state.collaborator in c_state.note.access_list:
+        c_state.note.access_list.append(c_state.collaborator)
+        c_state.note.save()
     
     return json_response(rsp)
     
@@ -217,6 +243,7 @@ def editor(request):
         # user wants a new note
         note = Note()
         note.creator = request.user
+        note.access_list = [request.user]
         note.save()
         note_id = note.pk
         

@@ -15,6 +15,41 @@ $.widget("custom.user_complete", $.ui.autocomplete, {
     }
 });
 
+function bindCollabActions(context) {
+    $(".del-collab", context).bind('click', function() {
+        var self = $(this);             // del-collab link
+        var note_listing = self.parents(".note-listing");     // note listing container
+        var collab = self.next();       // collab email container
+        
+        // send request to delete this collaborator
+        $.ajax({
+            type: "POST",
+            url: "/ajax/del_collab",
+            data: "note_id=" + note_listing.attr("data-id") + "&email=" + collab.html(),
+            success: function(result) {
+                json = $.parseJSON(result);
+                if(json["status"] == "ok") {
+                    // remove the elements corresponding to this collaborator
+                    self.remove();
+                    collab.remove();
+                }
+            },
+            error: function(jqXHR, textStatus, error) {
+                //debug.log(jqXHR);
+            }
+        });
+        
+    });
+}
+
+/*
+* Adds html for specified collaborator and binds appropriate delete actions
+*/
+function addCollaborator(context, email) {
+    $(".collaborators", context).append("<a class=\"del-collab\" href=\"#del-collab\">x</a><span class=\"collab\">" + email + "</span>");
+    bindCollabActions(context);
+}
+
 $(function() {
     /*
     * Specify custom autocomplete method to display
@@ -22,7 +57,6 @@ $(function() {
     */ 
     $("input.add-collab").user_complete({
         source: function(request, response) {
-            console.log(request);
             $.ajax({
                 type: "GET",
                 url: "/ajax/search_collab",
@@ -65,12 +99,10 @@ $(function() {
             data: "note_id=" + self.attr("data-note-id") + "&email=" + self.val(),
             success: function(result) {
                 json = $.parseJSON(result);
-                console.info(result);
                 if(json["status"] == "ok") {
-                    console.log("HERE");
                     // add the collaborator name to ui, but only within the
                     // context of this input field's parent
-                    $(".collaborators", self.parent()).append(self.val());
+                    addCollaborator(self.parent(), self.val());
                     self.val("");
                 }
             },
@@ -80,6 +112,9 @@ $(function() {
         });
         
     });
+    
+    // bind actions to all collaborators found on page
+    bindCollabActions($(document));
 });
 </script>
 
@@ -97,7 +132,9 @@ $(function() {
                 Collaborators:<br/>
                 <span class="collaborators">
                 {% for collab in note.access_list %}
-                    {{ collab.email }}
+                    {% if collab != user %}
+                        <a class="del-collab" href="#del-collab">x</a><span class="collab">{{ collab.email }}</span>
+                    {% endif %}
                 {% endfor %}
                 </span>
                 Add a collaborator:<br/>
