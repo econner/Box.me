@@ -7,7 +7,7 @@ hr {
 }
 
 .list-element {
-    margin: 0 0 5px 5px;
+    padding-bottom: 3px;
 }
 
 .list-clickable {
@@ -39,7 +39,6 @@ hr {
 
 #right-column {
     width: 220px;
-    margin: 0 10px 0 30px;
+    margin: 30px 10px 0 30px;
     padding: 5px;
-  /*  border: 2px solid #B8B8B8; */
 }
