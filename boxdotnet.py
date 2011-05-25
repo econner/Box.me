@@ -201,7 +201,8 @@ class BoxDotNet(object):
         fileList= results.files[0] # has status / folders / files, but nothing else... SEE WHERE AT
         print "file id (first): %s" % fileList.file[0].id[0].elementText # eventually get an array of file idss
 
-        return fileList.file[0].id[0].elementText
+        #return fileList.file[0].id[0].elementText
+        return fileList
 
     # added by HA
     def get_version_history(self, api_key, auth_token, file_id):
