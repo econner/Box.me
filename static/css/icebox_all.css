@@ -53,6 +53,29 @@ ol,ul {
     width: 280px;
 }
 
+#notes {
+	margin: 5px 0;
+}
+
+div.collaboration {
+	padding-left: 15px;
+}
+
+li.note-listing {
+	list-style: none;
+	padding-left: 15px;
+	padding-right: 20px;
+	padding-bottom: 10px;
+	padding-top: 10px;
+	border-top-color: #E9E9E9;
+	border-top-style: solid;
+	border-top-width: 1px;
+}
+
+a.view {
+	text-decoration: none;
+}
+
 #switch-rev-meta {
 	margin-top: 3px;
 	overflow: hidden;
