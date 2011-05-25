@@ -26,18 +26,12 @@ class UserListField(models.CommaSeparatedIntegerField):
             return ""
             
         if not isinstance(value, list):
-            # already a comma separated list
+            # already a comma separated list 
             return value 
 
         ids = [str(user.id) for user in value]
         ids.sort()
         return ",".join(ids)
-        
-class Folder(models.Model):
-    folder_id = models.IntegerField()
-    name = models.CharField(max_length=200)
-    owner = models.ForeignKey(User)
-    collaborators = UserListField(max_length=500) # need a max length since we subclass CommaSeparatedIntegerField
     
 class Note(models.Model):
     """
@@ -45,8 +39,7 @@ class Note(models.Model):
     These will be mirrored on Box.net, but we hit our database
     first for intermediate caching.
     """
-    box_folder = models.ForeignKey(Folder)
-    box_file_id = models.IntegerField()      # file id of this note on box.net so it can be overwritten
+    access_list = UserListField(max_length=500) # need a max length since we subclass CommaSeparatedIntegerField
     creator = models.ForeignKey(User)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)

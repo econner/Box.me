@@ -4,13 +4,12 @@ from django.http import HttpResponseRedirect
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.conf import settings
-
+from django.utils import simplejson
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate, logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from users.models import UserProfile
 from icebox.models import *
-from django.db.models import Q
 
 from boxdotnet import BoxDotNet
 import diff_match_patch as dmp_module
@@ -26,72 +25,75 @@ import stomp
 # mobwrite port
 PORT = 3017
 
-def _get_icebox_folder_id(user):
+def json_response(obj):
     """
-    Gets the id of the icebox folder corresponding
-    to this user.
+    Helper method to turn a python object into json format and return an HttpResponse object.
     """
-    icebox_folder = "icebox"
+    return HttpResponse(simplejson.dumps(obj), mimetype="application/x-javascript")
+
+@login_required
+def add_collab(request):
+    """
+    Add a collaborator to a specified note.
+    """
+    note = None
     
-    # get the folder to store notes
-    box = BoxDotNet()
-    profile = user.get_profile()
-    rsp = box.get_account_tree(api_key=settings.BOX_API_KEY, auth_token=profile.token, folder_id=0, params=['nozip'])
-    # make sure the response came back ok
-    if rsp.status[0].elementText != box.RETURN_CODES['get_account_tree']:
-        return -1
+    # assume a fail code to begin with
+    rsp = {}
+    rsp['status'] = 'fail'
+    rsp['output'] = ''
     
-    # iterate through the folders by name
-    folder_id = -1
-    if hasattr(rsp.tree[0].folder[0], "folders"):
-        for folder in rsp.tree[0].folder[0].folders[0].folder:
-            try:
-                my_folder = Folder.objects.get(folder_id=folder['id'])
-                folder_id = my_folder.folder_id
-                # add user as a collaborator if not owner and not one already
-                if my_folder.owner != user and not user in my_folder.collaborators:
-                    my_folder.collaborators.append(user)
-                    my_folder.save()
-                    
-            except Folder.DoesNotExist:
-                pass
+    try:
+        note = Note.objects.get(pk=request.POST['note_id'])
+    except Note.DoesNotExist:
+        rsp['output'] = "Bad note id."
+        return json_response(rsp)
     
-    # create folder if not found
-    if folder_id == -1:
-        created_folder = box.create_folder(api_key=settings.BOX_API_KEY, auth_token=profile.token, parent_id=0, name=icebox_folder, share=1)
-        if created_folder.status[0].elementText != box.RETURN_CODES['create_folder']:
-            return -1
+    if(request.user != note.creator and not request.user in note.access_list):
+        rsp['output'] = "You don't have permission to modify the collaborators on this note."
+        return json_response(rsp)
         
-        folder_id = int(created_folder.folder[0].folder_id[0].elementText)
-        my_folder = Folder(folder_id=folder_id, name=icebox_folder, owner=user)
-        my_folder.save()
+    try:
+        collab = User.objects.get(email=request.POST['email'])
+    except User.DoesNotExist:
+        rsp['output'] = "No user with that email."
+        return json_response(rsp)
     
-    return folder_id
+    if not collab in note.access_list:
+        note.access_list.append(collab)
+        note.save()
+        
+        rsp['status'] = 'ok'
+        rsp['output'] = 'Successfully added collaborator.' 
+    
+    return json_response(rsp)
+    
+@login_required
+def search_collab(request):
+    email = request.GET['email']
+    users = User.objects.filter(email__istartswith=email)
+    emails = [ ]
+    for user in users:
+        emails.append(user.email)
+    
+    json = simplejson.dumps(emails)
+    return HttpResponse(json, mimetype="application/x-javascript")
 
 @login_required
 def index(request):
     """
     handle the index request
     """
-    # make sure this user has an icebox folder of his own
-    folder_id = _get_icebox_folder_id(request.user)
-    if folder_id == -1:
-        return HttpResponse("Failed to retrieve icebox note folder.")
-
-    folder_qset = Folder.objects.all()
-    folders = []
-    for folder in folder_qset:
-        if folder.owner == request.user or request.user in folder.collaborators:
-            notes = []
-            note_qset = folder.note_set.all()
-            for note in note_qset:
-                note.revisions = note.noterevision_set.all().order_by("-created")
-                notes.append(note)
-                
-            folder.notes = notes
-            folders.append(folder)
     
-    return render_to_response("index.html", {"folders" : folders, "user": request.user})
+    # make sure this user has an icebox folder of his own
+    note_qset = Note.objects.all()
+    notes = []
+    for note in note_qset:
+        if note.creator == request.user or request.user in note.access_list:
+            note.revisions = note.noterevision_set.all().order_by("-created")
+            notes.append(note)
+    
+    return render_to_response("index.html", {"notes" : notes, "user": request.user})
 
 @login_required  
 def sync(request):
@@ -183,38 +185,6 @@ def save_note(request):
         revision.text = sanitizeHtml(request.POST['text'])
         revision.title = request.POST['title']
         revision.save()
-        
-        # save this note to box.net
-        folder_id = _get_icebox_folder_id(request.user)
-        if folder_id == -1:
-            return HttpResponse("Failed to retrieve icebox note folder.")
-        
-        box = BoxDotNet()
-        action = ""
-        entity_id = -1
-        # if we have a valid title, upload
-        if revision.title != "":
-            if note.box_file_id == -1:
-                # if not uploaded before, upload using whatever folder_id in db
-                action = "upload"
-                entity_id = note.box_folder.folder_id
-            else:
-                # if this has already been saved, upload using saved file id
-                action = "overwrite"
-                entity_id = note.box_file_id
-        
-        # upload the file
-        if action:
-            profile = request.user.get_profile()
-            uploaded_file = box.upload(filename="%s.txt" % revision.title, data=revision.text, action=action, 
-                                api_key=settings.BOX_API_KEY, auth_token=profile.token, entity_id=entity_id, share=1)
-        
-            if uploaded_file.status[0].elementText != box.RETURN_CODES['upload']:
-                return HttpResponse("Failed to upload file to box.net")
-        
-            file_obj = uploaded_file.files[0].file[0]
-            note.box_file_id = int(file_obj['id'])
-            note.save()
          
     except Note.DoesNotExist:
         pass
@@ -240,14 +210,6 @@ def editor(request):
     Display the editor view.  If no doc_id is found in
     the GET request, assume use wants to create a new note.
     """
-    folder_id = _get_icebox_folder_id(request.user)
-    if folder_id == -1:
-        return HttpResponse("Failed to retrieve icebox note folder.")
-        
-    try:
-        folder = Folder.objects.get(folder_id=folder_id)
-    except Folder.DoesNotExist:
-        return HttpResponse("Bad icebox folder.")
     
     note = None
     note_id = ""
@@ -255,8 +217,6 @@ def editor(request):
         # user wants a new note
         note = Note()
         note.creator = request.user
-        note.box_folder = folder
-        note.box_file_id = -1 # hasn't been saved yet
         note.save()
         note_id = note.pk
         
@@ -267,7 +227,7 @@ def editor(request):
         # user wants to retrieve existing note
         note_id = request.GET['note_id']
         try:
-            note = Note.objects.get(pk=note_id, box_folder=folder)
+            note = Note.objects.get(pk=note_id)
         except Note.DoesNotExist:
             return HttpResponse("Bad note id or folder id")
             

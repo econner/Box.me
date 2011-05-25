@@ -22,7 +22,11 @@ urlpatterns = patterns('',
     # mobwrite views
     (r'^sync/?$', 'box.icebox.views.sync'), 
     (r'^editor/?$', 'box.icebox.views.editor'), 
-    (r'^save_note/?$', 'box.icebox.views.save_note'), 
+    
+    (r'^ajax/save_note/?$', 'box.icebox.views.save_note'), 
+    (r'^ajax/add_collab/?$', 'box.icebox.views.add_collab'),
+    (r'^ajax/search_collab/?$', 'box.icebox.views.search_collab'),
+    
     (r'^note/(?P<id>\d+)/?$', 'box.icebox.views.note'),
     
     (r'^search/', 'box.suggestion_engine.views.get_similar_docs'),
