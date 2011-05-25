@@ -132,10 +132,10 @@ $(function() {
 </script>
 
     <div id="content-wrap">
-        <a id="create-note" href="/editor">+ Create New Note</a>
+        <a id="create-note" href="/editor">+ Create a New Note</a>
 		<br/>
         {% if notes %}
-        <p>Your notes:</a><br/>
+        <p>Your Notes</p>
 		<ul id="notes">		
         {% for note in notes %}
             <li class="note-listing" data-id="{{ note.pk }}" onmouseover="changeBackground(this);" onmouseout="changeBackgroundBack(this);">

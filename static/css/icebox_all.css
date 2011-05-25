@@ -27,6 +27,10 @@ ol,ul {
     padding-top: 20px;
 }
 
+#content-wrap {
+	font-weight: bold;
+}
+
 #create-note {
 	color: white;
 	background-color: #045A8B;
@@ -39,7 +43,7 @@ ol,ul {
 	padding-bottom: px;
 	border: 1px solid white;
 	outline: 1px solid #045A8B;
-	width: 200px;
+	width: 225cpx;
 	margin-left: 1px;
 	text-decoration: none;
 }
@@ -59,6 +63,10 @@ ol,ul {
 
 div.collaboration {
 	padding-left: 15px;
+	color: #888;
+	font-size: 14px;
+	font-weight: normal;
+	margin: 3px;
 }
 
 li.note-listing {
@@ -70,10 +78,12 @@ li.note-listing {
 	border-top-color: #E9E9E9;
 	border-top-style: solid;
 	border-top-width: 1px;
+	font-weight: 525;
 }
 
 a.view {
 	text-decoration: none;
+	color: #045A8B;
 }
 
 #switch-rev-meta {
