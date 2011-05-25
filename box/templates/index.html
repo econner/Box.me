@@ -82,34 +82,50 @@ $(function() {
     });
 });
 </script>
+<script type="text/javascript">
+	function changeBackground(elem)
+	{
+		elem.style.backgroundColor = "#EFF5F9";
+		elem.style.backgroundAttachment = "scroll";
+		elem.style.backgroundClip = "border-box";
+
+	}
+	function changeBackgroundBack(elem)
+	{
+		elem.style.backgroundColor = "white";
+	}
+</script>
 
     <div id="content-wrap">
         <a id="create-note" href="/editor">+ Create New Note</a>
 		<br/>
         {% if notes %}
-        <p>Your notes:</a><br />
+        <p>Your notes:</a><br/>
+		<ul id="notes">		
         {% for note in notes %}
-            <div class="note-listing" data-id="{{ note.pk }}">
-                <a id="view" href="/note/{{ note.pk }}">
+            <li class="note-listing" data-id="{{ note.pk }}" onmouseover="changeBackground(this);" onmouseout="changeBackgroundBack(this);">
+                <a class="view" href="/note/{{ note.pk }}">
                 {% if not note.revisions %}Note {{ note.pk }}
                 {% else %}{{ note.revisions.0.title }}{% endif %}
                 </a><br />
-                Collaborators:<br/>
-                <span class="collaborators">
-                {% for collab in note.access_list %}
-                    {{ collab.email }}
-                {% endfor %}
-                </span>
-                Add a collaborator:<br/>
-                <input type="text" data-note-id="{{ note.pk }}" class="add-collab" />
-            </div>
+				<div class="collaboration">
+		            Collaborators:<br/>
+		            <span class="collaborators">
+		            {% for collab in note.access_list %}
+		                {{ collab.email }}
+		            {% endfor %}
+		            </span>
+		            Add a collaborator:<br/>
+		            <input type="text" data-note-id="{{ note.pk }}" class="add-collab" />
+				</div>
+            </li>
         {% endfor %}
         {% endif %}
+		</ul>
     </div>
 {% endblock %}
 
 {% block right-column %}
 <div id="right-column">
-<p>This is a test!</p>
 </div>
 {% endblock %}
