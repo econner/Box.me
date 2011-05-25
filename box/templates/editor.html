@@ -106,18 +106,32 @@ $("#save").bind("click", function() {
 {% endblock %}
 
 {% block right-column %}
-<table>
-  <tr><td>Similar Notes:</td></tr>
-  <tr><td><ul id="sim_notes"></ul></td></tr>
-</table>
+<div id="right-column">
+  <h4 class="right-column-title">Similar Notes</h4>
+  <hr />
+  <ul id="sugg_list" class="suggestion-list"></ul>
+  <h4 class="right-column-title">Similar Documents</h4>
+  <hr />
+</div>
+
+<script id="suggNoteTemplate" type="text/x-jquery-tmpl">
+  <li class="list-element">
+    <a class="list-clickable" href="editor?note_id=${rev_id}">
+      <span class="list-element-title"->${rev_title}</span><br/>
+      <span class="list-element-body">Collaborators: ${collab_text}</span>
+    </a>
+  </li>
+</script>
 
 <script type="text/javascript">
-  setInterval("refresh_suggestions()", 5000);
   var note_id = document.getElementById("save").getAttribute("attr-note_id");
-  
   var text_area = $("#notes-" + note_id);
   var title_input = $("#title-" + note_id);
   var last_text = "";
+  
+  refresh_suggestions();
+  setInterval("refresh_suggestions()", 5000);
+  
   
 function refresh_suggestions() {
     var cur_text = text_area.val()
@@ -131,16 +145,13 @@ function refresh_suggestions() {
         url: "/notesims",
         data: "note_id=" + note_id + "&text=" + text,
         success: function(result) {
-             sim_notes_list = document.getElementById("sim_notes");
-             sim_notes_list.innerHTML = "";
-           
+             sugg_list = $("#sugg_list");
+              sugg_list.html("");
              var sim_notes = $.parseJSON(result);
               num_notes = sim_notes.length;
              for (var i = 0; i < num_notes; i++) {
                 note_rev = sim_notes[i].fields;
-                sugg = document.createElement('li');
-                sugg.innerHTML = "<a href=\"editor?note_id=" + note_rev.note + "\">" + note_rev.title + "</a";
-                sim_notes_list.appendChild(sugg)
+                $("#suggNoteTemplate").tmpl({'rev_id':note_rev.note, 'rev_title':note_rev.title}).appendTo(sugg_list);
              }
              
              last_text = cur_text
