@@ -1,0 +1,44 @@
+hr {
+    color: #B8B8B8;
+}
+.suggestion-list {
+    list-style-type: none;
+    margin: 0 0 20px 0;
+}
+
+.list-element {
+    padding-bottom: 3px;
+}
+
+.list-clickable {
+    padding: 5px;
+    display: block;
+    text-decoration: none;
+}
+
+.list-clickable:hover {
+    background-color: #D1EEEE;
+    color: white;
+}
+
+.list-element-title {
+    color: black;
+    font-size: 10pt;
+}
+
+.list-element-body {
+    color: #595959;
+    font-size: 8pt;
+}
+
+.right-column-title {
+    margin: 0 0 -7px 0;
+    font-size: 11pt;
+    color: #707070;
+}
+
+#right-column {
+    width: 220px;
+    margin: 30px 10px 0 30px;
+    padding: 5px;
+}
