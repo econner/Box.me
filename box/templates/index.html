@@ -1,20 +1,108 @@
 {% extends "base.html" %}
 
 {% block content %}
+
+<script>
+/*
+* User list auto complete
+*/
+$.widget("custom.user_complete", $.ui.autocomplete, {
+    _renderMenu: function(ul, items) {
+        var self = this;
+        $.each(items, function(index, item) {
+            self._renderItem(ul, item);
+        });
+    }
+});
+
+$(function() {
+    /*
+    * Specify custom autocomplete method to display
+    * users under input fields
+    */ 
+    $("input.add-collab").user_complete({
+        source: function(request, response) {
+            console.log(request);
+            $.ajax({
+                type: "GET",
+                url: "/ajax/search_collab",
+                data: "email=" + request.term,
+                success: function(result) {
+                    var json = $.parseJSON(result);
+                    // call the custom response function, passing the
+                    // items list in order to render items
+                    response(json);
+                },
+                error: function(jqXHR, textStatus, error) {
+                    //debug.log(jqXHR);
+                }
+            });
+        },
+        select: function(event, ui) {
+        }
+    }).data("user_complete")._renderItem = function(ul, item) {
+        return $("<li></li>")
+                    .data("item.autocomplete", item)
+                    .append($(""))
+                    .append($("<a class='ui-menu-item'></a>")
+                        .html(item.label))
+                    .appendTo(ul);
+    };
+    
+    /*
+    * Bind the submit function to the input box
+    */
+    $("input.add-collab").bind('keypress', function(e) {
+        var code = (e.keyCode ? e.keyCode : e.which);
+        // make sure enter key pressed
+        if(code != 13) return;
+        
+        var self = $(this);
+        
+        $.ajax({
+            type: "POST",
+            url: "/ajax/add_collab",
+            data: "note_id=" + self.attr("data-note-id") + "&email=" + self.val(),
+            success: function(result) {
+                json = $.parseJSON(result);
+                console.info(result);
+                if(json["status"] == "ok") {
+                    console.log("HERE");
+                    // add the collaborator name to ui, but only within the
+                    // context of this input field's parent
+                    $(".collaborators", self.parent()).append(self.val());
+                    self.val("");
+                }
+            },
+            error: function(jqXHR, textStatus, error) {
+                //debug.log(jqXHR);
+            }
+        });
+        
+    });
+});
+</script>
+
     <div id="content-wrap">
         <a id="create-note" href="/editor">+ Create New Note</a>
 		<br/>
         {% if notes %}
-            <p>Your notes:</a><br />
-            {% for note in notes %}
-            <a id="view" href="/note/{{ note.pk }}">
-            {% if not note.revisions %}
-                Note {{ note.pk }}
-            {% else %}
-                {{ note.revisions.0.title }}
-            {% endif %}
-            </a>
-            <br />
+        <p>Your notes:</a><br />
+        {% for note in notes %}
+            <div class="note-listing" data-id="{{ note.pk }}">
+                <a id="view" href="/note/{{ note.pk }}">
+                {% if not note.revisions %}Note {{ note.pk }}
+                {% else %}{{ note.revisions.0.title }}{% endif %}
+                </a><br />
+                Collaborators:<br/>
+                <span class="collaborators">
+                {% for collab in note.access_list %}
+                    {{ collab.email }}
+                {% endfor %}
+                </span>
+                Add a collaborator:<br/>
+                <input type="text" data-note-id="{{ note.pk }}" class="add-collab" />
+            </div>
         {% endfor %}
         {% endif %}
     </div>

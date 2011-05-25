@@ -75,7 +75,7 @@ $("#save").bind("click", function() {
     
     $.ajax({
         type: "POST",
-        url: "/save_note",
+        url: "/ajax/save_note",
         data: "note_id=" + note_id + "&text=" + html + "&title=" + title,
         success: function(result){
              //var json = $.parseJSON(result);

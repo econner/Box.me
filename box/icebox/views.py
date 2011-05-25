@@ -4,13 +4,12 @@ from django.http import HttpResponseRedirect
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.conf import settings
-
+from django.utils import simplejson
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate, logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from users.models import UserProfile
 from icebox.models import *
-from django.db.models import Q
 
 from boxdotnet import BoxDotNet
 import diff_match_patch as dmp_module
@@ -26,17 +25,73 @@ import stomp
 # mobwrite port
 PORT = 3017
 
+def json_response(obj):
+    """
+    Helper method to turn a python object into json format and return an HttpResponse object.
+    """
+    return HttpResponse(simplejson.dumps(obj), mimetype="application/x-javascript")
+
+@login_required
+def add_collab(request):
+    """
+    Add a collaborator to a specified note.
+    """
+    note = None
+    
+    # assume a fail code to begin with
+    rsp = {}
+    rsp['status'] = 'fail'
+    rsp['output'] = ''
+    
+    try:
+        note = Note.objects.get(pk=request.POST['note_id'])
+    except Note.DoesNotExist:
+        rsp['output'] = "Bad note id."
+        return json_response(rsp)
+    
+    if(request.user != note.creator and not request.user in note.access_list):
+        rsp['output'] = "You don't have permission to modify the collaborators on this note."
+        return json_response(rsp)
+        
+    try:
+        collab = User.objects.get(email=request.POST['email'])
+    except User.DoesNotExist:
+        rsp['output'] = "No user with that email."
+        return json_response(rsp)
+    
+    if not collab in note.access_list:
+        note.access_list.append(collab)
+        note.save()
+        
+        rsp['status'] = 'ok'
+        rsp['output'] = 'Successfully added collaborator.' 
+    
+    return json_response(rsp)
+    
+@login_required
+def search_collab(request):
+    email = request.GET['email']
+    users = User.objects.filter(email__istartswith=email)
+    emails = [ ]
+    for user in users:
+        emails.append(user.email)
+    
+    json = simplejson.dumps(emails)
+    return HttpResponse(json, mimetype="application/x-javascript")
+
 @login_required
 def index(request):
     """
     handle the index request
     """
+    
     # make sure this user has an icebox folder of his own
     note_qset = Note.objects.all()
     notes = []
     for note in note_qset:
-        note.revisions = note.noterevision_set.all().order_by("-created")
-        notes.append(note)
+        if note.creator == request.user or request.user in note.access_list:
+            note.revisions = note.noterevision_set.all().order_by("-created")
+            notes.append(note)
     
     return render_to_response("index.html", {"notes" : notes, "user": request.user})
 
