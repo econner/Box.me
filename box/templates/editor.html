@@ -106,13 +106,12 @@ $("#save").bind("click", function() {
 {% endif %}
 {% endblock %}
 
-{% block right-column %}
-<div id="right-column">
-  <h4 class="right-column-title">Similar Notes</h4>
-  <hr />
-  <ul id="sugg_list" class="suggestion-list"></ul>
-  <h4 class="right-column-title">Similar Files on Box.net</h4>
-  <hr />
+{% block nav-column-extra %}
+<div class="sim-items">
+    <h4 class="right-column-title">Similar Notes</h4>
+    <ul id="sugg_list" class="suggestion-list"></ul>
+    
+    <h4 class="right-column-title">Similar Documents</h4>
 </div>
 
 <script id="suggNoteTemplate" type="text/x-jquery-tmpl">
