@@ -27,11 +27,30 @@ ol,ul {
     padding-top: 20px;
 }
 
+#content-alternate {
+	width: 900px;
+	clear:both;
+    height: 100%;
+    overflow: hidden;
+    margin: 0 auto;
+    padding-top: 20px;
+}
+
+#content-wrap {
+	font-weight: bold;
+	font-size: 18px;
+	padding-top: 4px;
+}
+
+#version-wrap {
+	font-weight: bold;
+	font-size: 18px;
+}
+
 #create-note {
 	color: white;
 	background-color: #045A8B;
 	display: block;
-	font-weight: bold;
 	font-size: 18px;
 	font-weight: bold;
 	text-align: center;
@@ -41,6 +60,7 @@ ol,ul {
 	width: 200px;
 	margin-top: 10px;
 	margin-left: 1px;
+	margin-right: 10px;
 	text-decoration: none;
 }
 
@@ -53,8 +73,58 @@ ol,ul {
     box-shadow: 0 0 3px #CCCCCC;
 }
 #right-column {
-    float: left;
+    float: right;
     width: 280px;
+}
+
+#right-col {
+	float: right;
+	width: 225px;
+}
+
+#notes {
+	margin: 5px 0;
+	width: 500px;
+}
+
+div.collaboration {
+	padding-left: 15px;
+	color: #888;
+	font-size: 15px;
+	font-weight: normal;
+	margin: 3px;
+}
+
+input.add-collab {
+	margin-top: 2px;
+}
+
+li.note-listing {
+	list-style: none;
+	padding-left: 15px;
+	padding-right: 20px;
+	padding-bottom: 10px;
+	padding-top: 10px;
+	border-top-color: #E9E9E9;
+	border-top-style: solid;
+	border-top-width: 1px;
+	font-weight: 600;
+}
+
+#table {
+	width: 900px;
+}
+
+a.view {
+	text-decoration: none;
+	color: #045A8B;
+}
+
+a.switch-rev {
+	text-decoration: none;
+	color: #045A8B;
+	font-weight: normal;
+	font-size: 16px;
 }
 
 #switch-rev-meta {
@@ -66,6 +136,7 @@ ol,ul {
 	color: #888;
 	font-size: 11px;
 	float: left;
+	font-weight: normal;
 	white-space: nowrap;
 }
 

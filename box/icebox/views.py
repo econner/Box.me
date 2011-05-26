@@ -234,7 +234,7 @@ def note(request, id):
 def editor(request):
     """
     Display the editor view.  If no doc_id is found in
-    the GET request, assume use wants to create a new note.
+    the GET request, assume user wants to create a new note.
     """
     
     note = None

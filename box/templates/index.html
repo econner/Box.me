@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base_alternate.html" %}
 
 {% block content %}
 <div id="left-column">
@@ -117,6 +117,19 @@ $(function() {
     bindCollabActions($(document));
 });
 </script>
+<script type="text/javascript">
+	function changeBackground(elem)
+	{
+		elem.style.backgroundColor = "#EFF5F9";
+		elem.style.backgroundAttachment = "scroll";
+		elem.style.backgroundClip = "border-box";
+
+	}
+	function changeBackgroundBack(elem)
+	{
+		elem.style.backgroundColor = "white";
+	}
+</script>
 
     <div id="content-wrap">
         {% if notes %}
@@ -149,6 +162,7 @@ $(function() {
             </div>
         {% endfor %}
         {% endif %}
+		</ul>
     </div>
 </div>
 {% endblock %}
