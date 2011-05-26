@@ -27,8 +27,20 @@ ol,ul {
     padding-top: 20px;
 }
 
+#content-alternate {
+	width: 700px;
+	clear:both;
+    height: 100%;
+    overflow: hidden;
+    margin: 0 auto;
+    padding-top: 20px;
+}
+
 #content-wrap {
 	font-weight: bold;
+	font-size: 18px;
+	padding-right: 50px;
+	padding-top: 4px;
 }
 
 #create-note {
@@ -45,6 +57,7 @@ ol,ul {
 	outline: 1px solid #045A8B;
 	width: 225cpx;
 	margin-left: 1px;
+	margin-right: 10px;
 	text-decoration: none;
 }
 
@@ -53,20 +66,30 @@ ol,ul {
     width: 670px;
 }
 #right-column {
-    float: left;
+    float: right;
     width: 280px;
+}
+
+#right-col {
+	float: right;
+	width: 225px;
 }
 
 #notes {
 	margin: 5px 0;
+	width: 430px;
 }
 
 div.collaboration {
 	padding-left: 15px;
 	color: #888;
-	font-size: 14px;
+	font-size: 15px;
 	font-weight: normal;
 	margin: 3px;
+}
+
+input.add-collab {
+	margin-top: 2px;
 }
 
 li.note-listing {
@@ -78,7 +101,7 @@ li.note-listing {
 	border-top-color: #E9E9E9;
 	border-top-style: solid;
 	border-top-width: 1px;
-	font-weight: 525;
+	font-weight: 600;
 }
 
 a.view {

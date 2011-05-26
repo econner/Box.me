@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base_alternate.html" %}
 
 {% block content %}
 
@@ -132,8 +132,7 @@ $(function() {
 </script>
 
     <div id="content-wrap">
-        <a id="create-note" href="/editor">+ Create a New Note</a>
-		<br/>
+        
         {% if notes %}
         <p>Your Notes</p>
 		<ul id="notes">		
@@ -169,6 +168,7 @@ $(function() {
 {% endblock %}
 
 {% block right-column %}
-<div id="right-column">
+<div id="right-col">
+<a id="create-note" href="/editor">+ Create a New Note</a>
 </div>
 {% endblock %}
