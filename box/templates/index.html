@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base_alternate.html" %}
 
 {% block content %}
 
@@ -132,10 +132,9 @@ $(function() {
 </script>
 
     <div id="content-wrap">
-        <a id="create-note" href="/editor">+ Create New Note</a>
-		<br/>
+        
         {% if notes %}
-        <p>Your notes:</a><br/>
+        <p>Your Notes</p>
 		<ul id="notes">		
         {% for note in notes %}
             <li class="note-listing" data-id="{{ note.pk }}" onmouseover="changeBackground(this);" onmouseout="changeBackgroundBack(this);">
@@ -144,14 +143,20 @@ $(function() {
                 {% else %}{{ note.revisions.0.title }}{% endif %}
                 </a><br />
 				<div class="collaboration">
-		            Collaborators:<br/>
-		           <span class="collaborators">
-                {% for collab in note.access_list %}
-                    {% if collab != user %}
-                        <a class="del-collab" href="#del-collab">x</a><span class="collab">{{ collab.email }}</span>
-                    {% endif %}
-                {% endfor %}
-                </span>
+		        	<span class="collaborators">
+						{% if not note.access_list %}
+							No collaborators<br/>
+						{% endif %}
+						{% if note.access_list %}
+							Collaborators:<br/>
+						{% endif %}
+                		{% for collab in note.access_list %}
+                    		{% if collab != user %}
+                        		<a class="del-collab" href="#del-collab">x</a><br/>
+								<span class="collab">{{ collab.email }}</span>
+                    		{% endif %}
+                		{% endfor %}
+                	</span>
 		            Add a collaborator:<br/>
 		            <input type="text" data-note-id="{{ note.pk }}" class="add-collab" />
 				</div>
@@ -163,6 +168,7 @@ $(function() {
 {% endblock %}
 
 {% block right-column %}
-<div id="right-column">
-</div>
+	<div id="right-col">
+		<a id="create-note" href="/editor">+ Create a New Note</a>
+	</div>
 {% endblock %}

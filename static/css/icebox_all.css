@@ -27,38 +27,71 @@ ol,ul {
     padding-top: 20px;
 }
 
+#content-alternate {
+	width: 900px;
+	clear:both;
+    height: 100%;
+    overflow: hidden;
+    margin: 0 auto;
+    padding-top: 20px;
+}
+
+#content-wrap {
+	font-weight: bold;
+	font-size: 18px;
+	padding-top: 4px;
+}
+
+#version-wrap {
+	font-weight: bold;
+	font-size: 18px;
+}
+
 #create-note {
 	color: white;
 	background-color: #045A8B;
 	display: block;
-	font-weight: bold;
 	font-size: 18px;
 	font-weight: bold;
 	text-align: center;
 	padding-top: 3px;
-	padding-bottom: px;
+	padding-bottom: 1px;
 	border: 1px solid white;
 	outline: 1px solid #045A8B;
-	width: 200px;
 	margin-left: 1px;
+	margin-right: 10px;
 	text-decoration: none;
 }
 
 #left-column {
     float: left;
-    width: 670px;
+    width: 420px;
 }
 #right-column {
-    float: left;
+    float: right;
     width: 280px;
+}
+
+#right-col {
+	float: right;
+	width: 225px;
 }
 
 #notes {
 	margin: 5px 0;
+	width: 500px;
 }
 
 div.collaboration {
 	padding-left: 15px;
+	color: #888;
+	font-size: 15px;
+	font-weight: normal;
+	margin: 3px;
+}
+
+input.add-collab {
+	margin-top: 2px;
 }
 
 li.note-listing {
@@ -70,10 +103,23 @@ li.note-listing {
 	border-top-color: #E9E9E9;
 	border-top-style: solid;
 	border-top-width: 1px;
+	font-weight: 600;
+}
+
+#table {
+	width: 900px;
 }
 
 a.view {
 	text-decoration: none;
+	color: #045A8B;
+}
+
+a.switch-rev {
+	text-decoration: none;
+	color: #045A8B;
+	font-weight: normal;
+	font-size: 16px;
 }
 
 #switch-rev-meta {
@@ -85,6 +131,7 @@ a.view {
 	color: #888;
 	font-size: 11px;
 	float: left;
+	font-weight: normal;
 	white-space: nowrap;
 }
 
