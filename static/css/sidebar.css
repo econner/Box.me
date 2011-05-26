@@ -6,6 +6,10 @@ hr {
     margin: 0 0 20px 0;
 }
 
+.sim-items {
+    padding-top: 15px;
+}
+
 .list-element {
     padding-bottom: 3px;
 }
@@ -32,7 +36,6 @@ hr {
 }
 
 .right-column-title {
-    margin: 0 0 -7px 0;
     font-size: 11pt;
     color: #707070;
 }

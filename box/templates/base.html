@@ -44,46 +44,23 @@
             </div>
 
             <div id="content">
-              <table>
-                <tr>
-                  <td>
-                    {# these two should be used for two column displays #}
-                    {% block content %}
-                    {% endblock %}
-                  </td>
-                  <td style="vertical-align:top;">
-                    {% block right-column %}
-                    {% endblock %}
-                  </td>
-                  
-                </tr>
-              </table>
+                <div class="nav-column">
+                      <ul id="global-nav">
+                        <li><a class="" href="/">Latest activity</a></li>
+                        <li><a class="selected" href="/">My Notes</a></li>
+                        <li><a class="" href="/">Collaborators</a></li>
+                      </ul>
+                      <a id="create-note" href="/editor">+ Create New Note</a>
+                      {% block nav-column-extra %}
+                      {% endblock %}
+                </div>
+                {# these two should be used for two column displays #}
+                {% block content %}
+                {% endblock %}
+                {% block right-column %}
+                {% endblock %}
             </div>
-
-
-            <div class="push"></div>
         </div> 
-		
-		<div id="footer">
-            <div class="widget">
-				<div>
-					Raunk&nbsp;&copy;&nbsp;2011
-				</div>
-                <div>
-                    <a href="#">About</a>
-                </div>
-                <div>
-                    <a href="#">Legal</a>
-                </div>
-                <div>
-                    <a href="#">Help</a>
-                </div>
-                <div>
-                    <a href="#">Jobs</a>
-                </div>
-				
-            </div>
-        </div>
 		
 
     </body>

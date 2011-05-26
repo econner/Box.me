@@ -2,3 +2,51 @@
     margin-top: 10px;
     margin-bottom: 10px;
 }
+
+.uiToken {
+    background: none repeat scroll 0 0 #E2E6F0;
+    border: 1px solid #9DACCC;
+    border-radius: 2px 2px 2px 2px;
+    color: #1C2A47;
+    cursor: default;
+    display: block;
+    float: left;
+    height: 14px;
+    margin: 0 4px 4px 0;
+    padding: 0 3px;
+    position: relative;
+    white-space: nowrap;
+    font-size: 0.8em;
+}
+
+.smgrey {
+    font-size: 0.7em;
+    color: #aaa;
+}
+
+.del-collab {
+    display: inline-block;
+    background-image: url("http://b.static.ak.fbcdn.net/rsrc.php/v1/za/r/1Be-brvKO2y.png");
+    height: 11px;
+    margin: 2px 0 -2px 1px;
+    outline: medium none;
+    width: 11px;
+}
+
+td.note-title {
+    width: 300px;
+}
+
+.note-listing {
+    padding: 5px;
+}
+
+a.note-title-link, a.note-title-link:visited {
+    color: #0047B3;
+    font-size: 16pt;
+    font-weight: bold;
+    text-decoration: none;
+}
+.note-title-link:hover {
+    text-decoration: underline;
+}
