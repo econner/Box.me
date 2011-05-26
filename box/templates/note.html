@@ -5,8 +5,7 @@
     <h1>{{ note.revisions.0.title }}</h2><br />
     <div id="note">
         {{ note.revisions.0.text|safe }}
-    </div><br/>
-    <a id="editor" href="/editor?note_id={{ note.pk }}">Edit this note</a>
+    </div>
 </div>
 {% endblock %}
 
@@ -19,17 +18,20 @@ $(function() {
     });
 });
 </script>
-<div id="right-column">
-    Versions<br />
-    {% for rev in note.revisions %}
-        <a class="switch-rev" href="#switch">{{ rev.created }}</a>
-        <div style="display:none;">
-            {{ rev.text|safe }}
-        </div>
-		<div id="switch-rev-meta">
-			<span id="rev-owner">By {{ rev.collaborators.0.email }}</span>
-		</div>
-        <br/>
-    {% endfor %}
+<div id="right-col">
+	<a id="create-note" href="/editor?note_id={{ note.pk }}">Edit this note</a><br/>
+	<div id="version-wrap">
+    	Versions<br/>
+    	{% for rev in note.revisions %}
+        	<a class="switch-rev" href="#switch">{{ rev.created }}</a>
+        	<div style="display:none;">
+            	{{ rev.text|safe }}
+	        </div>
+			<div id="switch-rev-meta">
+				<span id="rev-owner">By {{ rev.collaborators.0.email }}</span>
+			</div>
+    	    <br/>
+    	{% endfor %}
+	</div>
 </div>
 {% endblock %}

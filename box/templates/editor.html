@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
+<div id="left-column">
 <script>
     // set the orbited settings and port
     
@@ -105,6 +106,7 @@ $("#save").bind("click", function() {
 {% endif %}
 {% endblock %}
 
+<<<<<<< HEAD
 {% block right-column %}
 <div id="right-column">
   <h4 class="right-column-title">Similar Notes</h4>
@@ -112,6 +114,14 @@ $("#save").bind("click", function() {
   <ul id="sugg_list" class="suggestion-list"></ul>
   <h4 class="right-column-title">Similar Files on Box.net</h4>
   <hr />
+=======
+{% block nav-column-extra %}
+<div class="sim-items">
+    <h4 class="right-column-title">Similar Notes</h4>
+    <ul id="sugg_list" class="suggestion-list"></ul>
+    
+    <h4 class="right-column-title">Similar Documents</h4>
+>>>>>>> f1f388f1d5f7ac5449c0174d197b5a4f9c8255a8
 </div>
 
 <script id="suggNoteTemplate" type="text/x-jquery-tmpl">

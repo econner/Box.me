@@ -42,7 +42,7 @@ urlpatterns = patterns('',
 	(r'^profile/?$', 'box.users.views.box_search_file'),
 	(r'^download/?$', 'box.users.views.box_download_file'),
 	(r'^versions/?$', 'box.users.views.box_versions'),
-	(r'^keywords/?$', 'box.aprestatagger.views.keywords'),
+	(r'^keywords/?$', 'box.suggestion_engine.views.get_similar_docs'),
 
     (r'^search/', include('haystack.urls')),
     

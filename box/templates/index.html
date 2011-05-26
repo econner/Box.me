@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-
+<div id="left-column">
 <script>
 /*
 * User list auto complete
@@ -19,13 +19,13 @@ function bindCollabActions(context) {
     $(".del-collab", context).bind('click', function() {
         var self = $(this);             // del-collab link
         var note_listing = self.parents(".note-listing");     // note listing container
-        var collab = self.next();       // collab email container
+        var collab = self.parent();       // collab email container
         
         // send request to delete this collaborator
         $.ajax({
             type: "POST",
             url: "/ajax/del_collab",
-            data: "note_id=" + note_listing.attr("data-id") + "&email=" + collab.html(),
+            data: "note_id=" + note_listing.attr("data-id") + "&email=" + self.attr("data-email"),
             success: function(result) {
                 json = $.parseJSON(result);
                 if(json["status"] == "ok") {
@@ -46,7 +46,7 @@ function bindCollabActions(context) {
 * Adds html for specified collaborator and binds appropriate delete actions
 */
 function addCollaborator(context, email) {
-    $(".collaborators", context).append("<a class=\"del-collab\" href=\"#del-collab\">x</a><span class=\"collab\">" + email + "</span>");
+    $(".collaborators", context).append("<span class=\"collab uiToken\">" + email + "<a class=\"del-collab\" data-email=\"" + email + "\" href=\"#del-collab\"></a></span>");
     bindCollabActions(context);
 }
 
@@ -132,37 +132,37 @@ $(function() {
 </script>
 
     <div id="content-wrap">
-        <a id="create-note" href="/editor">+ Create New Note</a>
-		<br/>
         {% if notes %}
-        <p>Your notes:</a><br/>
-		<ul id="notes">		
+        <p><h2>Your Notes</h2>
         {% for note in notes %}
-            <li class="note-listing" data-id="{{ note.pk }}" onmouseover="changeBackground(this);" onmouseout="changeBackgroundBack(this);">
-                <a class="view" href="/note/{{ note.pk }}">
-                {% if not note.revisions %}Note {{ note.pk }}
-                {% else %}{{ note.revisions.0.title }}{% endif %}
-                </a><br />
-				<div class="collaboration">
-		            Collaborators:<br/>
-		           <span class="collaborators">
-                {% for collab in note.access_list %}
-                    {% if collab != user %}
-                        <a class="del-collab" href="#del-collab">x</a><span class="collab">{{ collab.email }}</span>
-                    {% endif %}
-                {% endfor %}
-                </span>
-		            Add a collaborator:<br/>
-		            <input type="text" data-note-id="{{ note.pk }}" class="add-collab" />
-				</div>
-            </li>
+            <div class="note-listing" data-id="{{ note.pk }}">
+                <table>
+                    <tr>
+                        <td class="note-title">
+                            <h3>
+                            <a class="note-title-link" href="/note/{{ note.pk }}">
+                            {% if not note.revisions %}Note {{ note.pk }}
+                            {% else %}{{ note.revisions.0.title }}{% endif %}
+                            </a>
+                            </h3>
+                            <span class="smgrey">Created {{ note.created }}</span>
+                        </td>
+                        <td>
+                            <span class="collaborators">
+                            {% for collab in note.access_list %}
+                                {% if collab != user %}
+                                    <span class="collab uiToken">{{ collab.email }}<a class="del-collab" data-email="{{ collab.email }}" href="#del-collab"></a></span>
+                                {% endif %}
+                            {% endfor %}
+                            </span>
+                            <input type="text" data-note-id="{{ note.pk }}" class="add-collab" />
+                        </td>
+                    </tr>
+                </table>
+            </div>
         {% endfor %}
         {% endif %}
 		</ul>
     </div>
-{% endblock %}
-
-{% block right-column %}
-<div id="right-column">
 </div>
 {% endblock %}

@@ -6,9 +6,9 @@ import glob
 KEYWORDS_TO_GET = 3
 
 def keywords(request):
-    weights = pickle.load(open('aprestatagger/data/dict.pkl', 'rb'))
+    weights = pickle.load(open('suggestion_engine/aprestatagger/data/dict.pkl', 'rb'))
     
-    documents = glob.glob('*/tests/*')
+    documents = glob.glob('/tests/*')
     mytagger = Tagger(Reader(), Stemmer(), Rater(weights))
     allkeywords = []
     for doc in documents:
