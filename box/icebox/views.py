@@ -10,6 +10,7 @@ from django.contrib.auth import login, authenticate, logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from users.models import UserProfile
 from icebox.models import *
+from django.template import RequestContext
 
 from boxdotnet import BoxDotNet
 import diff_match_patch as dmp_module
@@ -59,7 +60,18 @@ def json_response(obj):
     """
     return HttpResponse(simplejson.dumps(obj), mimetype="application/x-javascript")    
     
+@login_required
+def activity(request):
+    return render_to_response("activity.html", 
+                {"user": request.user}, 
+                context_instance=RequestContext(request))
     
+@login_required
+def collaborators(request):
+    return render_to_response("collaborators.html", 
+                {"user": request.user}, 
+                context_instance=RequestContext(request))
+
 @login_required
 def del_collab(request):
     """
@@ -119,7 +131,9 @@ def index(request):
             note.revisions = note.noterevision_set.all().order_by("-created")
             notes.append(note)
     
-    return render_to_response("index.html", {"notes" : notes, "user": request.user})
+    return render_to_response("index.html", 
+                {"notes" : notes, "user": request.user}, 
+                context_instance=RequestContext(request))
 
 @login_required  
 def sync(request):
@@ -228,7 +242,9 @@ def note(request, id):
     # get note's latest revision
     note.revisions = note.noterevision_set.all().order_by("-created")
     
-    return render_to_response("note.html", {"note": note})
+    return render_to_response("note.html", 
+            {"note": note},
+            context_instance=RequestContext(request))
 
 @login_required
 def editor(request):
@@ -276,4 +292,6 @@ def editor(request):
     conn.subscribe(destination='/messages-%s' % note_id, ack='auto')
     conn.send(msg_to_send, destination="/messages-%s" % note_id)
     
-    return render_to_response("editor.html", {"note": note, "revision": revision})
+    return render_to_response("editor.html", 
+            {"note": note, "revision": revision}, 
+            context_instance=RequestContext(request))

@@ -16,23 +16,25 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     (r'^admin/', include(admin.site.urls)),
-    (r'^login/?$', 'box.users.views.box_login'),
+    url(r'^login/?$', 'box.users.views.box_login', name="login"),
     
-    (r'^/?$', 'box.icebox.views.index'),
+    url(r'^/?$', 'box.icebox.views.index', name="index"),
     # mobwrite views
-    (r'^sync/?$', 'box.icebox.views.sync'), 
-    (r'^editor/?$', 'box.icebox.views.editor'), 
+    url(r'^sync/?$', 'box.icebox.views.sync', name="sync"), 
+    url(r'^editor/?$', 'box.icebox.views.editor', name="editor"), 
+    url(r'^activity/?$', 'box.icebox.views.activity', name="activity"), 
+    url(r'^collaborators/?$', 'box.icebox.views.collaborators', name="collaborators"), 
     
-    (r'^ajax/save_note/?$', 'box.icebox.views.save_note'), 
-    (r'^ajax/add_collab/?$', 'box.icebox.views.add_collab'),
-    (r'^ajax/search_collab/?$', 'box.icebox.views.search_collab'),
-    (r'^ajax/del_collab/?$', 'box.icebox.views.del_collab'),
+    url(r'^ajax/save_note/?$', 'box.icebox.views.save_note', name="save_note"), 
+    url(r'^ajax/add_collab/?$', 'box.icebox.views.add_collab', name="add_collab"),
+    url(r'^ajax/search_collab/?$', 'box.icebox.views.search_collab', name="search_collab"),
+    url(r'^ajax/del_collab/?$', 'box.icebox.views.del_collab', name="del_collab"),
     
-    (r'^note/(?P<id>\d+)/?$', 'box.icebox.views.note'),
+    url(r'^note/(?P<id>\d+)/?$', 'box.icebox.views.note', name="note"),
     
-    (r'^search/', 'box.suggestion_engine.views.get_similar_docs'),
-    (r'^nlp/?$', 'box.suggestion_engine.views.do_analysis'),
-    (r'^notesims/?$', 'box.suggestion_engine.views.get_similar_notes'),
+    url(r'^search/', 'box.suggestion_engine.views.get_similar_docs', name="similar_docs"),
+    url(r'^nlp/?$', 'box.suggestion_engine.views.do_analysis', name="do_analysis"),
+    url(r'^notesims/?$', 'box.suggestion_engine.views.get_similar_notes', name="similar_notes"),
     
     # this is used for the search box interface provided by haystack
 

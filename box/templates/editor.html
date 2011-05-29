@@ -59,20 +59,30 @@ Title:<br>
 <br />
 <!-- Preview:
 <div id="notes-preview"></div> -->
-<a href="#saving" id="save" attr-note_id="{{ note.pk }}">Save</a>
-<a id="view" href="/note/{{ note.pk }}">View</a>
-<br />
+<div class="menu-container" style="margin-top: 20px; text-align: right; width: 660px;">
+    <button class="med-button page-action no-icon" id="view" data-note_id="{{ note.pk }}">
+          <span>View</span>
+      </button>
+  <button class="med-button page-action no-icon" id="save" data-note_id="{{ note.pk }}">
+      <span>Save</span>
+  </button>
+</div>
 <div id="note"></div>
 </div>
 
 <script type="text/javascript">
+$("#view").bind("click", function() {
+    var note_id = $(this).attr("data-note_id");
+    window.location.href = "/note/" + note_id;
+});
+
 $("#save").bind("click", function() {
-    var note_id = $(this).attr("attr-note_id");
+    var note_id = $(this).attr("data-note_id");
     var text = encodeURIComponent($("#notes-" + note_id).val());
     var title = encodeURIComponent($("#title-" + note_id).val());
     var html = encodeURIComponent($("#note").html());
     
-    $("#save").html("Saving...");
+    $("#save").html("<span>Saving...</span>");
     
     $.ajax({
         type: "POST",
@@ -81,7 +91,7 @@ $("#save").bind("click", function() {
         success: function(result){
              //var json = $.parseJSON(result);
              //response(json);
-             $("#save").html("Save");
+             $("#save").html("<span>Save</span>");
         },
          error: function(jqXHR, textStatus, error){
              //console.log(jqXHR);

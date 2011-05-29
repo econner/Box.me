@@ -47,11 +47,11 @@ ol,ul {
 	font-size: 18px;
 }
 
-#edit-note-button {
+button.page-action.med-button {
     height: 35px;
     font-size: 15px;
 }
-#edit-note-button > span {
+button.page-action.med-button > span {
     padding: 10px 10px 10px 10px;
     background: none;
 }

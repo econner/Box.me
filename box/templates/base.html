@@ -1,3 +1,6 @@
+{# Loads extra template tags for processing navigation #}
+{% load base_extras %}
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
@@ -46,9 +49,9 @@
             <div id="content">
                 <div class="nav-column">
                       <ul id="global-nav">
-                        <li><a class="" href="/">Latest activity</a></li>
-                        <li><a class="selected" href="/">My Notes</a></li>
-                        <li><a class="" href="/">Collaborators</a></li>
+                        <li><a class="{% navactive request 'activity' %}" href="{% url activity %}">Latest activity</a></li>
+                        <li><a class="{% navactive request 'index' %}" href="{% url index %}">My Notes</a></li>
+                        <li><a class="{% navactive request 'collaborators' %}" href="{% url collaborators %}">Collaborators</a></li>
                       </ul>
                       <script>
                       $(function() {
