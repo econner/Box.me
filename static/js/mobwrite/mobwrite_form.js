@@ -522,6 +522,7 @@ mobwrite.shareTextareaObj.prototype.patch_apply_ =
             index2 = this.dmp.diff_xIndex(diffs, index1);
           }
           if (mod[0] === DIFF_INSERT) {  // Insertion
+             // MOD BY ECONNER TO ADD EDIT POSITION
             text = text.substring(0, start_loc + index2) + mod[1] +
                    text.substring(start_loc + index2);
             for (var i = 0; i < offsets.length; i++) {

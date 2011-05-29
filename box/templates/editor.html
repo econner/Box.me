@@ -2,6 +2,9 @@
 
 {% block content %}
 <div id="left-column">
+<div id="tip">
+    test
+</div>
 <script>
     // set the orbited settings and port
     
@@ -55,7 +58,7 @@ NOTE NOT FOUND
 Title:<br>
 <input type="text" name="title" id="title-{{ note.pk }}" style="width:660px;" value="{{ revision.title }}"/>
 <div id="notes-button-bar"></div>
-<textarea class="note-editor" id="notes-{{ note.pk }}" style="width:660px; height: 200px">{{ revision.text }}</textarea>
+<textarea class="note-editor" id="notes-{{ note.pk }}" style="width: 660px; height: 200px">{{ revision.text }}</textarea>
 <br />
 <!-- Preview:
 <div id="notes-preview"></div> -->

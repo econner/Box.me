@@ -63,6 +63,7 @@ button.page-action {
     -moz-border-right-colors: none;
     -moz-border-top-colors: none;
     background: -moz-linear-gradient(-90deg, #FFFFFF, #E1E1E1) repeat scroll 0 0 transparent;
+    background: -webkit-linear-gradient(-90deg, #FFFFFF, #E1E1E1) repeat scroll 0 0 transparent;
     border-color: -moz-use-text-color -moz-use-text-color #EBEBEB;
     border-radius: 4px 4px 4px 4px;
     border-style: none none solid;
@@ -85,6 +86,7 @@ button.page-action {
 
 button.page-action:hover {
     background: -moz-linear-gradient(-90deg, #485f75, #1B3146) repeat scroll 0 0 transparent;
+    background: -webkit-linear-gradient(-90deg, #485f75, #1B3146) repeat scroll 0 0 transparent;
     border-bottom-color: #0770A0;
     color: #FFFFFF;
     text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.3);
