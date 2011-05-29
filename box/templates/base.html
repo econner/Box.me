@@ -75,45 +75,7 @@
                 {% endblock %}
                 
                 {# script for refreshing content of sidebar #}
-                <script type="text/javascript">
-                  var note_id = $("#save").attr("attr-note_id");
-                  var text_area = $("#notes-" + note_id);
-                  var title_input = $("#title-" + note_id);
-                  var last_text = "";
-
-                  function refresh_suggestions() {
-                      var cur_text = text_area.val();
-                      if (last_text == cur_text) return;
-
-                      var text = encodeURIComponent(cur_text);
-                      var title = encodeURIComponent(title_input.val());
-
-                      $.ajax({
-                          type: "POST",
-                          url: "/notesims",
-                          data: "note_id=" + note_id + "&text=" + text,
-                          success: function(result) {
-                            sugg_list = $("#sugg_list");
-                            sugg_list.html("");
-                            var sim_notes = $.parseJSON(result);
-                            num_notes = sim_notes.length;
-                            for (var i = 0; i < num_notes; i++) {
-                              note_rev = sim_notes[i].fields;
-                              $("#suggNoteTemplate").tmpl({'rev_id':note_rev.note, 'rev_title':note_rev.title}).appendTo(sugg_list);
-                            }
-
-                            last_text = cur_text
-                          },
-                          
-                          error: function(jqXHR, textStatus, error){
-                               //console.log(jqXHR);
-                          }
-                      });
-                  };
-
-                  refresh_suggestions();
-                  setInterval("refresh_suggestions()", 5000);
-                </script>
+                
             </div>
         </div> 
 		
