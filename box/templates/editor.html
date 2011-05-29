@@ -104,22 +104,26 @@ $("#save").bind("click", function() {
 </script>
 
 {% endif %}
+</div>
 {% endblock %}
 
-{% block nav-column-extra %}
-<div id="sidebar" class="sim-items">
-    <h4 class="right-column-title">Similar Notes</h4>
-    <ul id="sugg_list" class="suggestion-list"></ul>
+{% block right-column %}
+<div id="right-col">
+    <div id="version-wrap">
+        <h5 class="right-column-header">Similar Notes</h4>
+        <ul id="sugg_list" class="suggestion-list"></ul>
     
-    <h4 class="right-column-title">Similar Documents</h4>
-</div>
+        <h5 class="right-column-header">Similar Documents</h4>
+    </div>
 
-<script id="suggNoteTemplate" type="text/x-jquery-tmpl">
-  <li class="list-element">
-    <a class="list-clickable" href="editor?note_id=${rev_id}">
-      <span class="list-element-title"->${rev_title}</span><br/>
-      <span class="list-element-body">Collaborators: ${collab_text}</span>
-    </a>
-  </li>
-</script>
+        <script id="suggNoteTemplate" type="text/x-jquery-tmpl">
+          <li class="list-element">
+            <a class="list-clickable" href="editor?note_id=${rev_id}">
+              <span class="list-element-title"->${rev_title}</span><br/>
+              <span class="list-element-body">Collaborators: ${collab_text}</span>
+            </a>
+          </li>
+        </script>
+    </div>
+</div>
 {% endblock %}
