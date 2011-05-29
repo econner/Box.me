@@ -50,7 +50,18 @@
                         <li><a class="selected" href="/">My Notes</a></li>
                         <li><a class="" href="/">Collaborators</a></li>
                       </ul>
-                      <a id="create-note" href="/editor">+ Create New Note</a>
+                      <script>
+                      $(function() {
+                         $("#create-note-button").bind("click", function() {
+                            window.location.href = $(this).attr("data-href"); 
+                         });
+                      });
+                      </script>
+                      <div class="menu-container">
+                          <button class="page-action" id="create-note-button" data-href="/editor">
+                              <span>Create New Note</span>
+                          </button>
+                      </div>
                       {% block nav-column-extra %}
                       {% endblock %}
                 </div>

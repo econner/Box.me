@@ -19,7 +19,7 @@ ol,ul {
 }
 
 #content {
-    width: 960px;
+    width: 1210px;
 	clear:both;
     height: 100%;
     overflow: hidden;
@@ -47,26 +47,58 @@ ol,ul {
 	font-size: 18px;
 }
 
-#create-note {
-	color: white;
-	background-color: #045A8B;
-	display: block;
-	font-size: 18px;
-	font-weight: bold;
-	text-align: center;
-	padding-top: 3px;
-	border: 1px solid white;
-	outline: 1px solid #045A8B;
-	width: 200px;
-	margin-top: 10px;
-	margin-left: 1px;
-	margin-right: 10px;
-	text-decoration: none;
+#edit-note-button {
+    height: 35px;
+    font-size: 15px;
+}
+#edit-note-button > span {
+    padding: 10px 10px 10px 10px;
+    background: none;
+}
+
+button.page-action {
+    -moz-border-bottom-colors: none;
+    -moz-border-image: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background: -moz-linear-gradient(-90deg, #FFFFFF, #E1E1E1) repeat scroll 0 0 transparent;
+    border-color: -moz-use-text-color -moz-use-text-color #EBEBEB;
+    border-radius: 4px 4px 4px 4px;
+    border-style: none none solid;
+    border-width: medium medium 1px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+    color: #333333;
+    cursor: pointer;
+    font-family: helvetica,arial,freesans,clean,sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+    height: 40px;
+    margin-left: 10px;
+    overflow: visible;
+    padding: 0;
+    position: relative;
+    text-shadow: 1px 1px 0 #FFFFFF;
+    top: 1px;
+    white-space: nowrap;
+}
+
+button.page-action:hover {
+    background: -moz-linear-gradient(-90deg, #485f75, #1B3146) repeat scroll 0 0 transparent;
+    border-bottom-color: #0770A0;
+    color: #FFFFFF;
+    text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.3);
+}
+
+button.page-action > span {
+    background: url("/static/images/plus_image.png") no-repeat scroll 5px 55% transparent;
+    padding: 15px 10px 10px 30px;
 }
 
 #left-column {
     float: left;
-    width: 670px;
+    width: 705px;
+    min-height: 400px;
     padding: 20px;
     border-radius: 6px 6px 6px 6px;
     border: 1px solid #D7D7D7;
@@ -139,6 +171,23 @@ a.switch-rev {
 	font-weight: normal;
 	white-space: nowrap;
 }
+#version-wrap {
+    background-color: #fefefa;
+    border: 2px solid #E5E5E5;
+    border-radius: 6px 6px 6px 6px;
+    padding: 15px;
+}
+
+.right-column-header {
+    border-bottom: 1px solid #EFEFEF;
+    color: #222222;
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 1em;
+    padding: 0 0 3px;
+    text-transform: none;
+    margin-bottom: 5px;
+}
 
 .content {
     overflow: auto;
@@ -162,6 +211,7 @@ a.switch-rev {
 
 .nav-column ul#global-nav {
     margin-top: 15px;
+    margin-bottom: 20px;
     list-style: none outside none;
 }
 

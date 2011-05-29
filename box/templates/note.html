@@ -19,9 +19,8 @@ $(function() {
 });
 </script>
 <div id="right-col">
-	<a id="create-note" href="/editor?note_id={{ note.pk }}">Edit this note</a><br/>
 	<div id="version-wrap">
-    	Versions<br/>
+    	<h5 class="right-column-header">Versions</h5>
     	{% for rev in note.revisions %}
         	<a class="switch-rev" href="#switch">{{ rev.created }}</a>
         	<div style="display:none;">
@@ -32,6 +31,19 @@ $(function() {
 			</div>
     	    <br/>
     	{% endfor %}
+    	<script>
+          $(function() {
+             $("#edit-note-button").bind("click", function() {
+                window.location.href = $(this).attr("data-href"); 
+             });
+          });
+          </script>
+          <div class="menu-container">
+              <button id="edit-note-button" class="page-action no-icon" data-href="/editor?note_id={{ note.pk }}">
+                  <span>Edit this Note</span>
+              </button>
+          </div>
 	</div>
+
 </div>
 {% endblock %}
