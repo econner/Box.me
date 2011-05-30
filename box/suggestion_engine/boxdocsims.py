@@ -5,8 +5,9 @@ def box_search_file(profile, query, api_key):
 	box = BoxDotNet()
 	searchFiles = box.get_search(api_key, profile.token, query)
 	return searchFiles
-    
-    
-def box_download_file(auth_token, fileid):
-    downloadurl = 'https://www.box.net/api/1.0/download/%s/%s' % (auth_token, fileid)
-    return HttpResponseRedirect(downloadurl) # change
+
+def box_preview(fileid, profile, api_key):
+    box = BoxDotNet()
+    folder_id = box.get_folder_id(fileid, profile.token, api_key)
+    preview_url = 'https://www.box.net/files#/files/0/f/%s/1/f_%s' % (folder_id, fileid)
+    return preview_url

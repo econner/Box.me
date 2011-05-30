@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.utils import simplejson
 from django.core import serializers
 
@@ -44,9 +44,12 @@ def get_similar_docs(request):
         query += str(word)+ " "
         
     sim_box_docs = boxdocsims.box_search_file(profile, query, settings.BOX_API_KEY) # have it return full XML for now
+    file_id = sim_box_docs.file[0].id[0].elementText
+    folder_id = 0
+    url = boxdocsims.box_preview(file_id, profile, settings.BOX_API_KEY)
     
-    for files in sim_box_docs.file:
-        print "\nFILE ID: " + files.id[0].elementText + "\nFILE NAME: " + files.name[0].elementText
+    #for files in sim_box_docs.file:
+     #   print "\nFILE ID: " + files.id[0].elementText + "\nFILE NAME: " + files.name[0].elementText
     
-    return HttpResponse(str(sim_box_docs))
+    return HttpResponseRedirect(url)
 

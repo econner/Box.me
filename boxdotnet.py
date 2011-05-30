@@ -153,7 +153,8 @@ class BoxDotNet(object):
         'delete'            :   's_delete_node',
         'search'            :   's_search',
         'get_account_info'  :   'get_account_info_ok',
-        'get_versions'      :   's_get_versions'
+        'get_versions'      :   's_get_versions',
+        'get_file_info'     :   's_get_file_info'
     }
 
     def __init__(self, browser="firefox"):
@@ -203,6 +204,10 @@ class BoxDotNet(object):
 
         #return fileList.file[0].id[0].elementText
         return fileList
+
+    def get_folder_id(self, file_id, auth_token, api_key):
+        file_info = self.get_file_info(api_key=api_key, auth_token=auth_token, file_id=file_id)
+        return file_info.info[0].folder_id[0].elementText
 
     # added by HA
     def get_version_history(self, api_key, auth_token, file_id):
