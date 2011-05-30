@@ -31,25 +31,27 @@ def get_similar_notes(request):
     
     return HttpResponse(json, mimetype='application/json')
 
+NUM_QUERY_WORDS = 2
   
 def get_similar_docs(request):
     weights = pickle.load(open('suggestion_engine/aprestatagger/data/dict.pkl', 'rb'))
     profile = request.user.get_profile()
+    text = request.POST['text']
     
-    #text = request.POST['text'] # not working, where to add in?
     mytagger = Tagger(Reader(), Stemmer(), Rater(weights))
-    keywords = mytagger("b word words not here a the", 2) # alter so its just 'text' once the POST request is working
-    query = ""
-    for word in keywords:
-        query += str(word)+ " "
-        
+    keywords = mytagger(text, NUM_QUERY_WORDS) # alter so its just 'text' once the POST request is working
+    query = ' '.join(str(word)[2:-1] for word in keywords)
+     
     sim_box_docs = boxdocsims.box_search_file(profile, query, settings.BOX_API_KEY) # have it return full XML for now
-    file_id = sim_box_docs.file[0].id[0].elementText
-    folder_id = 0
-    url = boxdocsims.box_preview(file_id, profile, settings.BOX_API_KEY)
     
-    #for files in sim_box_docs.file:
-     #   print "\nFILE ID: " + files.id[0].elementText + "\nFILE NAME: " + files.name[0].elementText
+    files_info = []
     
-    return HttpResponseRedirect(url)
+    for files in sim_box_docs.file:
+        file_id = files.id[0].elementText
+        file_name = files.name[0].elementText
+        url = boxdocsims.box_preview(file_id, profile, settings.BOX_API_KEY)
+        files_info.append(dict(file_id=file_id, file_name=file_name, url=url))
+        
+    json = simplejson.dumps(files_info)
+    return HttpResponse(json, mimetype='application/json')
 

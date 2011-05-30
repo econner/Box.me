@@ -123,10 +123,11 @@ $("#save").bind("click", function() {
 {% block right-column %}
 <div id="right-col">
     <div id="version-wrap">
-        <h5 class="right-column-header">Similar Notes</h4>
-        <ul id="sugg_list" class="suggestion-list"></ul>
+        <h4 class="right-column-header">Similar Notes</h4>
+        <ul id="sugg_list_notes" class="suggestion-list"></ul>
     
-        <h5 class="right-column-header">Similar Documents</h4>
+        <h4 class="right-column-header">Similar Files on Box.net</h4>
+        <ul id="sugg_list_docs" class="suggestion-list"></ul>
     </div>
 
         <script id="suggNoteTemplate" type="text/x-jquery-tmpl">
@@ -134,6 +135,15 @@ $("#save").bind("click", function() {
             <a class="list-clickable" href="editor?note_id=${rev_id}">
               <span class="list-element-title"->${rev_title}</span><br/>
               <span class="list-element-body">Collaborators: ${collab_text}</span>
+            </a>
+          </li>
+        </script>
+        
+        <script id="suggDocTemplate" type="text/x-jquery-tmpl">
+          <li class="list-element">
+            <a class="list-clickable" href="${url}" target="_blank">
+              <span class="list-element-title"->${doc_title}</span><br/>
+              <span class="list-element-body">Your Box file</span>
             </a>
           </li>
         </script>
@@ -156,22 +166,43 @@ $("#save").bind("click", function() {
                   url: "/notesims",
                   data: "note_id=" + note_id + "&text=" + text,
                   success: function(result) {
-                    sugg_list = $("#sugg_list");
-                    sugg_list.html("");
+                    var sugg_list_notes = $("#sugg_list_notes");
+                    sugg_list_notes.html("");
                     var sim_notes = $.parseJSON(result);
                     num_notes = sim_notes.length;
                     for (var i = 0; i < num_notes; i++) {
                       note_rev = sim_notes[i].fields;
-                      $("#suggNoteTemplate").tmpl({'rev_id':note_rev.note, 'rev_title':note_rev.title}).appendTo(sugg_list);
+                      $("#suggNoteTemplate").tmpl({'rev_id':note_rev.note, 'rev_title':note_rev.title}).appendTo(sugg_list_notes);
                     }
-
-                    last_text = cur_text
                   },
                   
                   error: function(jqXHR, textStatus, error){
                        //console.log(jqXHR);
                   }
               });
+              
+              $.ajax({
+                  type: "POST",
+                  url: "/docsims",
+                  data: "text=" + text,
+                  success: function(result) {
+                    var sugg_list_docs = $("#sugg_list_docs");
+                    sugg_list_docs.html("");
+                    
+                    var sim_docs = result;
+                    num_docs = sim_docs.length;
+                    for (var i = 0; i < num_docs; i++) {
+                      var doc = sim_docs[i];
+                      $("#suggDocTemplate").tmpl({'doc_title':doc.file_name, 'url':doc.url}).appendTo(sugg_list_docs);
+                    }
+                  },
+                  
+                  error: function(jqXHR, textStatus, error){
+                       console.log(jqXHR);
+                  }
+              });
+              
+              last_text = cur_text
           };
 
           refresh_suggestions();
