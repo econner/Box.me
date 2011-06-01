@@ -174,7 +174,7 @@ a.switch-rev {
 	white-space: nowrap;
 }
 #version-wrap {
-    background-color: #fefefa;
+    background-color: #F5F5DC;
     border: 2px solid #E5E5E5;
     border-radius: 6px 6px 6px 6px;
     padding: 15px;
@@ -218,7 +218,7 @@ a.switch-rev {
 }
 
 .nav-column li a:hover {
-    background: #f8faff;
+    background: #eff1f6;
 }
 
 .nav-column li a.selected {

@@ -149,9 +149,7 @@ $("#save").bind("click", function() {
         
         <script id="noneFoundTemplate" type="text/x-jquery-tmpl">
           <li class="list-element">
-            <a style="padding:5px">
-              <span class="list-element-title">none found...</span>
-            </a>
+            <span class="none-found">none found...</span>
           </li>
         </script>
         
@@ -215,7 +213,6 @@ $("#save").bind("click", function() {
                   },
                   
                   error: function(jqXHR, textStatus, error){
-                    alert("ERROR");
                        //console.log(jqXHR);
                   }
               });
