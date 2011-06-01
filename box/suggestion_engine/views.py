@@ -47,6 +47,5 @@ def get_similar_docs(request):
             files_info.append(dict(file_id=file_id, file_name=file_name, url=url))
         
     json = simplejson.dumps(files_info)
-    print "JSON: ", json
     return HttpResponse(json, mimetype='application/json')
 

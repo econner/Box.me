@@ -3,6 +3,8 @@ from boxdotnet import BoxDotNet
 box = BoxDotNet()
 
 # take a user, and search his files for a given query - HA
+# Returns XMLNode of files in search results
+# Returns None if no results found
 def box_search_file(profile, query, api_key):
     return box.get_search(api_key, profile.token, query)
 

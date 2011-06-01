@@ -52,13 +52,15 @@ def generate_note_sims(note_text, note_id):
     dictionary = corpora.Dictionary(texts)
     corpus = [dictionary.doc2bow(text) for text in texts]
 
-    sms = similarities.docsim.MatrixSimilarity(corpus, MAX_NUM_TO_RETURN)
+    sms = similarities.docsim.MatrixSimilarity(corpus, 10)
     
     vec = dictionary.doc2bow(note_text.lower().split())
     sims = sms[vec]
     
     best = [] 
+    num_best = 0
     for sim in sims:
-        if sim[1] < SIM_THRESHOLD: break
+        if sim[1] < SIM_THRESHOLD or num_best >= MAX_NUM_TO_RETURN: break
         best.append(text_revisions[sim[0]])
+        num_best = num_best + 1
     return best

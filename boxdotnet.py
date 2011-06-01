@@ -195,18 +195,15 @@ class BoxDotNet(object):
         return url
 
     # added by HA
+    # Returns XMLNode of files in search results
+    # Returns None if no results found
     def get_search(self, api_key, auth_token, query):
-
         results = self.search (api_key=api_key, auth_token=auth_token, query=query, page=1, per_page=25, sort='relevance', direction='asc')
-        #print "status: %s" % results.status[0].elementText # working
-        if results.xml.find("<files>") < 0:
+        if results.xml.find("<files>") < 0: # no search results found
             return None
-        fileList= results.files[0] # has status / folders / files, but nothing else... SEE WHERE AT
-       # print "file id (first): %s" % fileList.file[0].id[0].elementText # eventually get an array of file idss
 
-        #return fileList.file[0].id[0].elementText
-        return fileList
-
+        return results.files[0] # has status / folders / files, but nothing else... SEE WHERE AT
+        
     def get_folder_id(self, file_id, auth_token, api_key):
         file_info = self.get_file_info(api_key=api_key, auth_token=auth_token, file_id=file_id)
         return file_info.info[0].folder_id[0].elementText
