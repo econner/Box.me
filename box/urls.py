@@ -33,7 +33,6 @@ urlpatterns = patterns('',
     url(r'^note/(?P<id>\d+)/?$', 'box.icebox.views.note', name="note"),
     
     url(r'^docsims/?$', 'box.suggestion_engine.views.get_similar_docs', name="similar_docs"),
-    url(r'^nlp/?$', 'box.suggestion_engine.views.do_analysis', name="do_analysis"),
     url(r'^notesims/?$', 'box.suggestion_engine.views.get_similar_notes', name="similar_notes"),
     
     # this is used for the search box interface provided by haystack

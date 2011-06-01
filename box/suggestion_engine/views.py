@@ -15,12 +15,6 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate, logout as auth_logout
 
-def do_analysis(request):
-#    text = textextract.extract_text()
-#    return HttpResponse(text)
-    sim_pairs = docsims.generate_doc_sims.delay()
-    return HttpResponse(str(sim_pairs.get()))
-
 def get_similar_notes(request):    
     text = request.POST['text']
     note_id = request.POST['note_id']
