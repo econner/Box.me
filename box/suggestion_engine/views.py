@@ -14,6 +14,7 @@ from aprestatagger.tagger import *
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate, logout as auth_logout
+from notesims import filter_html_tags
 
 def get_similar_notes(request):    
     text = request.POST['text']
@@ -31,21 +32,21 @@ def get_similar_docs(request):
     weights = pickle.load(open('suggestion_engine/aprestatagger/data/dict.pkl', 'rb'))
     profile = request.user.get_profile()
     text = request.POST['text']
-    
+    text = filter_html_tags(text)
     mytagger = Tagger(Reader(), Stemmer(), Rater(weights))
-    keywords = mytagger(text, NUM_QUERY_WORDS) # alter so its just 'text' once the POST request is working
-    query = ' '.join(str(word)[2:-1] for word in keywords)
-     
-    sim_box_docs = boxdocsims.box_search_file(profile, query, settings.BOX_API_KEY) # have it return full XML for now
-    
+    keywords = mytagger(text, NUM_QUERY_WORDS) 
+    query = ' '.join(str(word)[1:-1] for word in keywords)
+    sim_box_docs = boxdocsims.box_search_file(profile, query, settings.BOX_API_KEY)
+
     files_info = []
-    
-    for files in sim_box_docs.file:
-        file_id = files.id[0].elementText
-        file_name = files.name[0].elementText
-        url = boxdocsims.box_preview(file_id, profile, settings.BOX_API_KEY)
-        files_info.append(dict(file_id=file_id, file_name=file_name, url=url))
+    if sim_box_docs is not None:
+        for files in sim_box_docs.file:
+            file_id = files.id[0].elementText
+            file_name = files.name[0].elementText
+            url = boxdocsims.box_preview(file_id, profile, settings.BOX_API_KEY)
+            files_info.append(dict(file_id=file_id, file_name=file_name, url=url))
         
     json = simplejson.dumps(files_info)
+    print "JSON: ", json
     return HttpResponse(json, mimetype='application/json')
 

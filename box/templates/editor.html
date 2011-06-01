@@ -133,7 +133,7 @@ $("#save").bind("click", function() {
         <script id="suggNoteTemplate" type="text/x-jquery-tmpl">
           <li class="list-element">
             <a class="list-clickable" href="editor?note_id=${rev_id}">
-              <span class="list-element-title"->${rev_title}</span><br/>
+              <span class="list-element-title">${rev_title}</span><br/>
               <span class="list-element-body">Collaborators: ${collab_text}</span>
             </a>
           </li>
@@ -142,8 +142,14 @@ $("#save").bind("click", function() {
         <script id="suggDocTemplate" type="text/x-jquery-tmpl">
           <li class="list-element">
             <a class="list-clickable" href="${url}" target="_blank">
-              <span class="list-element-title"->${doc_title}</span>
+              <span class="list-element-title">${doc_title}</span>
             </a>
+          </li>
+        </script>
+        
+        <script id="noneFoundTemplate" type="text/x-jquery-tmpl">
+          <li class="list-element">
+            <span class="list-element-title">None Found</span>
           </li>
         </script>
         
@@ -169,9 +175,14 @@ $("#save").bind("click", function() {
                     sugg_list_notes.html("");
                     var sim_notes = $.parseJSON(result);
                     num_notes = sim_notes.length;
-                    for (var i = 0; i < num_notes; i++) {
-                      note_rev = sim_notes[i].fields;
-                      $("#suggNoteTemplate").tmpl({'rev_id':note_rev.note, 'rev_title':note_rev.title}).appendTo(sugg_list_notes);
+                    if (num_notes == 0) {
+                      $("#noneFoundTemplate").tmpl().appendTo(sugg_list_notes);
+                    }
+                    else {
+                      for (var i = 0; i < num_notes; i++) {
+                        note_rev = sim_notes[i].fields;
+                        $("#suggNoteTemplate").tmpl({'rev_id':note_rev.note, 'rev_title':note_rev.title}).appendTo(sugg_list_notes);
+                      }
                     }
                   },
                   
@@ -190,14 +201,20 @@ $("#save").bind("click", function() {
                     
                     var sim_docs = result;
                     num_docs = sim_docs.length;
-                    for (var i = 0; i < num_docs; i++) {
-                      var doc = sim_docs[i];
-                      $("#suggDocTemplate").tmpl({'doc_title':doc.file_name, 'url':doc.url}).appendTo(sugg_list_docs);
+                    if (num_docs == 0) {
+                      $("#noneFoundTemplate").tmpl().appendTo(sugg_list_docs);
+                    }
+                    else {
+                      for (var i = 0; i < num_docs; i++) {
+                        var doc = sim_docs[i];
+                        $("#suggDocTemplate").tmpl({'doc_title':doc.file_name, 'url':doc.url}).appendTo(sugg_list_docs);
+                      }
                     }
                   },
                   
                   error: function(jqXHR, textStatus, error){
-                       console.log(jqXHR);
+                    alert("ERROR");
+                       //console.log(jqXHR);
                   }
               });
               
