@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div id="left-column">
+<div id="left-column"  {% if note.no_edit %}style="width:920px"{% endif %}>
     <h1>{{ note.revisions.0.title }}</h2><br />
     <div id="note">
         {{ note.revisions.0.text|safe }}
@@ -36,13 +36,41 @@ $(function() {
              $("#edit-note-button").bind("click", function() {
                 window.location.href = $(this).attr("data-href"); 
              });
+             
+             $("#public").bind("click", function() {
+                 var make_public = 0;
+                 if( $(this).is(':checked') )
+                    make_public = 1;
+                var note_id = $(this).attr("data-note-id");
+                $(".public-label").html("Changing status...")
+                
+                $.ajax({
+                    type: "POST",
+                    url: "/ajax/change_note_status",
+                    data: "note_id=" + note_id + "&public=" + make_public,
+                    success: function(result){
+                     //var json = $.parseJSON(result);
+                     //response(json);
+                     $(".public-label").html("Public")
+                    },
+                    error: function(jqXHR, textStatus, error){
+                     //console.log(jqXHR);
+                    }
+                });
+                
+             })
           });
           </script>
+          {% if not note.no_edit %}
           <div class="menu-container">
               <button id="edit-note-button" class="med-button page-action no-icon" data-href="/editor?note_id={{ note.pk }}">
                   <span>Edit this Note</span>
               </button>
           </div>
+          <div style="padding: 10px; border-top: 1px solid #EFEFEF; margin-top: 10px">
+              <input name="public" id="public" data-note-id="{{ note.pk }}" type="checkbox" {% if note.isPublic %}checked="yes"{% endif %}/><label for="public" class="public-label">Public</label>
+          </div>
+          {% endif %}
 	</div>
 
 </div>

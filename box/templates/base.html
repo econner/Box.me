@@ -51,6 +51,7 @@
             </div>
 
             <div id="content">
+                {% if not note.no_edit %}
                 <div class="nav-column">
                       <ul id="global-nav">
                         <li><a class="{% navactive request 'activity' %}" href="{% url activity %}">Latest activity</a></li>
@@ -70,8 +71,10 @@
                           </button>
                       </div>
                       {% block nav-column-extra %}
-                      {% endblock %}
+                      {% endblock %}  
                 </div>
+                {% endif %}
+                
                 {# these two should be used for two column displays #}
                 {% block content %}
                 {% endblock %}

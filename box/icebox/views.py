@@ -206,6 +206,32 @@ def sanitizeHtml(value, base_url=None):
                 tag.attrs.append((attr, val))
 
     return soup.renderContents().decode('utf8')
+    
+@login_required
+def change_note_status(request):
+    status = "fail"
+    output = ""
+    
+    try:
+        note = Note.objects.get(pk = request.POST['note_id'])
+        if(request.user != note.creator and not request.user in note.access_list):
+            return HttpResponse("No access to note.")
+            
+        print request.POST['public']
+        if(request.POST['public'] == "1"):
+            note.isPublic = True
+        else:
+            note.isPublic = False
+        note.save()
+        print note.isPublic 
+        status = "ok"
+        output = "Successfully changed public status."
+        
+    except Note.DoesNotExist:
+        output = "Bad note id"
+        
+    return json_response({"status": status, "output": output})
+    
 
 @login_required
 def save_note(request):
@@ -232,12 +258,20 @@ def save_note(request):
     
 
 def note(request, id):
+    
     # get the note
     try:
         note = Note.objects.get(pk=id)
     except Note.DoesNotExist:
         return HttpResponse("Bad note id")
         
+    # make sure user has access
+    if(request.user != note.creator and not request.user in note.access_list):
+        if(not note.isPublic):
+            return HttpResponse("No access to note")
+        else:
+            note.no_edit = True
+    print note.isPublic
     # get note's latest revision
     note.revisions = note.noterevision_set.all().order_by("-created")
     

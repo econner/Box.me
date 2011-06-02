@@ -29,6 +29,7 @@ urlpatterns = patterns('',
     url(r'^ajax/add_collab/?$', 'box.icebox.views.add_collab', name="add_collab"),
     url(r'^ajax/search_collab/?$', 'box.icebox.views.search_collab', name="search_collab"),
     url(r'^ajax/del_collab/?$', 'box.icebox.views.del_collab', name="del_collab"),
+    url(r'^ajax/change_note_status/?$', 'box.icebox.views.change_note_status', name="change_note_status"),
     
     url(r'^note/(?P<id>\d+)/?$', 'box.icebox.views.note', name="note"),
     

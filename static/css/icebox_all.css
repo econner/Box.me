@@ -522,3 +522,7 @@ li.ui-autocomplete-category {
     color: gray;
     display: block;
 }
+
+.public-label {
+    padding-left: 5px; font-weight: normal; font-size: 10pt
+}

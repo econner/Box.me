@@ -43,6 +43,7 @@ class Note(models.Model):
     creator = models.ForeignKey(User)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+    isPublic = models.BooleanField(default=False)
 
     def __unicode__(self):
         return "note %d" % self.pk
