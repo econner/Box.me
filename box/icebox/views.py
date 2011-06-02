@@ -214,7 +214,6 @@ def save_note(request):
     Expects note to be passed as a post request with
     text and id fields.
     """
-    print request.POST['text']
     try:
         note = Note.objects.get(pk = request.POST['note_id'])
         
