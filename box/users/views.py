@@ -42,23 +42,25 @@ def box_login(request, extra_context=dict(), account_inactive_template='TODO'):
     # if we have a ticket, then get the auth token
     tokenNode = box.login(settings.BOX_API_KEY, request.GET['ticket'])
 	
-    print tokenNode.xml
     token = tokenNode.auth_token[0].elementText
+    user_id = tokenNode.user[0].user_id[0].elementText
+    print user_id
     
     # authenticate the user using this auth token
-    user = authenticate(token=token)
+    user = authenticate(box_user_id=user_id)
     
     if user is None:
         # we have a token but no user, create one
         user = User()
         user.email = tokenNode.user[0].email[0].elementText
-        # we need a username so generate one randomly..
-        user.username = str(uuid.uuid4())[:30]
+        # use box.net user_id as username
+        user.username = user_id
         user.save()
         
         user_profile = UserProfile()
         user_profile.user = user
         user_profile.token = token
+        user_profile.box_user_id = user_id
         user_profile.save()
         
         # Authenticate and login

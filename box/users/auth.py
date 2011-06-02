@@ -10,9 +10,8 @@ class Auth(object):
             return None
 
 class BoxAuth(Auth):
-    def authenticate(self, token=None):
+    def authenticate(self, box_user_id=None):
         try:
-            cur_profile = UserProfile.objects.get(token=token,site=Site.objects.get_current())
-            return cur_profile.user
+            return User.objects.get(username=box_user_id)
         except UserProfile.DoesNotExist:
             return None
