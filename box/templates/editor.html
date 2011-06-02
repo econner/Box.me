@@ -2,9 +2,6 @@
 
 {% block content %}
 <div id="left-column">
-<div id="tip">
-    test
-</div>
 <script>
     // set the orbited settings and port
     
@@ -63,6 +60,9 @@ Title:<br>
 <!-- Preview:
 <div id="notes-preview"></div> -->
 <div class="menu-container" style="margin-top: 20px; text-align: right; width: 660px;">
+    <button class="med-button page-action no-icon" id="preview" data-note_id="{{ note.pk }}">
+          <span>Preview</span>
+      </button>
     <button class="med-button page-action no-icon" id="view" data-note_id="{{ note.pk }}">
           <span>View</span>
       </button>
@@ -70,10 +70,18 @@ Title:<br>
       <span>Save</span>
   </button>
 </div>
-<div id="note"></div>
+<div id="note" style="display:none;"></div>
 </div>
 
 <script type="text/javascript">
+$("#preview").bind("click", function() {
+    $.facebox({ 
+            div: '#note',
+            loadingImage : '/static/images/loading.gif',
+            closeImage : '/static/images/closelabel.png' 
+    });
+});
+
 $("#view").bind("click", function() {
     var note_id = $(this).attr("data-note_id");
     window.location.href = "/note/" + note_id;
