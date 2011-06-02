@@ -13,5 +13,5 @@ class BoxAuth(Auth):
     def authenticate(self, box_user_id=None):
         try:
             return User.objects.get(username=box_user_id)
-        except UserProfile.DoesNotExist:
+        except User.DoesNotExist:
             return None
