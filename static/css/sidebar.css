@@ -25,12 +25,27 @@ hr {
     color: white;
 }
 
+.list-element-content {
+    list-style-type: none;
+    padding:-10px;
+}
+
+.list-element-content li {
+    margin:-5px 0 -5px 0;
+}
+
 .list-element-title {
     color: black;
     font-size: 10pt;
 }
 
-.list-element-body {
+.list-element-snippet {
+    color: black;
+    font-size: 8pt;
+    font-weight: normal;
+}
+
+.list-element-collab {
     color: #595959;
     font-size: 8pt;
 }

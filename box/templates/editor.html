@@ -141,12 +141,14 @@ $("#save").bind("click", function() {
         <script id="suggNoteTemplate" type="text/x-jquery-tmpl">
           <li class="list-element">
             <a class="list-clickable" href="editor?note_id=${rev_id}">
-              <span class="list-element-title">${rev_title}</span><br/>
-              <span class="list-element-body">Collaborators: ${collab_text}</span>
+              <ul class="list-element-content">
+                <li><span class="list-element-title">${rev_title}</span></li>
+                <li><span class="list-element-snippet">{% templatetag openvariable %}html snippet{% templatetag closevariable %}</span></li>
+                <li><span class="list-element-collab">Collaborators: ${collab_text}</span></li>
+              </ul>
             </a>
           </li>
         </script>
-        
         <script id="suggDocTemplate" type="text/x-jquery-tmpl">
           <li class="list-element">
             <a class="list-clickable" href="${url}" target="_blank">
@@ -164,7 +166,7 @@ $("#save").bind("click", function() {
         <script id="notLoggedInTemplate" type="text/x-jquery-tmpl">
           <li class="list-element"><span class="none-found">You are not logged into Box.net.<br/> Click <a href="${url}">here</a> to log in!</span></li>
         </script>
-        
+      
         <script type="text/javascript">
           var note_id = $("#save").attr("data-note_id");
           var text_area = $("#notes-" + note_id);
@@ -185,24 +187,34 @@ $("#save").bind("click", function() {
                   success: function(result) {
                     var sugg_list_notes = $("#sugg_list_notes");
                     sugg_list_notes.html("");
-                    var sim_notes = $.parseJSON(result);
+                    var sim_notes = result;
                     var num_notes = 0;
                     if (sim_notes != null) {
                       num_notes = sim_notes.length
                     }
+                    
                     if (num_notes == 0) {
                       $("#noneFoundTemplate").tmpl().appendTo(sugg_list_notes);
                     }
                     else {
                       for (var i = 0; i < num_notes; i++) {
-                        note_rev = sim_notes[i].fields;
-                        $("#suggNoteTemplate").tmpl({'rev_id':note_rev.note, 'rev_title':note_rev.title}).appendTo(sugg_list_notes);
+                        sim_note = sim_notes[i];
+                        var collab = sim_note.collaborators;
+                        if (collab == '') {
+                          collab = 'None';
+                        }
+                        var snippet = sim_note.sim_text;
+                        if (sim_note.sim_word != '') {
+                          snippet = snippet.replace(sim_note.sim_word, '<b>'+sim_note.sim_word+'</b>');
+                        }
+                        snippet = '...' + snippet + '...'
+                        $("#suggNoteTemplate").tmpl({'rev_id':sim_note.note, 'rev_title':sim_note.title, 'snippet':snippet, 'collab_text':collab, 'hi':true, 'bye':false}).appendTo(sugg_list_notes);
                       }
                     }
                   },
                   
                   error: function(jqXHR, textStatus, error){
-                    alert("SIM NOTE ERROR");
+                    //alert("SIM NOTE ERROR");
                        //console.log(jqXHR);
                   }
               });
@@ -234,7 +246,7 @@ $("#save").bind("click", function() {
                   },
                   
                   error: function(jqXHR, textStatus, error){
-                    alert("SIM DOC ERROR");
+                  //  alert("SIM DOC ERROR");
                        //console.log(jqXHR);
                   }
               });

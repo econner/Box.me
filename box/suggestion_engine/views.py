@@ -17,26 +17,46 @@ from django.contrib.auth import login, authenticate, logout as auth_logout
 from notesims import filter_html_tags
 from boxdotnet import BoxDotNet
 
+
+NUM_QUERY_WORDS = 2
+weights = pickle.load(open('suggestion_engine/aprestatagger/data/dict.pkl', 'rb'))
+mytagger = Tagger(Reader(), Stemmer(), Rater(weights))
+
+def get_keywords_from_text(text):
+    text = filter_html_tags(text)
+    keywords_raw = mytagger(text, NUM_QUERY_WORDS) 
+    keywords = []
+    for word in keywords_raw:
+        keywords.append(str(word)[1:-1])
+    return keywords
+    
 def get_similar_notes(request):    
     text = request.POST['text']
     note_id = request.POST['note_id']
-    sim_note_revs = notesims.generate_note_sims(text, note_id)
-    if sim_note_revs != []:
-        sim_note_revs = serializers.serialize('json', sim_note_revs)
+    keywords = get_keywords_from_text(text)
+    sim_note_revs = notesims.generate_note_sims(filter_html_tags(text), note_id, keywords)
+    print "SUCCESS"
+
+ #   if sim_note_revs != []:
+  #      sim_note_revs = serializers.serialize('json', sim_note_revs)
+
+    print "SIM REVS", sim_note_revs
     json = simplejson.dumps(sim_note_revs) 
+    #json = simplejson.dumps([dict({"a":"A", "b":"B"}), dict({"c":"C", "d":"D"})]) 
+    print "WHOA"
     print "JSON", json
+    
     return HttpResponse(json, mimetype='application/json')
 
-NUM_QUERY_WORDS = 2
-  
+     
 def get_similar_docs(request):
-    weights = pickle.load(open('suggestion_engine/aprestatagger/data/dict.pkl', 'rb'))
+
     profile = request.user.get_profile()
     text = request.POST['text']
-    text = filter_html_tags(text)
-    mytagger = Tagger(Reader(), Stemmer(), Rater(weights))
-    keywords = mytagger(text, NUM_QUERY_WORDS) 
-    query = ' '.join(str(word)[1:-1] for word in keywords)
+    
+    keywords = get_keywords_from_text(text)
+    
+    query = ' '.join(keywords)
     sim_box_docs = boxdocsims.box_search_file(profile, query, settings.BOX_API_KEY)
 
     files_info = []
