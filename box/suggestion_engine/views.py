@@ -35,17 +35,7 @@ def get_similar_notes(request):
     note_id = request.POST['note_id']
     keywords = get_keywords_from_text(text)
     sim_note_revs = notesims.generate_note_sims(filter_html_tags(text), note_id, keywords)
-    print "SUCCESS"
-
- #   if sim_note_revs != []:
-  #      sim_note_revs = serializers.serialize('json', sim_note_revs)
-
-    print "SIM REVS", sim_note_revs
     json = simplejson.dumps(sim_note_revs) 
-    #json = simplejson.dumps([dict({"a":"A", "b":"B"}), dict({"c":"C", "d":"D"})]) 
-    print "WHOA"
-    print "JSON", json
-    
     return HttpResponse(json, mimetype='application/json')
 
      
