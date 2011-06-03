@@ -6,7 +6,6 @@ box = BoxDotNet()
 # Returns XMLNode of files in search results
 # Returns None if no results found
 def box_search_file(profile, query, api_key):
-    print "TOKEN", profile.token
     return box.get_search(api_key, profile.token, query)
 
 def box_preview(fileid, profile, api_key):
