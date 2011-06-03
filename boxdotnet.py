@@ -135,8 +135,10 @@ class XMLNode:
         return __parseXMLElement(dom.firstChild, rootNode)
 
 class BoxDotNetError(Exception):
-    """Exception class for errors received from Facebook."""
-    pass
+    def __init__(self, message, status, method):
+        Exception.__init__(self, message)
+        self.status = status
+        self.method = method
 
 class BoxDotNet(object):
     END_POINT = 'http://www.box.net/api/1.0/rest?'
@@ -181,7 +183,7 @@ class BoxDotNet(object):
         if status == cls.RETURN_CODES[method]:
             return
 
-        raise BoxDotNetError ("Box.net returned [%s] for action [%s]" % (status, method))
+        raise BoxDotNetError ("Box.net returned [%s] for action [%s]" % (status, method), status, method)
 
 
     # added by Eric Conner
@@ -197,11 +199,19 @@ class BoxDotNet(object):
     # added by HA
     # Returns XMLNode of files in search results
     # Returns None if no results found
+    # Returns -1 if user is not logged in
     def get_search(self, api_key, auth_token, query):
-        results = self.search (api_key=api_key, auth_token=auth_token, query=query, page=1, per_page=25, sort='relevance', direction='asc')
+        try:
+            results = self.search (api_key=api_key, auth_token=auth_token, query=query, page=1, per_page=25, sort='relevance', direction='asc')
+        except BoxDotNetError as e:
+            print "BOX ERROR:", e
+            if e.status == "not_logged_in":
+                return -1
+            else:
+                return None
         if results.xml.find("<files>") < 0: # no search results found
             return None
-
+        
         return results.files[0] # has status / folders / files, but nothing else... SEE WHERE AT
         
     def get_folder_id(self, file_id, auth_token, api_key):

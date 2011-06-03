@@ -41,6 +41,7 @@ def generate_note_sims(note_text, note_id):
     all_notes = Note.objects.all()
     texts = []
     text_revisions = []
+    num_other_notes = 0
     for note in all_notes:
         revision = get_latest_note_revision(note)
         if revision is None or str(revision.note.pk) == note_id:
@@ -48,7 +49,11 @@ def generate_note_sims(note_text, note_id):
             
         texts.append(extract_text_from_note(revision))
         text_revisions.append(revision)
-        
+        num_other_notes = num_other_notes + 1
+    
+    if num_other_notes == 0:
+        return []
+    
     dictionary = corpora.Dictionary(texts)
     corpus = [dictionary.doc2bow(text) for text in texts]
 

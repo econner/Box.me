@@ -161,6 +161,10 @@ $("#save").bind("click", function() {
           </li>
         </script>
         
+        <script id="notLoggedInTemplate" type="text/x-jquery-tmpl">
+          <li class="list-element"><span class="none-found">You are not logged into Box.net.<br/> Click <a href="${url}">here</a> to log in!</span></li>
+        </script>
+        
         <script type="text/javascript">
           var note_id = $("#save").attr("data-note_id");
           var text_area = $("#notes-" + note_id);
@@ -182,7 +186,10 @@ $("#save").bind("click", function() {
                     var sugg_list_notes = $("#sugg_list_notes");
                     sugg_list_notes.html("");
                     var sim_notes = $.parseJSON(result);
-                    num_notes = sim_notes.length;
+                    var num_notes = 0;
+                    if (sim_notes != null) {
+                      num_notes = sim_notes.length
+                    }
                     if (num_notes == 0) {
                       $("#noneFoundTemplate").tmpl().appendTo(sugg_list_notes);
                     }
@@ -195,6 +202,7 @@ $("#save").bind("click", function() {
                   },
                   
                   error: function(jqXHR, textStatus, error){
+                    alert("SIM NOTE ERROR");
                        //console.log(jqXHR);
                   }
               });
@@ -206,21 +214,27 @@ $("#save").bind("click", function() {
                   success: function(result) {
                     var sugg_list_docs = $("#sugg_list_docs");
                     sugg_list_docs.html("");
+                    if (typeof(result) == 'string') {
+                      $("#notLoggedInTemplate").tmpl({'url':result}).appendTo(sugg_list_docs);
+                      return;
+                    }
                     
                     var sim_docs = result;
+                    
                     num_docs = sim_docs.length;
                     if (num_docs == 0) {
-                      $("#noneFoundTemplate").tmpl().appendTo(sugg_list_docs);
+                      $("#noneFoundTemplate").tmpl({'text':"none found..."}).appendTo(sugg_list_docs);
                     }
                     else {
                       for (var i = 0; i < num_docs; i++) {
                         var doc = sim_docs[i];
-                        $("#suggDocTemplate").tmpl({'doc_title':doc.file_name, 'url':doc.url}).appendTo(sugg_list_docs);
+                        $("#suggDocTemplate").tmpl().appendTo(sugg_list_docs);
                       }
                     }
                   },
                   
                   error: function(jqXHR, textStatus, error){
+                    alert("SIM DOC ERROR");
                        //console.log(jqXHR);
                   }
               });
