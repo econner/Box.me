@@ -40,7 +40,6 @@ def get_similar_notes(request):
 
      
 def get_similar_docs(request):
-
     profile = request.user.get_profile()
     text = request.POST['text']
     

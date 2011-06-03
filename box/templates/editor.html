@@ -152,7 +152,9 @@ $("#save").bind("click", function() {
         <script id="suggDocTemplate" type="text/x-jquery-tmpl">
           <li class="list-element">
             <a class="list-clickable" href="${url}" target="_blank">
-              <span class="list-element-title">${doc_title}</span>
+              <ul class="list-element-content">
+                <li><span class="list-element-title">${doc_title}</span></li>
+              </ul>
             </a>
           </li>
         </script>
