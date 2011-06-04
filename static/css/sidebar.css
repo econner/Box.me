@@ -14,6 +14,9 @@ hr {
     padding-bottom: 3px;
 }
 
+.list-element p {
+}
+
 .list-clickable {
     padding: 5px;
     display: block;
@@ -22,31 +25,33 @@ hr {
 
 .list-clickable:hover {
     background-color: #FFFFCC;
-    color: white;
+}
+
+.list-clickable:hover .list-element-title {
+    text-decoration: underline;
 }
 
 .list-element-content {
     list-style-type: none;
 }
 
-.list-element-content li {
-    margin:-5px 0 -5px 0;
-}
-
 .list-element-title {
-    color: black;
+    color: #5C3317;
     font-size: 10pt;
-}
-
-.list-element-snippet {
-    color: black;
-    font-size: 8pt;
     font-weight: normal;
 }
 
-.list-element-collab {
+.list-element-snippet {
     color: #595959;
     font-size: 8pt;
+    font-weight: normal;
+    margin: 2px 0 3px 0;
+}
+
+.list-element-collab {
+    color: black;
+    font-size: 8pt;
+    font-weight: normal;
 }
 
 .right-column-title {
@@ -63,5 +68,4 @@ hr {
 .none-found {
     color: #595959;
     font-size:9pt;
-    padding: 5px;
 }

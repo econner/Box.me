@@ -95,7 +95,6 @@ def generate_note_sims(note_text, note_id, keywords):
                 num_words = len(words)
                 if end_ind > num_words:
                     end_ind = num_words
-                    
                 sim_dict['sim_text'] = ' '.join(words[begin_ind:end_ind])
                 sim_dict['sim_word'] = keyword
                 

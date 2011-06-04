@@ -141,32 +141,30 @@ $("#save").bind("click", function() {
         <script id="suggNoteTemplate" type="text/x-jquery-tmpl">
           <li class="list-element">
             <a class="list-clickable" href="editor?note_id=${rev_id}">
-              <ul class="list-element-content">
-                <li><span class="list-element-title">${rev_title}</span></li>
-                <li><span class="list-element-snippet">{% templatetag openvariable %}html snippet{% templatetag closevariable %}</span></li>
-                <li><span class="list-element-collab">Collaborators: ${collab_text}</span></li>
-              </ul>
+              <p class="list-element-title">${rev_title}</p>
+              <p class="list-element-snippet">{% templatetag openvariable %}html snippet{% templatetag closevariable %}</p>
+              <p class="list-element-collab">Collaborators: ${collab_text}</p>
             </a>
           </li>
         </script>
         <script id="suggDocTemplate" type="text/x-jquery-tmpl">
           <li class="list-element">
             <a class="list-clickable" href="${url}" target="_blank">
-              <ul class="list-element-content">
-                <li><span class="list-element-title">${doc_title}</span></li>
-              </ul>
+              <p class="list-element-title">${doc_title}</p>
             </a>
           </li>
         </script>
         
         <script id="noneFoundTemplate" type="text/x-jquery-tmpl">
           <li class="list-element">
-            <span class="none-found">none found...</span>
+            <p class="none-found">none found...</p>
           </li>
         </script>
         
         <script id="notLoggedInTemplate" type="text/x-jquery-tmpl">
-          <li class="list-element"><span class="none-found">You are not logged into Box.net.<br/> Click <a href="${url}">here</a> to log in!</span></li>
+          <li class="list-element">
+            <p class="none-found">You are not logged into Box.net.<br/> Click <a href="${url}">here</a> to log in!</p>
+          </li>
         </script>
       
         <script type="text/javascript">

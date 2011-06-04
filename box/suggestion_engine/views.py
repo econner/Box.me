@@ -18,16 +18,18 @@ from notesims import filter_html_tags
 from boxdotnet import BoxDotNet
 
 
-NUM_QUERY_WORDS = 2
 weights = pickle.load(open('suggestion_engine/aprestatagger/data/dict.pkl', 'rb'))
 mytagger = Tagger(Reader(), Stemmer(), Rater(weights))
 
 def get_keywords_from_text(text):
     text = filter_html_tags(text)
-    keywords_raw = mytagger(text, NUM_QUERY_WORDS) 
+    num_query_words = 1 + len(text) / 20; #have number of query words vary with length of text
+    keywords_raw = mytagger(text, num_query_words) 
     keywords = []
-    for word in keywords_raw:
-        keywords.append(str(word)[1:-1])
+    for word in keywords_raw: 
+        without_quotes = str(word)[1:-1] #remove enclosing quotes
+        single_words = without_quotes.split() #keyword may be multiple words
+        keywords.extend(single_words)
     return keywords
     
 def get_similar_notes(request):    
