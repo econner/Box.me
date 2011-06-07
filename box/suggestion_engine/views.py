@@ -21,9 +21,7 @@ from boxdotnet import BoxDotNet
 weights = pickle.load(open('suggestion_engine/aprestatagger/data/dict.pkl', 'rb'))
 mytagger = Tagger(Reader(), Stemmer(), Rater(weights))
 
-def get_keywords_from_text(text):
-    text = filter_html_tags(text)
-    num_query_words = 1 + len(text) / 20; #have number of query words vary with length of text
+def get_keywords_from_text(text, num_query_words):
     keywords_raw = mytagger(text, num_query_words) 
     keywords = []
     for word in keywords_raw: 
@@ -34,9 +32,11 @@ def get_keywords_from_text(text):
     
 def get_similar_notes(request):    
     text = request.POST['text']
+    text = filter_html_tags(text)
     note_id = request.POST['note_id']
-    keywords = get_keywords_from_text(text)
-    sim_note_revs = notesims.generate_note_sims(filter_html_tags(text), note_id, keywords)
+    keywords = get_keywords_from_text(text, 1 + len(text) / 20)
+    sim_note_revs = notesims.generate_note_sims(text, note_id, keywords)
+    print sim_note_revs
     json = simplejson.dumps(sim_note_revs) 
     return HttpResponse(json, mimetype='application/json')
 
@@ -44,8 +44,9 @@ def get_similar_notes(request):
 def get_similar_docs(request):
     profile = request.user.get_profile()
     text = request.POST['text']
+    text = filter_html_tags(text)
     
-    keywords = get_keywords_from_text(text)
+    keywords = get_keywords_from_text(text, e)
     
     query = ' '.join(keywords)
     sim_box_docs = boxdocsims.box_search_file(profile, query, settings.BOX_API_KEY)

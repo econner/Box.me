@@ -70,6 +70,8 @@ def generate_note_sims(note_text, note_id, keywords):
        
         rev = text_revisions[sim[0]]
         rev_text = filter_html_tags(rev.text)
+        words = rev_text.split()
+        rev_text_lower = rev_text.lower()
 
         collaborators = []
         for c in rev.collaborators:
@@ -81,13 +83,16 @@ def generate_note_sims(note_text, note_id, keywords):
 
         found_keyword = False
         for keyword in keywords:
-            if rev_text.find(keyword) >= 0:
-                words = rev_text.split()
+            if rev_text_lower.find(keyword) >= 0:
                 w_ind = 0
+                the_word = None
                 for word in words:
-                    if word == keyword:
+                    if word.lower() == keyword:
+                        the_word = word
                         break
                     w_ind = w_ind + 1
+                if the_word is None:
+                    continue
                 begin_ind = w_ind - WORD_RADIUS
                 end_ind = w_ind + WORD_RADIUS
                 if begin_ind < 0:
@@ -96,7 +101,7 @@ def generate_note_sims(note_text, note_id, keywords):
                 if end_ind > num_words:
                     end_ind = num_words
                 sim_dict['sim_text'] = ' '.join(words[begin_ind:end_ind])
-                sim_dict['sim_word'] = keyword
+                sim_dict['sim_word'] = the_word
                 
                 found_keyword = True
                 break
