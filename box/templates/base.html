@@ -54,9 +54,9 @@
                 {% if not note.no_edit %}
                 <div class="nav-column">
                       <ul id="global-nav">
-                        <li><a class="{% navactive request 'activity' %}" href="{% url activity %}">Latest activity</a></li>
-                        <li><a class="{% navactive request 'index' %}" href="{% url index %}">My Notes</a></li>
-                        <li><a class="{% navactive request 'collaborators' %}" href="{% url collaborators %}">Collaborators</a></li>
+                        <li><a class="" href="#">Latest activity</a></li>
+                        <li><a class="selected" href="/">My Notes</a></li>
+                        <li><a class="" href="#">Collaborators</a></li>
                       </ul>
                       <script>
                       $(function() {
