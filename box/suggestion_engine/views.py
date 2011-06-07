@@ -46,7 +46,7 @@ def get_similar_docs(request):
     text = request.POST['text']
     text = filter_html_tags(text)
     
-    keywords = get_keywords_from_text(text, e)
+    keywords = get_keywords_from_text(text, 2)
     
     query = ' '.join(keywords)
     sim_box_docs = boxdocsims.box_search_file(profile, query, settings.BOX_API_KEY)
