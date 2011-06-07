@@ -1,0 +1,14 @@
+194 ideas
+note taking app
+
+real-time + whiteboard-like
+save to box
+
+version history (w/ ppl who collaborated on that version)
+invite ppl to collaborate
+list of relevant docs
+
+public URL to note - support markdown syntax (if you choose)
+
+we are also thinking about adding 1 more feature that takes advantage of some of the document similarity stuff we have already worked on
+- one potential idea:

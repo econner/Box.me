@@ -1,0 +1,4 @@
+insert into icebox_note values(3, '2', 2, '2011-06-07 04:15:41.352064', '2011-06-07 04:15:41.352100', 0);
+insert into icebox_noterevision values(3, '2', '2011-06-07 04:15:55.068508', '2011-06-07 04:15:55.068547', 'Hash Functions', 'Hash functions, also called message digests and one-way encryption, are algorithms that, in some sense, use no key (Figure 1C). Instead, a fixed-length hash value is computed based upon the plaintext that makes it impossible for either the contents or length of the plaintext to be recovered. Hash algorithms are typically used to provide a digital fingerprint of a file\'s contents, often used to ensure that the file has not been altered by an intruder or virus. Hash functions are also commonly employed by many operating systems to encrypt passwords. Hash functions, then, provide a measure of the integrity of a file.
+
+', 0, 3);

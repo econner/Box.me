@@ -2,6 +2,7 @@
 *.pyc
 *DS_Store
 boxdb
+build_db.sql
 box/example/
 !schema.xml
 box/haystack/

@@ -1,0 +1,24 @@
+About The Nuance No-Show At Apple’s WWDC Keynote
+With regard to today’s WWDC keynote, we were right about a lot of things. Twitter/iOS. Revamped notifications. Widgets (though they didn’t call them “widgets” on stage, the weather and stock areas in the notifications pull-down are widgets). iOS Messages (okay, this was more of a dream that somehow came true). July launch for OS X Lion. No “iPhone 4S”. iCloud WWDC launch. iOS 5 fall launch.
+
+But we weren’t right about everything. Namely, where the hell was Nuance and/or Siri in today’s keynote?
+
+We’re still looking into this, but here’s the latest we’re hearing. At least three of our original sources on this were “very surprised” not to hear anything during the keynote today. One noted that leading up to the last minute, they were sure new, elaborate voice features in iOS 5 were going to be announced on stage. It didn’t happen. Apple has been known to pull things at the last second. But this may go deeper.
+
+Another source wonders if our stories on the negotiations between Apple and Nuance didn’t throw a wrench in things? Nuance is known to be just as hard of a negotiator as Apple is. And if the rumored features are coming to iOS, they know that Apple absolutely needs them.
+
+But none of this changes the fact that Nuance technology has already been found in Apple software (OS X Lion, to be exact). And multiple source claim Nuance software is already running at Apple’s new datacenter in North Carolina. Still, the finalized deals may simply not be in place just yet, so Apple couldn’t say anything on stage. If that’s true, the thought is that Nuance technology will still be a part of iOS 5, it would just be included closer to the actual launch in the fall.
+
+This may make sense as we noted from the beginning that it’s entirely possible that at first, Nuance (and Siri) technology will only be used for apps created by Apple. They would then presumably be opened to third-party developers at a later time. If that’s the case, Apple did not need to show off the technology today to get developers ready. And they can add it when they like.
+
+Or it could be that Apple scrapped plans entirely for one reason or another. But again, we don’t believe that to be the case at this time. More likely than that is that the implementation just may not be done yet.
+
+And the fact that the Chief Mobile Technology Architect at Nuance was in the audience today at WWDC is very interesting to say the least. Even more interesting is something else we had heard, but haven’t been able to confirm — he may be about to start working at Apple. (He has not returned our request for comment.)
+
+Also interesting is that Roger Rosner, Apple’s VP of Productivity Applications who is believed to be in charge of the Siri/Nuance stuff at Apple, was on stage today. But instead of voice features, he demoed Documents in the Cloud and a few other new things. That may have been tweaked at the last second.
+
+Now that iOS 5 is out there in developers hands, we can probably expect some code digging shortly, and we wouldn’t be surprised if they find more references to Nuance in the code. Apple did tout hundreds of new features/tools in iOS 5 today, and only gave stage time to a handful.
+
+More to come.
+
+Update: In a comment below, Robert Scoble (who yes, did nail the deep Twitter/iOS integration stuff after our initial post on the matter), says the same source told him that the Siri integration just wasn’t done in time for today. He speculates that it still could be a part of the iPhone 5/iOS 5 launch in the fall, thinking that they will need something cool and new to show off. That could very well be the case.

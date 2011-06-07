@@ -1,0 +1,44 @@
+Everything You Need To Know About iOS 5
+The WWDC 2011 keynote has just wrapped up, and Steve Jobs and company have announced some very interesting features for the iOS family of devices, including improvements to browsing, rich reminders, and a slightly Android-esque Notification Center.
+
+Apple has its own page with many of these features, but here are the big ones as we see them, and links to further coverage on the network.
+
+Notification Center – iOS has always been deficient in the notifications department, something Android hit hard on from its first release. Apple has finally updated with a rich, powerful notifications screen that, like Android, you swipe down from the top of the screen. Paging Google Legal! The new notifications won’t pop up and interrupt you, either, but slide down from the top. SMS, Mail, and any app that’s qualified to alert you will show up here.
+
+Improved lockscreen – the stark but iconic iOS lock screen has also received a major update. It now shows any missed notifications, and you can swipe directly to the related app without having to unlock first.
+
+Newsstand – a unified sub-category in the app store where all subscription magazines are placed. Download any of them, and they’re placed in the newsstand app. Each subscription app will do background downloads and update the cover of the magazine to show the latest. (read more)
+
+Safari update: Tabbed browsing, finally! Tabs are always visible and switch instantly. The new reading list functionality is interesting, as well:
+
+Reader/Reading List – This is a desktop/mobile thing. In Desktop Safari, it’ll gather all the pages of a story and reformat to make it “pretty.” You can also add items to be read later to your “reading list,” which is like a tightly-integrated version of Instapaper. It’ll sync those items with all your iOS devices, and any computer with Safari on it.
+
+Reminders – Lists of items, times, and locations that can be set to remind you or brought up at any time. You can associate contacts and such, very helpful, though if I’m not mistaken another thing Google has done pretty well for a while. Not to be hard on iOS or anything, but it’s a direct competition thing now, not a big jump over what’s out there.
+
+Camera – The iOS native camera app has been improved with a great number of features. It’s “way faster” now, which is reassuring, and you can also now take pictures directly from the lock screen, whether there is a password or not. While this may lead to increased pranking, it’s excellent for snapshots and amateur journalism, where every second matters. There are UI enhancements within the app now; you can lock focus and exposure, pinch and zoom the live view, and enhance the photos with the iPhoto optimization techniques. A hard trigger (volume up elsewhere) rounds out the features. (read more)
+
+Mail updates – Some small but meaningful tweaks to Mail. S/MIME and better secure enterprise support, for one thing, which should help with business uptake of iPads. Better UI gestures for navigating between messages and inbox. Rich text formatting, control over indentation, and better search indexing – all content is now searchable. You can now drag addresses around, which may or may not be useful.
+
+Thumb keyboard – A new keyboard option, with the keys split and placed on either side of the screen for easy thumbing. Some people love this, some hate it, but it’s good to have it as an option. Windows 8 demonstrated this recently, though I seriously doubt this was a last-minute activation on Apple’s part; there are plenty of similar usability improvements.
+
+“PC Free” – Apple is emphasizing the independence of the mobile and tablet platforms. They’ve been tied to a PC for the most part, but iOS 5 will enable better OTA updates and no device will require a Mac or PC to activate or set up. Updates have been shrunk to “delta” updates (i.e. just the difference between files and binaries, etc) so they’re quicker. New emphasis on on-device editing of content and things like contacts or calendar events.
+
+Twitter better integrated - Simple, in-OS sign-in, then context-sensitive pop-up tweeting with attachments and location data. (read more)
+
+Game Center update – After an update on the popularity of the platform (100,000 games, 50 million users), some new social features were announced: game and friend recommendations, achievement points, photo sharing, and (my favorite) turn-based gaming support built right into the OS. Hopefully this means games like Worms 2 will get play-by-mail and enhanced multiplayer options.
+
+iMessages – an all-inclusive (text, photos, videos, meta-info like contacts) messaging platform by which any two iOS 5 users can chat and trade files securely, over WiFi or 3G. Advanced features like read receipts, live typing indicators, etc. Tight integration with notifications, and non-invasive pop-in of incoming messages. Multi-tasking friendly.
+
+Wireless sync to iTunes – Does what it says on the tin.
+
+AirPlay mirroring - Mirror your entire iPad 2 (not iPad, not enough processing power I assume) on your TV wirelessly. Assuming you have a new Apple TV with an A4 inside, that is. Great for “big” games, though lag could be an issue.
+
+Improved multitouch multitasking – better gestures for getting around between apps, returning home, etc.
+
+Improved iPad iPod – mostly glossed over, but the iPad’s music app should be better now.
+
+There were also a number of small things: alternate routes in maps, new emoji, hourly updates to weather, etc. iCloud integration as well, though there’s still much to learn about how all that will work.
+
+The developer seed is available now, and consumers will have it in the Fall. Consumers, that is, with any of the following devices: iPhone 3GS & 4, iPad 1 or 2, 3rd generation iPod touch.
+
+Want to watch the whole keynote where these things were announced? Head on over to Apple.
