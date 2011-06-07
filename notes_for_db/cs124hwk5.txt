@@ -1,0 +1,78 @@
+CS124 Homework 5 README
+QUESTION 5.
+  In Pang, Lee, and Vaithyanathan, they dealt with negation words by basically figuring out where they existed (e.g. by searching for words like ‘not’, ‘didn’t’, ‘wasn’t’, etc…) and then adding the tag NOT_ to every word which FOLLOWS that negation term, up until a punctuation (e.g. a period at the end of a sentence). 
+
+Examples of sentences which have the negation method above FAIL:
+1)	Only with sarcasm would I say this movie is amazing! – Get that the movie is amazing (positive sentiment) even though there is a negative sentiment.
+
+2)	I wouldn’t see this boring movie again. – Get “NOT_boring” even though you clearly think the movie is boring.
+
+An improved algorithm is one which takes into account parts of speech when evaluating when to add the “NOT” tag before a word.  In the second example above, the reason the negation messes up is that the “NOT” should be applied to the transitive verbs ‘miss’ and ‘see,’ but not to everything afterward.  Therefore, to improve the algorithm, rather than adding the tag NOT_ to every word following the negation term up until a punctuation, we should add the NOT_ tag to every word following the negation term up until we either 1) reach a transitive verb OR 2) reach a punctuation (e.g. in the normal case ‘this movie isn’t fun’).   To make an improvement on the first example, we should not only search for words such as “not” or “didn’t”, but also search for words that indicate a reverse in sentiment such as “sarcasm” or “lie” and include the NOT_ tag in cases there as well.  This would make the movie be NOT_amazing, which is correct.  This should improve the negation algorithm used in the paper, though it is still not perfect.
+
+QUESTION 6.   
+I am going to assume that Levenshtein distance in this case has a substitution cost of 2 with an insertion cost of 1 and deletion cost of 1, because this is what was specified in Lecture Notes #2. 
+
+Given this assumption, ride is CLOSER to bier because there is a Levenshtein distance of 4 by having b-i-*-e-r match with r-i-d-e-*.  The b-r substitution costs 2 and the *-d costs 1 and the r-* costs 1 as well.
+
+The levenshtein distance between ride and shard is 5 because the proper match is *-*-*-r-i-d-e with s-h-a-r-*-d-*.  All the *’s cost 1, so the distance is 5, which is worse than between ride and bier.
+
+QUESTION 7.   
+So the first step is to correct v2(2), which should actually give 0.00448 (the actual numbers are correct within the max, just the final value was wrong in the book).
+
+From there, we can say that v3(1) = max(v2(1)*P(C|C)*P(3|C), v2(2)*P(C|H)*P(3|C)) = max(0.048*0.6*0.1,0.00448*0.3*0.1) = 0.00288
+
+Going further, v3(2) = max(v2(1)*P(H|C)*P(3|H), v2(2)*P(H|H)*P(3|H)) = max(0.048*0.4*0.4,0.00448*0.7*0.4) = 0.00768.
+
+So now that we have v3(1) and v3(2), to calculate v3(end), all we need to do is realize that from v3(1), there is only 1 path to end because the sequence is done, and this is the same for v3(2).  This means P(H|end) and P(C|end) after the last observation are both 1, meaning v3(end) is actually just max(v3(1)*1,v3(2)*1) = 0.00768.
+
+QUESTION 8
+Query 1: “golf cart” on Google versus Bing.  The snippets produced on google are markedly different than the results on Bing. 
+
+E-Z-GO on Google (first non-sponsored search result):
+E-Z-GO offers durable vehicles to enhance the image and day-to-day operations of your course, including the revolutionary RXV, fleet cars, refreshment, ...
+
+E-Z-GO on Bing (second non-sponsored search result):
+golf. fleet. rxv; txt; freedom rxv; freedom txt; turf maintenance. mpt 800; mpt 1000; mpt 1200; food and beverage. mpt 1200 refresher; mpt 2000 refresher; hospitality. shuttle 2+2 rxv
+
+The amazing thing is that when the query is “golfcart,” both snippets converge to what the Google one shows.
+
+Query 2: “academics” on Google versus Bing.  The snippets produced by the first search result (the Wikipedia page for ‘academia’) are actually different.
+
+Google: 
+An academic is a person who works as a researcher (and usually teacher) at a university, college, or similar institution in post-secondary (tertiary) ...
+
+Bing:
+Academic societies served both as a forum to present and publish academic work, the role now served by academic publishing, and as a means to sponsor research and support academics ...
+
+
+Explanation as to why the snippets are different: With the first query, we can see that Bing attempts to look for exact words from the query to display in the snippet – printing out “golf” whereas Google’s does not.  Similarly, in query 2, Bing displays “academics” (the query exactly), whereas Google only displays “academic,” the singular form of the query.  
+
+Not only does it seem like Bing seems to place emphasis on the actual query as opposed to variations of it within the snippet, it also places a greater focus on the “keywords” within the metaname source code compared to the “description” within the metaname.  We see this from query 1, where the snippet for Google focuses on the source code “description” (it really just copies it) whereas the snippet for Bing just copies the keywords within the source code rather than the description (so it’s really a collection of words rather than a full sentence in this case).  
+
+These are both pretty interesting differences within the snippets that I would not have expected – really because I just assumed Google and Bing were the same.
+
+QUESTION 9
+Query 1: “Jackson” on Google versus Bing.  See printed pages for results.
+Query 2: “bieber” on Google versus Bing.  See printed pages for results
+
+Through the Jackson query results, we notice that a lot of the Bing results focus on Michael Jackson, and there is even a link on the left hand side for related searches where Michael Jackson repeatedly comes up.  Interestingly, the rest of Bing’s first page results focus on either people (Andrew and Michael Jackson), or places (Jackson, MI and Jackson, CA, and Jackson, Mississippi).  Google’s results on the other hand are actually fairly different from Bing’s in that Michael Jackson only shows up once, and it’s not even that near the top of the page.  This is interesting because I’m fairly certain ‘Michael Jackson’s’ Wikipedia entry has been clicked on much more than Andrew Jackson’s, yet it’s Andrew Jackson’s Wikipedia entry that shows up on Google.  The rest of Google’s results are filled with places, labs, JSON processor, and other locations (that aren’t cities).  Given that the results on the first page are so different for Google and Bing, it would seem as if Bing wants to focus on the most commonly clicked links for ‘Jackson’ e.g. focusing on the musician as well as places, whereas Google is really giving results that are explicitly and specifically ‘Jackson’ e.g. Jackson lab, Jackson Research, Jackson Casino rather than emphasizing people/places.
+
+The ‘bieber’ query results also show an interesting difference between Google and Bing, but in a different way than the ‘Jackson’ query.  What it shows is that while the results are both unique, the types of results that Google returned are actually much more clustered around recently updated pages such as news links and music sites centered on Justin Bieber, whereas Bing’s results were uniformly varied across news, Wikipedia, music sites, and others.  Interestingly, ‘bieber’ on Bing returns a few Bieber, Caliofrnia results that aren’t included in Google’s.  
+
+Rather than being in contrast to the previous query results, where it seemed like Google’s were more varied compared to Bing’s, I think now that the query is much more focused to one contemporary thing (i.e. ‘bieber’ as opposed to ‘jackson’), Google emphasizes contemporary links such as news results and his updated websites in its normal search more so than Bing does.  At the same time, consistently, Bing seems to like places a lot since in both ‘Jackson’ and ‘bieber,’ locations are used more in Bing’s results than in Google’s.
+
+QUESTION 10
+
+Bing > Google: “volumes” is the query.
+
+In this query, Bing’s results seem to be better than Google’s because it seems to directly be searching for the word ‘volumes’ rather than just ‘volume’.  While a lot of the query results are the same, we do see things like the South Park Gift Pack show up on the first page, as well as the Volumes music group staying at the top of the results.  With Google, however, these results fall because it seems to be content with equating ‘volume’ with ‘volumes’ in its search result, which may be fine, but in the case where we are looking for the Volumes band or we are adding the ‘s’ at the end for a reason, Bing does a better job of returning results.
+
+Google > Bing: “functionality in cars” 
+
+Bing defaults to “function in car” which is a stemming, but there is a distinct difference between functionality in cars and function in cars semantically.  While in the first query (‘volumes’), neither Google or Bing defaulted to ‘volume’ (Google just returned more results dealing with ‘volume’), in this query, Bing explicitly does morphological stemming prior to the return of the search results.  Since ‘functionality in cars’ refers to added gadgets which improve cars (e.g. WLAN, Car Consoles) but ‘function in cars’ is MUCH broader (e.g. deals with things like ‘what is the function of a clutch?, function of a steering wheel, etc…), Google’s results are much more direct to what the query was.  While you can select at the top of ‘Bing’ that you oly want results for ‘functionality in cars,’ the first response which they give has that stemming which drastically changes the meaning of what you are looking for when you search.
+
+In sum, the main difference between Google and Bing’s results seems to be that Google does some basic stemming without actually modifying the search query, but Bing can completely change the query by stemming the original query (and then informing you) to give you different search results sometimes.
+
+
+
+Note: on this homework assignment, I worked through the problems with Andy Altman, though the solutions were written up and done separately.

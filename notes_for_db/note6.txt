@@ -1,0 +1,16 @@
+Apple WWDC: iOS 5 integrates Twitter into contacts, photos, Safari and more
+Apple and Twitter have teamed up to allow iPad, iPhone and iPod Touch users to tweet photos, maps, websites and other items directly from within the iOS operating system.
+
+Scott Forstall, Apple's senior vice president of iOS software, announced Monday morning at the company's Worldwide Developers Conference in San Francisco that Twitter would be baked into iOS 5, which is coming to i-devices this fall.
+
+"People send more than a billion tweets per week," Forstall said during the event's first-day keynote. "And we hear from a lot of our customers on iPhone and iPad and iPod Touch that they love Twitter. And so we want to make it even easier for all of our customers to use Twitter on iOS products."
+
+One of the major ways that Apple is integrating the microblogging site into iOS 5 is with a single sign-on feature. Users will be able to sign into their Twitter accounts once, and all Twitter-enabled apps will respond — eliminating the need to enter a username and password for each individual app.
+
+The single sign-on feature then will enable iOS 5 users to post directly to Twitter from built-in iOS apps such as Photos and Camera, Safari (for tweeting links to websites), YouTube (for tweeting videos) and Maps (for tweeting locations). And Apple has made APIs available so third-party developers can take advantage of the single sign-on feature for their own apps.
+
+Apple's iOS 5 will also pull Twitter profile pictures and Twitter handles into an iOS user's contacts list alongside names, email addresses and phone numbers.
+
+Jack Dorsey, who co-founded Twitter and oversees the San Francisco company's product development, wrote a short post on Twitter's blog about the iOS integration.
+
+"Building Twitter into iOS 5 truly creates the easiest way to share everything that's happening in your world," Dorsey wrote. "Take a picture, tap 'Tweet.' Tweeting has never been simpler."

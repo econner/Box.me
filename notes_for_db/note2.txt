@@ -1,0 +1,20 @@
+Apple Has Finally Stuck A Dagger Into SMS. I Love It.
+Now that the WWDC keynote is over and I’ve had a little bit of time to reflect, I’ve been thinking about what excited me the most from today’s announcements. The list is long, no doubt. But I think I’m going to have to go with something that surprised me — while at the same time making me look smarter than perhaps I really am. (Again, just perhaps.) iMessages.
+
+As one of the core new features highlighted today in iOS 5, iMessages has one purpose: to kill SMS. That is, traditional carrier-controlled text messages. iMessages will do this by replacing SMS with a service that Apple is in control of across all of their iOS devices. And here’s the real death blow: iMessages will be completely free.
+
+Sure, you can argue that iMessages is limited due to the iOS requirement. But as Apple announced today, there are over 200 million iOS devices out there now. That’s a lot. Like Blackberry Messenger before it, Apple now has the strength to create their own device-to-device messaging application. And that’s exactly what they’ve done. And considering what a colossal rip-off SMS is, I can’t help but love this move. It’s exactly what I’ve been waiting for.
+
+Five days ago, on my personal blog, I responded to a post Anil Dash wrote wondering if Apple had all the tools in place to build their own Twitter. (As we’ve seen today, they’ve chosen to partner with them instead.) That was an interesting idea, but more interesting to me was the higher level concept of Apple creating their own messaging platform — again, like RIM did with BBM.
+
+“There’s a reason why BBM took off. Apple could make it work device-to-device as well. I’m thinking we need a FaceTime without the ‘Face’,” I wrote noting that while there are no shortage of third-party attempting to do this, it may take a true Apple integrated solution to fully take off. And that’s exactly what iMessages is.
+
+But SMS, with its billion percent margins (roughly), is a huge profit center for carriers. So why would they let Apple do this? (After all, this isn’t just a WiFi feature, it will work over 3G as well.) That’s easy. What choice do they have? Are Verizon and AT&T (or international carriers) going to boot Apple at this point for destroying their precious SMS services? No. And Apple will probably argue that SMS remains a great medium for cross-device message pollination (which is true).
+
+But it’s not just that iMessages kills SMS because it’s free. It kills it because it’s better. While the sending of photos, videos, and text matches SMS (and MMS), it’s better with iMessage because it’s streamlined and simplified. Plus you can now send contacts and locations. And you can see in real time when someone is typing, responding to your message. And there are delivery receipts. And optional read receipts (so you know if someone has actually read your message). There’s group messaging. Encryption. Etc.
+
+It’s sort of like SMS 2.0. And again, free.
+
+And my favorite part of all of this is that Apple is baking it into the same Messages app that SMS goes into. People will use this. A lot.
+
+And again, while this may be iOS-only, guess who else is going to have to match this feature now? Android. SMS is about to become a cross-platform messaging platform only. As a person who has paid hundreds if not thousands of dollars in bullshit SMS fees in my life, I happily say to the carriers: eat it.

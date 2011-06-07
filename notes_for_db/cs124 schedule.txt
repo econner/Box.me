@@ -1,0 +1,155 @@
+CS124 Quarter Schedule (Winter 2010-11)
+
+Topic and R
+1
+Jan 4
+Lec 1 (pptx)
+Lec 1 (pdf)
+Strings, Formal languages, and Automata
+•	J+M Chapter 2: Regular Expressions and Automata
+1
+Jan 6 
+Lec 2 (pptx)
+Lec 2 (pdf)
+Edit Distance (in Text and Genes) and start of Tokenization
+•	J+M Chapter 3: Words and Transducers, pages 68-77 (=IE 102-111)
+•	MR+S Chapter 2: Term vocabulary and postings lists (Online version: 19-35, Paper version: 18-33) 
+2
+Jan 11
+Lec 3 (pptx)
+Lec 3 (pdf)
+Language Modeling (and Probability Theory Background)
+•	An intro to probability such as a gentle introduction to probability
+•	J+M Chapter 4, N-grams
+2
+Jan 13 
+HW 1: Harvesting email addresses and phone numbers
+Lec 4 (pptx)
+Lec 4 (pdf)
+Naive Bayes and Text Classification
+•	MR+S Chapter 13: Text classification and Naive Bayes(Online version: 253-270, Paper version: 234-250)
+3
+Jan 18
+Lec 5 (pptx)
+Lec 5 (pdf)
+Text Classification for Sentiment Analysis
+•	Bo Pang, Lillian Lee, and Shivakumar Vaithyanathan. 2002. Thumbs up? Sentiment Classification using Machine Learning Techniques. Proceedings of the Conference on Empirical Methods in Natural Language Processing (EMNLP), pp. 79--86
+•	Optional Reading: MR+S Chapter 13: Text classification and Naive Bayes (Online version: 271-285, Paper version: 251-265)
+3
+Jan 20 
+HW 2: Language Identification
+Lec 6 (pptx)
+Lec 6 (pdf)
+Hidden Markov Models
+•	J+M Chapter 6: Hidden Markov and Maximum Entropy Models, pages 173-192 (=IE 207-226)
+•	Optional: Rachel Karchin, Hidden Markov Models and Protein Sequence Analysis
+4
+Jan 25 
+Lec 7 (pptx)
+Lec 7 (pdf)
+Named Entity Tagging
+•	J+M Chapter 22: Information Extraction, pages 727-734, 743-749 (=IE 761-768, 777-783)
+•	J+M Chapter 6: Logistic Regression and MEMMs, pages 193-211(=IE 227-245)
+4
+Jan 27
+HW 3: Sentiment analysis of movie reviews
+Lec 8 (pptx)
+Lec 8 (pdf)
+Information Retrieval (I) 
+•	MR+S Chapter 1: Boolean Retrieval
+•	MR+S Chapter 2: Term vocabulary and postings lists
+5
+Feb 1 
+
+Lec 9 (pptx)
+Lec 9 (pdf)
+Information Retrieval (II) 
+•	MR+S Chapter 6: Scoring, term weighting, and the vector space model
+5
+Feb 3 
+HW 4: Person name extractionLec 10 (pptx)
+Lec 10 (pdf)
+Information Retrieval (III) 
+•	MR+S Chapter 8: Evaluation in Information Retrieval
+6
+Feb 8 
+Lec 11 (pptx)
+Lec 11 (pdf)
+Computational Lexical Semantics
+•	J+M Chapter 19: Lexical Semantics (pages 611-619 = IE 645-653)
+•	J+M Chapter 20 Computational Lexical Semantics 20 (pages 652-670 = IE 686-704)
+6
+Feb 10
+HW 5: Exercises and Search Engine analysisLec 12 (pptx)
+Lec 12 (pdf)Question Answering 
+•	J+M Chapter 23 Question Answering and Summarization
+•	Ferrucci et al. 2010. Building Watson: An Overview of the DeepQA Project. AI Magazine. Fall 2010. 59-79.
+7
+Feb 15 
+
+Lec 13 (pptx)
+Lec 13 (pdf)
+XML: accessing structured information (I) 
+•	The Wikipedia page on XML through the end of Section 6, Processing XML Files. (I.e., stop when you get to "History")
+•	The Wikipedia page on DTD
+7
+Feb 17
+Lec 14 (pptx)
+Lec 14 (pdf)XML: accessing structured information (II) 
+•	XML in a Nutshell via Safari Tech books, Chapter 8 (XSLT), 
+To get this, go to library.stanford.edu/ezproxy/, choose Safari Tech Books, and search for XML in a Nutshell.
+•	XML in a Nutshell via Safari Tech books, Chapter 9 (XPath), 
+To get this, go to library.stanford.edu/ezproxy/, choose Safari Tech Books, and search for XML in a Nutshell.
+8
+Feb 22
+Lec 15 (pptx)
+Lec 15 (pdf)
+Relation and Information Extraction 
+•	J+M Chapter 22: Information Extraction (including Biomedical Information Extraction), page 734-743, 749-764 (=IE 768-777, 783-798)
+8
+Feb 25 (Friday)
+HW6: Jeopardy: Question and Answering and XML
+Lec 16 (pptx)
+Lec 16 (pdf)
+Machine Translation
+•	J+M Chapter 25: Machine Translation, page 859-879 (=IE 895-915)
+9
+Mar 1
+Lec 17 (pptx)
+Lec 17 (pdf)
+Machine Translation
+•	J+M Chapter 25: Machine Translation, page 879-897 (=IE 915-933)
+9
+Mar 3 (lecture); Mar 4 (homework due)
+Due Fri Mar 4 9:30am
+HW 7: Machine TranslationLec 18 (pptx)
+Lec 18 (pdf)
+Web graphs, Links, and PageRank
+•	MR+S Chapter 21: Link Analysis
+•	Optional Reading: David Austin, How Google Finds your Needle in the Web's Haystack, American Mathematical Society Feature Column, Monthly Essays on Mathematical Topics
+10
+Mar 8
+Work through the Review Questions for Final. 
+
+This isn't a homework to turn in, but we hope will be helpful to you guys in studying for the final.Lec 19 (pptx)
+Lec 19 (pdf)
+Understanding Social and Technological Networks: Small Worlds, Fat Tails, and Whatnot
+•	Jon Kleinberg. 2008. The convergence of social and technological networks. Communications of the ACM, 51(11):66-72, 2008.
+•	Jon Kleinberg, S. Lawrence. 2001. The Structure of the Web. Science 294(2001), page 1849.
+•	Mark Newman. The physics of networks, Physics Today, November 2008, pp. 33-38.
+•	Plus either one of the following two papers:
+o	Lada A. Adamic. Zipf, Power-laws, and Pareto - a ranking tutorial. Web tutorial
+o	(Just the first 7 pages of) M. E. J. Newman. 2005. Power laws, Pareto distributions and Zipf's lawContemporary Physics 46, 323-351 (2005).
+10
+Mar 10
+
+Lec 20 (pptx)
+Lec 20 (pdf)
+Speech Recognition
+•	J+M Chapter 9: Automatic Speech Recognition, page 285-314 (=IE 319-348)
+Final
+Mar 18
+Friday, 12:15pm-3:15pm, 370-370
+Final Exam in room 370-370
+
+

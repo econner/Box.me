@@ -1,0 +1,9 @@
+Some of the Finer Details of RSA Public-Key Cryptography
+Unlike Diffie-Hellman, RSA can be used for key exchange as well as digital signatures and the encryption of small blocks of data. Today, RSA is primary used to encrypt the session key used for secret key encryption (message integrity) or the message's hash value (digital signature). RSA's mathematical hardness comes from the ease in calculating large numbers and the difficulty in finding the prime factors of those large numbers. Although employed with numbers using hundreds of digits, the math behind RSA is relatively straight-forward.
+
+To create an RSA public/private key pair, here are the basic steps:
+
+Choose two prime numbers, p and q. From these numbers you can calculate the modulus, n = pq.
+Select a third number, e, that is relatively prime to (i.e., it does not divide evenly into) the product (p-1)(q-1). The number e is the public exponent.
+Calculate an integer d from the quotient (ed-1)/[(p-1)(q-1)]. The number d is the private exponent.
+The public key is the number pair (n,e). Although these values are publicly known, it is computationally infeasible to determine d from n and e if p and q are large enough.

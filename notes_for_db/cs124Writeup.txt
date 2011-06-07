@@ -1,0 +1,70 @@
+CS124 Homework 6 WRITEUP
+
+1) Spanish sentence:
+Espectacular partido en Toluca que los locales iban ganando y al final los Rayos consiguieron remontar de forma heróica.
+
+Human translation:
+Spectacular match in Toluca that the locals were winning and at the end the Rayos were able to catch up heroically. 
+
+Our program's translation:
+Spectacular game in Toluca that the locals were winning it and to the last the Rayos got to climb it of heroic shape.
+
+The main errors here are the translation of 'al final' to 'to the last' rather than 'at the end' as well as 'consiguieron remontar' to 'got to climb it' rather than 'able to catch up'.  The reason why our translation is still good is because this is a function of our dictionary translation since we can't even catch the idioms when we see them.  The nice thing is that the structure of our sentence matches perfecto with the structure of our human translation.
+
+Google translation:
+Toluca spectacular party that the premises were winning and eventually managed to trace rays in a heroic.
+
+The first obvious errors are direct translation by Google of 'partido' to 'party' and 'Rayos' to 'rays' rather than the team name Rays.  Also, the lack of being able to process the idiomatic 'consiguieron remontar' to 'were able to catch up' and have a direct translation to 'managed to trace rays' obviously leads the Google translation to sound incoherent.  Other than that, the main error comes from the translation of 'los locales' to premises rather than locals.  The general trend is that Google was directly translating words incorrectly relative to their context in the sentence, for whatever reason.
+
+
+2) Spanish sentence: 
+Sin palabras, el clásico norteño dejó mucho que desear pero estas chicas sacaron la casta por la afición.
+
+Human translation: 
+Speechless, the norteño classic left a lot to desire but these girls continued to show their support of the team.
+
+Our program translation:
+Without words , the classic northern left much to desire but these girls took the stock for the liking .
+
+The error in our translation is once again just a dictionary one where 'we could not recognize the idiomatic expression 'sacaron la casta por la aficion' and tried to translate it based on our direct dictionary giving us 'took the stock for the liking.'  However, the structure of the sentence remains correct as it would in English.
+
+Google translation: 
+Without words, the classic norteño was disappointing but these girls took the breed by the fans.
+
+The error in the Google translation is that it tried to directly translate the idiomatic expression 'sacaron la casta por la aficion', since 'took the breed by the fans' doesn't actually mean anything.  Tough for a computer program to recognize that expression though, but it seems to translate to 'show their support'.
+
+3) Spanish sentence:
+Con este resultado los Pumas llegaron a 18 puntos para mantenerse firmes en el liderato del Torneo Clausura 2011.
+
+Human translation: 
+With this result the Pumas arrived at 18 points, staying strong at the head of the 2011 Closure Tournament.
+
+Our program translation:
+With this result the Pumas arrived to 18 points to stand strong in the leadership 2011 of the closing tournament .
+
+This translation turned out really well because for the most part, the direct translation was right with the exception of 'liderato' which we translated to 'leadership' rather than 'head' or 'lead' (just like the Google translation below).  The one other error (which was mentioned when we described the rules) is that the 2011 seems out of place, and that is because it was not recognized as an adjective describing 'tournament'.  If it was, it would read '… strong in the leadership of the 2011 closing tournament' which sounds a lot better.  However, otherwise, our sentence structure is identical to how we want it in English.
+
+Google translation:
+With this result the Pumas reached 18 points to stick to the leadership of the Torneo Clausura 2011.
+
+This Google translation really is quite good -- the only difference is that it translated 'para mantenerse firms en el liderato' as 'to stick to the leadership' rather than 'stick to the lead' or something that more resembles that they were at the top of the tournament.
+
+4) Spanish sentence:
+Ellos trabajan bien, es un equipo que tiene mucho tiempo junto.
+
+Human translation:
+They work well, they are a team that has spent a lot of time together.
+
+Our program translation:
+They work well , it is a team that has much time together .
+
+Translation is pretty good (almost identical to google translation below, also a bit better) - there is a pronoun to describe the team, but it is not 'they', because we translate 'es' to 'it is'.  This is fine - the other main difference is that we had no way of  translating 'tiene' to 'has spent' instead of 'has' so it reads a bit funny, but contextually, the sentence still makes sense.  The sentence structure is identical to how it should be in English.
+
+Google translation:
+They work well, is a team that has a lot of time together.
+
+This translation is also pretty good - the main difference is there is no inclusion of a pronoun that describes the team (i.e. 'they are a team' rather than 'is a team') so the translation via Google sounds a little odd.  Also, because tiene translates directly to 'has', there was no way to add in 'has spent' which is how we would translate it in English.
+
+
+
+

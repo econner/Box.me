@@ -2,10 +2,8 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.utils import simplejson
 from django.core import serializers
 
-import docsims
 import textextract
 import models
-import docsearch
 import notesims
 import os
 
@@ -32,7 +30,7 @@ def get_keywords_from_text(text, num_query_words):
         keywords.extend(single_words)
     return keywords
     
-def get_similar_notes(request):    
+def get_similar_notes(request):   
     text = request.POST['text']
     text = filter_html_tags(text)
     note_id = request.POST['note_id']

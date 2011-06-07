@@ -1,0 +1,26 @@
+Apple WWDC 2011: Can iCloud and iOS 5 beat Google Android's massive cloud infrastructure ?
+As Apple attempts to chart out new territory with its cloud-offering iCloud, it is entering into a domain ruled by other giants like Google, Amazon and Microsoft who have huge data centers to back their cloud services.
+
+The websphere is abuzz with reports of what Apple will reveal about iCloud at WWDC 2011. Certain clues like Apple signing licensing deals with music labels Sony Corp., EMI and Warner Music suggests that iCloud will be a digital locker. However, the biggest give away of iCloud is its very name - iCloud.
+
+Apple's iCloud plan embodies a feature which enables users to store music in the cloud or on Apple's servers and then allows users to stream content to the browser. If iCloud is the purported service it intends to offer, then Apple seems to be lacking the infrastructure compared to its arch rival Google.
+
+Google is a key player in cloud-computing domain and has cornered multiple government and municipal office deals for office productivity tools. The primary edge Google holds over Apple is that it has 36 data centers. TechCrunch reported that Google has 19 data centers in U.S., 12 in Europe and 3 in Asia. Google has never disclosed the exact number of and size of data centers it holds across the globe. Google also leases space from third-party facilities for data center purposes.
+
+Datacenterknowledge reported in 2007 that Google had purchased a 466-acre land near Blythewood, South Carolina, also in April 2007 Google announced a $600-million data center Goose Creek South Carolina.
+
+In 2008 Google acquired additional 60 acres of land in Lenoir North Carolina near a site where Google had built a $600-million data center on a 220-acre property, which is just 25 km away from Apple's.
+
+Google's site in Dalles, Oregon blueprint reveals three 68,680 square foot data centers while its two buildings North Carolina Lenoir facility are surmised to have 139,797-square foot data center and 337,008-square foot structure. Google on an average spends about $500-$600 million on building data centers.
+
+But Apple's data center in North Carolina costs $1 billion and measures 500,000 sq. ft. Its data center in Newark measures 107,000 sq.ft. Also it was reported that in April Apple signed a seven-year lease with DuPont Fabros Technology - a wholesale data center space developer - for 11,000 square foot data center facility in Santa Clara, California.
+
+Apple's product launches have a history of bumper openings, a fact which was recently attested by the iPad 2 launch in China. The launch witnessed serpentine queues outside Apple stores and a violent scuffle broke out between an Apple Store employee and a customer.
+
+However, if Apple's iCloud receives similar welcome, then Apple's servers need to sustain the pressure as well. Recently, Amazon in an attempt to promote its music locker Cloud Drive, offered Lady Gaga's "Born This Way" album for 99 cents. Amazon's servers were not able to handle the traffic and thus Amazon had to offer the deal again, after prepping its servers to manage the overcapacity.
+
+With the increasing number of Apple's iPhone, iPad and iPod users, Apple servers need to be in a position to handle the surge.
+
+Apple's iOS and Google's Android platform are in a bare-knuckle fight. The possibility to differentiate on the level of hardware is slim and thus, it is the service component of the ecosystem which allows the maximum room for differentiation. Differentiation on the basis of delivery is where the scope is and it is here that the supporting infrastructure comes into play.
+
+Google has a head start in the cloud computing game with its massive server farms and Apple is playing to catch up. Google has the means to support cloud services globally while Apple's advantage is still in the US. Before Apple iOS 5 can exploit the cloud potential, it will have to do massive investments in server farms.

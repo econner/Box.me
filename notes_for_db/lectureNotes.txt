@@ -1,0 +1,117 @@
+CS124 Lecture NOTES
+
+Lecture 1
+
+Regular expressions – Perl-based syntax
+
+Anchors - ^ - start of line
+Anchors - $ - matches end of line
+Boundary - \b – word boundary (word = sequence of digits, underscores, or letters)
+Boundary - \B – non-word boundary
+
+Precedence – pg. 22
+Know pgs 24-26
+
+Remember, backslash (\) is used to use actual characters rather than special meanings e.g. \. Means “period”
+
+KNOW greediness of regexes
+
+False positives – Type I (matching strings we should not have matched)
+False negatives – Type II (not matching strings that we should have matched)
+
+Ways to fix – increasing accuracy / precision (min false positives), or increasing coverage / recall (min false negatives)
+
+KNOW how to go from regex to FSA
+
+Lecture 2
+
+Lemma – cat and cats have same lemma
+Wordform – cat and cats have different wordforms
+Tokens vs. types
+…. (know slides)
+minimum edit distance
+genomic stuff
+
+Stop lists – common words to be removed in tokenization
+Stemming (cutting off ends of words) vs. lemmatization (uses vocab and morphology to remove certain parts)
+
+Lecture 3
+
+Perplexity
+Backoff / interpolation
+
+Lecture 4
+
+Bayes rule regarding classes / documents
+Naïve bayes (multinomial model) – can be used for text classification (find best class for document) – the conditional independence assumption is huge
+KNOW BAYESIAN UNIGRAM PRIOR – smoothing
+
+Slide 34 is nice for an example
+
+Gotta know naïve bayes really well
+-	potential errors: positional independence assumption, conditional independence assumption
+
+Lecture 5
+
+Pointwises mutual information
+Know sentiment analysis from slides / paper
+
+Lecture 6
+
+All about HMM’s! make sure you know
+e.g. forward algorithm
+Viterbi
+Hmm’s used for gene finding / POS tagging
+
+Lecture 7
+
+Rule-based (regex) approaches vs ML-based approaches (training/testing) to named entity tagging
+
+See logistic regression calculation – slide 15/22
+Needs to lie between zero and one
+
+Problems with using classifiers for sequence labeling – tought o integrate info from hidden labels on both sides / we make a hard decision on each token rather than global optimum
+
+So we’d rather use probabilistic sequence models – HMM’s or MEMM’s
+-	see examples in notes / know F1 score
+
+Lecture 8
+
+Concept of an inverted index so we don’t have really sparse matrices
+Merging posting lists: postings need to be sorted by docID to get O(x+y) runtime
+
+Issues for byword indexes: get false positives, and get a huge dictionary
+Know positional indexes
+
+Lecture 9
+All about ranked retrieval / tf-idf
+Jaccard coefficient
+KNOW BETTER
+
+Lecture 10
+
+How to tell whether search results are good – fast does it index / search … relevance of results
+
+Relevance a response to information need which the query is based off of, NOT the query itself
+
+Understand interpolated precision
+
+Lecture 11
+
+Sense of a word
+
+Thesaurs-based versus distributional algorithms for word similarity – KNOW WELL
+
+KNOW 652-670 WELL!
+
+Lecture 12
+
+Try to understand mean reciprocal rank (787)
+
+Lecture 13/14
+XML stuff!
+Know DTD well – def. will be questions in the final about it
+
+Get apply-templates very important
+Get better sense of XSLT and Xpath
+
