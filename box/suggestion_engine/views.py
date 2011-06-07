@@ -19,7 +19,7 @@ from notesims import filter_html_tags
 from boxdotnet import BoxDotNet
 
 MAX_DOCS = 6
-dict_path = os.path.join(settings.PROJECT_ROOT, 'box/suggestion_engine/aprestatagger/data/dict.pkl'),
+dict_path = os.path.join(settings.PROJECT_ROOT, 'box/suggestion_engine/aprestatagger/data/dict.pkl')
 weights = pickle.load(open(dict_path, 'rb'))
 mytagger = Tagger(Reader(), Stemmer(), Rater(weights))
 
