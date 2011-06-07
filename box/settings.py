@@ -5,7 +5,7 @@ from datetime import timedelta
 
 import platform
 
-if platform.node() != 'ip-10-117-38-244':
+if platform.node() != 'ip-10-117-38-202':
     LIVE = False
 else:
     LIVE = True
