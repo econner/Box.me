@@ -1,7 +1,6 @@
 import os
 from box import constants
 from gensim import corpora, models, similarities
-from celery.decorators import task
 from box.icebox.models import Note, NoteRevision
 from BeautifulSoup import BeautifulSoup
 
