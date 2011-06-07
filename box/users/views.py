@@ -69,7 +69,12 @@ def box_login(request, extra_context=dict(), account_inactive_template='TODO'):
     if not user.is_active:
         return render_to_response(account_inactive_template, extra_context,
              context_instance=RequestContext(request))
-
+             
+    # update user's auth token
+    profile = user.get_profile()
+    profile.token = token
+    profile.save()
+    
     return HttpResponseRedirect(_get_next(request))
 
 # take a user, and search his files for a given query - HA

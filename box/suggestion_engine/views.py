@@ -17,7 +17,7 @@ from django.contrib.auth import login, authenticate, logout as auth_logout
 from notesims import filter_html_tags
 from boxdotnet import BoxDotNet
 
-
+MAX_DOCS = 6
 weights = pickle.load(open('suggestion_engine/aprestatagger/data/dict.pkl', 'rb'))
 mytagger = Tagger(Reader(), Stemmer(), Rater(weights))
 
@@ -55,11 +55,15 @@ def get_similar_docs(request):
     if sim_box_docs == -1:
         return HttpResponse(BoxDotNet().get_login_url(settings.BOX_API_KEY))
     elif sim_box_docs is not None:
+        num_docs = 1
         for files in sim_box_docs.file:
+            if num_docs > MAX_DOCS:
+                break
             file_id = files.id[0].elementText
             file_name = files.name[0].elementText
             url = boxdocsims.box_preview(file_id, profile, settings.BOX_API_KEY)
             files_info.append(dict(file_id=file_id, file_name=file_name, url=url))
+            num_docs = num_docs + 1
             
     json = simplejson.dumps(files_info)
     return HttpResponse(json, mimetype='application/json')

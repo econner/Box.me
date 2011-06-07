@@ -240,7 +240,7 @@ $("#save").bind("click", function() {
                     else {
                       for (var i = 0; i < num_docs; i++) {
                         var doc = sim_docs[i];
-                        $("#suggDocTemplate").tmpl().appendTo(sugg_list_docs);
+                        $("#suggDocTemplate").tmpl({'url': doc.url, 'doc_title': doc.file_name}).appendTo(sugg_list_docs);
                       }
                     }
                   },
