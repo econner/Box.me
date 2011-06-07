@@ -62,6 +62,8 @@ def box_login(request, extra_context=dict(), account_inactive_template='TODO'):
         user_profile.token = token
         user_profile.box_user_id = user_id
         user_profile.save()
+        
+        user = authenticate(box_user_id=user_id)
     
     # here we will have valid user so login
     login(request, user)
