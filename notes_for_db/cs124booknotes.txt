@@ -1,0 +1,50 @@
+CS124 Book Notes
+
+L1
+
+Regular expression – standard notation for characterizing text sequences
+Kleene * and Kleene +
+
+Anchors - ^ and $ \b and \B
+P 22 – operator precedence hierarchies
+
+Increasing accuracy – minimize false positives
+Increasing coverage – minimize false negatives
+
+L2
+Sentence tokenization
+Greedy way: maximum matching
+
+Make sure document lists match what you’re going for (i.e. don’t index the whole book if it is actually a book of books)
+Interesting stuff on stop words and how they are used in search engines / stuff (just an overview though)
+
+Equivalence classes / token normalization e.g. anti-discriminatory and antidiscriminatory should map to the same thing
+-	can be asymmetry in expansion (see 29)
+review skip lists if it seems like we need to know it for the exam!
+
+L3
+n-gram
+types vs tokens (tokens = total number, types = vocabulary size / number of distinct words)
+
+chain rule of probability … understand
+MLE
+Training and test sets
+
+Understand ‘perplexity’ – 92/95
+Training sets super important to get accurate results on training data
+Intrinsic versus extrinsic evaluation – perplexity is for intrinsic
+KNOW the end of l3 really well – both perplexity and backoff/interpolation
+
+L4
+Text Classification and Naïve Bayes
+
+KNOW the last 7 pages of the document (online)
+
+L5
+KNOW entropy classification and SVM’s (from paper)
+
+L6
+Make sure you read J+M for HMM notes! – good for 262 too
+Forward-backward algorithm at the end too
+
+
