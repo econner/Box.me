@@ -7,7 +7,7 @@ import textextract
 import models
 import docsearch
 import notesims
-impot os
+import os
 
 import pickle
 import boxdocsims
