@@ -72,12 +72,10 @@ def generate_note_sims(note_text, note_id, keywords):
         rev_text = filter_html_tags(rev.text)
         words = rev_text.split()
         rev_text_lower = rev_text.lower()
-
         collaborators = []
+        print "COLLABS:", len(rev.collaborators)
         for c in rev.collaborators:
-            if c.first_name == '' and c.last_name == '':
-                continue
-            collaborators.append(c.first_name + ' ' + c.last_name)
+            collaborators.append(c.email)
 
         sim_dict = dict({'title': rev.title, 'note': rev.note.pk, 'collaborators': ', '.join(collaborators)})
 
