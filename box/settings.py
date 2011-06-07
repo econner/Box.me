@@ -133,25 +133,8 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
     'box.users',
     'suggestion_engine',
-    'haystack',
     'icebox',
 )
-
-HAYSTACK_SITECONF = 'box.search_sites'
-HAYSTACK_SEARCH_ENGINE= 'solr'
-HAYSTACK_SOLR_URL = 'http://127.0.0.1:8983/solr'
-
-BROKER_HOST = "localhost"
-BROKER_PORT = 5672
-BROKER_USER = "myuser"
-BROKER_PASSWORD = "mypassword"
-BROKER_VHOST = "myvhost"
-
-AMQP_SERVER = "192.168.1.2"
-AMQP_PORT = 5672
-AMQP_USER = "myuser"
-AMQP_PASSWORD = "mypassword"
-AMQP_VHOST = "myvhost"
 
 if LIVE:
     BOX_API_KEY = "k6oor00o6680cll6q42x8b9hox6tvcbt"
