@@ -137,9 +137,9 @@ INSTALLED_APPS = (
 )
 
 if LIVE:
-    BOX_API_KEY = "k6oor00o6680cll6q42x8b9hox6tvcbt"
+    BOX_API_KEY = ""
 else:
-    BOX_API_KEY = "9lnj948i7xsyj7d0ldiiasdlgoq9seys"
+    BOX_API_KEY = ""
     
 LOGIN_REDIRECT_URL = "/"
 LOGIN_URL = "/login/"
